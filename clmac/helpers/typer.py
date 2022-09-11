@@ -8,8 +8,7 @@ from typing import Optional
 
 import pyperclip
 from pynput.keyboard import KeyCode, Controller, Key
-from slibtk import slibtk
-
+from clmac.helpers import core
 logger = logging.getLogger(__name__)
 
 MAX_DEQUE_SIZE = 20
@@ -122,8 +121,8 @@ class Typer(Controller):
     def __call__(self, text, n_left: Optional[int] = None):
         return self.partial_typing(text, n_left)
 
-    @slibtk.sleep_after(0.2)
-    @slibtk.log_output()
+    @core.sleep_after(0.2)
+    @core.log_output()
     def selection_to_clipboard(self) -> str:
         with self.pressed(self.cmd_ctrl):
             self.press(KeyCode(char='c'))

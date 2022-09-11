@@ -3,8 +3,7 @@ from threading import Thread
 from typing import Any, List
 
 import pyperclip
-from slibtk.slibtk import write_pickle, read_pickle
-
+from clmac.helpers import core
 from clmac.config.definitions import FILE_CLIPBOARD_HISTORY
 
 import logging
@@ -24,15 +23,15 @@ class ClipboardHistoryFile:
     def initialise_if_not_exist(self) -> None:
         """if a clipboard history file does not exist it creates one"""
         if not FILE_CLIPBOARD_HISTORY.is_file():
-            write_pickle([], self.file)
+            core.write_pickle([], self.file)
 
     def load(self) -> List:
         """load clipboard history flagging an error if it is not of type list"""
         try:
-            history = read_pickle(self.file)
+            core.history = core.read_pickle(self.file)
         except UnicodeError:
             history = []
-            write_pickle(history, self.file)
+            core.write_pickle(history, self.file)
         assert isinstance(history, list)
         return history
 
@@ -41,7 +40,7 @@ class ClipboardHistoryFile:
         if len(history) > self.max_length:
             history = history[-self.max_length:]
         history.append(item)
-        write_pickle(history, self.file)
+        core.write_pickle(history, self.file)
 
     def clean(self) -> None:
         """clean up the clipboard history file by removing duplicates, white spaces and writing over the original"""
@@ -52,7 +51,7 @@ class ClipboardHistoryFile:
             logger.debug(f'clipboard history contains less than 10 items: {clipboard_history}')
             return None
         logger.debug(f'over-writing clean list: {clipboard_history_unique}')
-        write_pickle(clipboard_history_unique, self.file)
+        core.write_pickle(clipboard_history_unique, self.file)
 
     def get_menu_items(self) -> List[str]:
         return list(reversed(self.load()))

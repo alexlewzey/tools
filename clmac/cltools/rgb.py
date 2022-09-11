@@ -4,12 +4,11 @@ add the rgb of current mouse cursor position to the clipboard, default rgb will 
 cmdline arg
 """
 import time
-
+from clmac.helpers import core
 import pyautogui
-from slibtk import slibtk
 
 
-@slibtk.log_output()
+@core.log_output()
 def get_pixel_rgb():
     return pyautogui.pixel(*pyautogui.position())
 

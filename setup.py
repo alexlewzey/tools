@@ -8,7 +8,6 @@ with open('README.md') as readme_file:
     readme = readme_file.read()
 
 requirements = [
-    # 'slibtk @ git+https://github.com/alexlewzey/slibtk.git#egg=slibtk',
     'pyautogui',
     'pyperclip',
     'measurement',
@@ -28,7 +27,7 @@ requirements = [
     'pyyaml',
     'tabulate',
     'gTTS',
-
+    'pyttsx3',
 ]
 
 setup(

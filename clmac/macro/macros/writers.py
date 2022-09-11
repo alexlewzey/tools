@@ -3,9 +3,10 @@
 functions that automate typing which features control character which cannot be fed into the macro encoding as callable
 text
 """
-import pyperclip
-from pynput.keyboard import Key, KeyCode
 from typing import *
+
+from pynput.keyboard import Key, KeyCode
+
 from clmac.helpers.typer import Typer
 
 typer = Typer()

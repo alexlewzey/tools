@@ -2,8 +2,6 @@
 import time
 from threading import Thread
 
-from slibtk import slibtk
-
 
 def input_bpm(default: int = 130) -> int:
     bpm: str = input(f'BPM [{default}]:')

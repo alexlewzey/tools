@@ -9,10 +9,10 @@ import time
 from typing import Tuple
 
 from pynput.keyboard import Key, KeyCode, Listener
-from slibtk import slibtk
 
 import clmac.helpers.typer as lh
 from clmac.macro.encodings import ENCODINGS, test_for_duplicates
+from clmac.helpers import core
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -72,7 +72,7 @@ def restart_app() -> None:
     quit()
 
 
-@slibtk.log_input()
+@core.log_input()
 def on_press(key):
     GlobalInputs.key_history.add_key(key)
     GlobalInputs.currently_pressed.add(key)

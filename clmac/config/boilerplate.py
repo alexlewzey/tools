@@ -34,7 +34,6 @@ import json
 import random
 import string
 import requests
-from slibtk import slibtk
 import configparser
 import copy
 import shutil
@@ -48,7 +47,7 @@ df.to_gbq(destination_table='dataset.some_data',
 """
 
 data_sci: str = f"""{standard_lib}
-from dstk import dptk, mltk, dviztk
+from dstk import dptk, mltk, dviztk, slibtk
 import pyperclip
 import numpy as np
 import scipy

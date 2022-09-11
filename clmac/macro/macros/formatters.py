@@ -9,7 +9,6 @@ from typing import *
 import traceback
 import pyperclip
 from pynput.keyboard import Key
-from slibtk import slibtk
 
 import clmac.helpers.automation as auto
 from clmac.helpers.typer import Typer
@@ -454,7 +453,7 @@ def fmt_underline():
 
 
 def make_underline(text: str) -> str:
-    clipboard_clean: str = slibtk.trim(text)
+    clipboard_clean: str = ' '.join(text.split())
     return len(clipboard_clean) * '-'
 
 

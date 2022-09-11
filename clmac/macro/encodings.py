@@ -4,15 +4,15 @@ a collection of all my available macro
 
 from collections import Counter
 from functools import partial
-from typing import Tuple, Dict
 from typing import Callable
+from typing import Tuple
+
 from pynput.keyboard import KeyCode
 
 from clmac.config import boilerplate, conftk
 from clmac.helpers.typer import Typer
 from clmac.macro.macros import clipper, formatters, writers, launchers, img2text, text2speech
 from clmac.macro.macros.launchers import clipboard2browser
-from clmac.macro.macros.writers import GDocWriter
 
 
 class MacroEncoding:

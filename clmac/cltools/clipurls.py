@@ -4,12 +4,11 @@ save the urls and webpage titles of the current chrome tabs to the clipboard in 
 import logging
 import re
 import time
-
+from clmac.helpers import core
 import pyperclip
 import requests
 from lxml import html
 from selenium import webdriver
-from slibtk import slibtk
 from webdriver_manager.chrome import ChromeDriverManager
 
 from clmac.helpers.core import *
@@ -27,12 +26,12 @@ class DriverChrome:
         chrome_options.add_argument("## incognito")
         self.driver = webdriver.Chrome(ChromeDriverManager().install())
 
-    @slibtk.sleep_after(PAGE_LOAD_TIME)
+    @core.sleep_after(PAGE_LOAD_TIME)
     def load_page(self, url: str):
         """url must have http protocol"""
         self.driver.get(url)
 
-    @slibtk.sleep_after(JS_LOAD_TIME)
+    @core.sleep_after(JS_LOAD_TIME)
     def scroll_bottom(self):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 

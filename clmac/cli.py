@@ -2,7 +2,6 @@
 """
 command line tool app / main interface
 """
-import logging
 import shutil
 import sys
 from distutils.dir_util import copy_tree
@@ -10,11 +9,11 @@ from distutils.dir_util import copy_tree
 import click
 import yaml
 from PyPDF2 import PdfFileMerger
-from slibtk import slibtk
 from tabulate import tabulate
 
+from clmac.helpers import core
 import clmac.macro.app as app
-from clmac.cltools import clipurls, todoist_add_list
+from clmac.cltools import clipurls
 from clmac.cltools.tunings import show_tuning
 from clmac.config import conftk
 from clmac.config import definitions
@@ -36,11 +35,6 @@ def cli():
 def clt():
     """command line tool-box"""
     pass
-
-
-@clt.command()
-def todoist_shopping():
-    todoist_add_list.main()
 
 
 @clt.command()
@@ -92,7 +86,7 @@ def to_unix(path: Path) -> Path:
     return path
 
 
-def get_tree(path: PathOrStr, cond: Callable) -> List[Tuple[Path, int]]:
+def get_tree(path: Union[Path, str], cond: Callable) -> List[Tuple[Path, int]]:
     tree = Path(path).rglob('*')
     return sorted([(p, p.stat().st_size) for p in tree if cond(p)], key=lambda x: x[1], reverse=True)
 
@@ -100,11 +94,11 @@ def get_tree(path: PathOrStr, cond: Callable) -> List[Tuple[Path, int]]:
 @clt.command()
 @click.argument('path', type=click.Path(exists=True, file_okay=False))
 @click.option('-n', type=int, default=10, help='Max no. of files displayed', show_default=True)
-def file_sizes(path: PathOrStr, n: int = 10) -> None:
+def file_sizes(path: Union[Path, str], n: int = 10) -> None:
     """list the largest file child files of a directory"""
     path = Path(path)
     sizes = get_tree(to_unix(path), cond=lambda p: p.is_file())
-    file_out = tabulate([(p.as_posix(), slibtk.hr_bytes(size)) for p, size in sizes[:n]],
+    file_out = tabulate([(p.as_posix(), hr_bytes(size)) for p, size in sizes[:n]],
                         headers=('file', 'size'))
     click.echo(file_out)
 
@@ -112,19 +106,32 @@ def file_sizes(path: PathOrStr, n: int = 10) -> None:
 @clt.command()
 @click.argument('path', type=click.Path(exists=True, file_okay=False))
 @click.option('-n', type=int, default=10, help='Max no. of files displayed', show_default=True)
-def dir_sizes(path: PathOrStr, n: int = 10) -> None:
+def dir_sizes(path: Union[Path, str], n: int = 10) -> None:
     """list the largest child directories of a directory"""
     path = Path(path)
     sizes = get_tree(to_unix(path), cond=lambda p: p.is_dir())
-    dir_out = tabulate([(p.as_posix(), slibtk.hr_bytes(size)) for p, size in sizes[:n]],
+    dir_out = tabulate([(p.as_posix(), hr_bytes(size)) for p, size in sizes[:n]],
                        headers=('directory', 'size'))
     click.echo(dir_out)
+
+
+def hr_bytes(n_bytes: int, binary=False, decimal_places=1):
+    """return bytes in a human readable format"""
+    if binary:
+        factor, units = 1024, ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB']
+    else:
+        factor, units = 1000, ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
+    for unit in units:
+        if n_bytes < factor:
+            break
+        n_bytes /= factor
+    return f"{n_bytes:.{decimal_places}f}{unit}"
 
 
 @clt.command()
 @click.argument('src', type=click.Path(exists=True))
 @click.argument('dest', type=click.Path())
-def mv(src: PathOrStr, dest: PathOrStr) -> None:
+def mv(src: Union[Path, str], dest: Union[Path, str]) -> None:
     """python implementation of unix mv command"""
     src, dest = to_unix(Path(src)), to_unix(Path(dest))
     if src.is_dir():
@@ -147,7 +154,7 @@ def mv(src: PathOrStr, dest: PathOrStr) -> None:
 @clt.command()
 @click.argument('src', type=click.Path(exists=True))
 @click.argument('dest', type=click.Path())
-def cp(src: PathOrStr, dest: PathOrStr) -> None:
+def cp(src: Union[Path, str], dest: Union[Path, str]) -> None:
     """python implementation of unix cp command"""
     src, dest = to_unix(Path(src)), to_unix(Path(dest))
     if src.is_dir():
@@ -172,7 +179,7 @@ def rm(src) -> None:
 
 @clt.command()
 @click.argument('path', nargs=-1, type=click.Path(file_okay=False))
-def cd(path: Optional[PathOrStr]) -> None:
+def cd(path: Optional[Union[Path, str]]) -> None:
     typer = Typer()
     if path:
         typer.type_text(f'cd {to_unix(Path((path[0]))).as_posix()}')
