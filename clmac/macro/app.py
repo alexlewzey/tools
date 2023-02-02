@@ -11,8 +11,8 @@ from typing import Tuple
 from pynput.keyboard import Key, KeyCode, Listener
 
 import clmac.helpers.typer as lh
-from clmac.macro.encodings import ENCODINGS, test_for_duplicates
 from clmac.helpers import core
+from clmac.macro.encodings import ENCODINGS, test_for_duplicates
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -95,3 +95,5 @@ def run():
 
 if __name__ == '__main__':
     run()
+
+
