@@ -283,8 +283,8 @@ def fmt_repr():
 
     input from clipboard:
         self.id = id_
-            self.username = username
-            self.password = password
+        self.username = username
+        self.password = password
     output of script:
         (id=self.id, username=self.username, password=self.password)
     """
