@@ -71,7 +71,7 @@ class Typer(Controller):
         elif sys.platform == 'darwin':
             self.hotkey(Key.cmd, KeyCode(char='v'))
         else:
-            raise ValueError(f'{self.paste.__name__}no handler for operating system')
+            raise ValueError(f'{self.paste.__name__} no handler for operating system')
 
     def copy(self) -> str:
         self.hotkey(self.cmd_ctrl, KeyCode(char='c'))

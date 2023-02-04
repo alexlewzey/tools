@@ -7,6 +7,7 @@ from functools import partial
 from typing import Callable
 from typing import Tuple
 
+import pandas as pd
 from pynput.keyboard import KeyCode
 
 from clmac.config import boilerplate, conftk
@@ -229,7 +230,7 @@ ENCODINGS = [
     MacroEncoding(cat='formatter', name='parse_sql_table', encoding=';pt', func=formatters.parse_sql_table),
     MacroEncoding(cat='writer', name='camel_to_snake', encoding=';cs', func=formatters.camel_to_snake),
     MacroEncoding(cat='writer', name='snake_to_camel', encoding=';sc', func=formatters.snake_to_camel),
-    MacroEncoding(cat='writer', name='fmt_variables', encoding=';fv', func=formatters.fmt_varibles),
+    MacroEncoding(cat='writer', name='fmt_variables', encoding=';fv', func=formatters.fmt_print_variables),
     MacroEncoding(cat='writer', name='clean_whitespace', encoding=';cw', func=formatters.clean_whitespace),
     # select previous lines
     MacroEncoding(cat='line select', name='select_prev_1', encoding=';s1', func=partial(typer.select_previous_lines, n_lines=1)),
@@ -242,7 +243,6 @@ ENCODINGS = [
     MacroEncoding(cat='line select', name='select_prev_8', encoding=';s8', func=partial(typer.select_previous_lines, n_lines=8)),
     MacroEncoding(cat='line select', name='select_prev_9', encoding=';s9', func=partial(typer.select_previous_lines, n_lines=9)),
 ]
-
 
 class DuplicateEncodingError(ValueError):
     pass

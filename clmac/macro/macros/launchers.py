@@ -37,8 +37,11 @@ def guitar_practice():
     open_urls(urls.values())
 
 
-def clipboard2browser():
-    """open the current clipboard item as a url in a browser"""
+def clipboard2browser() -> None:
+    """take a line separated list of urls from the clipboard and open each one in a separate tab"""
     cb = pyperclip.paste()
-    url = cb if cb.startswith('http') else 'http://' + cb
-    webbrowser.open(url)
+    for url in cb.splitlines():
+        url = url if url.startswith('http') else 'http://' + url
+        webbrowser.open(url)
+
+

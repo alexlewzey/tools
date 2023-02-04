@@ -76,6 +76,20 @@ def clipboard_in_out(func):
     return wrapper
 
 
+def clipboard_in_out_paste(func):
+    """Decorator that grabs text from the clipboard passes it to the decorated function then copies the
+    text returned by the decorated function to the clipboard"""
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        clip: str = auto.read_clipboard()
+        clip = func(clip)
+        pyperclip.copy(clip)
+        typer.paste()
+
+    return wrapper
+
+
 @clipboard_in_out
 def snake_to_camel(name: str) -> str:
     return ''.join(word.title() for word in name.split('_'))
@@ -513,6 +527,7 @@ def sql_col_as_mil() -> None:
     input
     -----
     sum(spend) as spend,
+
     output
     ------
     sum(spend) / 1000000 as spend_m,
@@ -543,6 +558,9 @@ def test_parse_sql_table():
 
 
 def fmt_sql_table_as_python() -> None:
+    """
+
+    """
     cb: str = ' '.join(pyperclip.paste().split()).replace('select * from ', '')
     code = f''' = pygcp.read_gbq("""select * from {cb}""")'''
     pyperclip.copy(code)
@@ -550,8 +568,23 @@ def fmt_sql_table_as_python() -> None:
     typer.caret_to_line_start()
 
 
-@clipboard_in_out
-def fmt_varibles(s: str) -> str:
-    varibles = re.sub('[^\w\s]', '', s).split()
-    varibles = [f'{v}={{{v}:.3f}}' for v in varibles]
-    return f"print(f'{', '.join(varibles)}')"
+@clipboard_in_out_paste
+def fmt_print_variables(s: str) -> str:
+    """
+    Take the variables from the clipboard and format them as a string to be printed and return to clipboard
+
+    input
+    ------
+    days_elapsed
+    weeks_elapsed
+
+    output
+    -----
+    print(f'days_elapsed={days_elapsed:.3f}, weeks_elapsed={weeks_elapsed:.3f}')
+    """
+    variables = re.sub('[^\w\s]', '', s).split()
+    variables = [f'{v}={{{v}:.3f}}' for v in variables]
+    output = f"print(f'{', '.join(variables)}')"
+    if len(output) > 120:
+        output = '\', \n      f\''.join(output.split(', '))
+    return output
