@@ -7,6 +7,8 @@ import re
 import textwrap
 from typing import *
 import traceback
+
+import numpy as np
 import pyperclip
 from pynput.keyboard import Key
 
@@ -352,8 +354,8 @@ def fmt_list() -> None:
     pyperclip.copy(items_str)
 
 
-def seq2list() -> None:
-    """format a seqence separated by white space into a python list format
+def to_list() -> None:
+    """format a sequence separated by white space into a python list format
 
     input
     -----
@@ -588,3 +590,22 @@ def fmt_print_variables(s: str) -> str:
     if len(output) > 120:
         output = '\', \n      f\''.join(output.split(', '))
     return output
+
+
+@clipboard_in_out_paste
+def swap_quotation_marks(s: str) -> str:
+    """
+    For a string taken from the clipboard replace all the quotation marks of one type
+    with the other type i.e. single for double and vice versa. If a string contains a single
+    quote it will all replace single marks with doubles.
+
+    input
+    -----
+    {"start_date": '2023-01-07'}
+
+    output
+    ------
+    {"start_date": "2023-01-07"}
+    """
+    s = s.replace('\'', '"') if '\'' in s else s.replace('"', '\'')
+    return s

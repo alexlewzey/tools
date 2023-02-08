@@ -56,11 +56,6 @@ def git_commit() -> None:
     typer.type_text(text)
 
 
-def git_push() -> None:
-    cmd_push: str = 'git push'
-    typer.type_text(cmd_push)
-
-
 def caret_to_line_start() -> None:
     typer.caret_to_line_start()
 
