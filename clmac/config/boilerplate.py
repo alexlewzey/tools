@@ -12,13 +12,10 @@ log_config = """logging.basicConfig(
 )"""
 
 standard_lib: str = """from typing import *
-from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 import logging
 import collections
 from datetime import datetime, timedelta
 from pathlib import Path
-from importlib import reload
-from varname import nameof
 import itertools
 import functools
 import subprocess
@@ -34,23 +31,13 @@ import json
 import random
 import string
 import requests
-import configparser
 import copy
 import shutil
 """
 
-big_query: str = """client_bq = bigquery.Client()
-df.to_gbq(destination_table='dataset.some_data',
-            project_id=os.environ['GCLOUD_PROJECT'],
-            if_exists='replace',
-            location='europe-west2')
-"""
 
 data_sci: str = f"""{standard_lib}
-from dstk import dptk, mltk, dviztk, slibtk
-import pyperclip
 import numpy as np
-import scipy
 from scipy import stats
 from tqdm.auto import tqdm
 import pandas as pd
@@ -66,38 +53,29 @@ model_selection,
  linear_model
 )
 from sklearn.metrics.pairwise import euclidean_distances, cosine_similarity
-from sklearn_extra.cluster import KMedoids
 import xgboost as xgb
-import lightgbm as lgbm
+import lightgbm as lgb
 import optuna
 from optuna import Trial
-import optuna.integration.lightgbm as lgb
 import umap
 import matplotlib.pyplot as plt
-import seaborn as sns
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.offline import plot
-from plotly.subplots import make_subplots
-from functools import partial
-import torch
-import torch.nn as nn
-from pygcp import pygcp
-from src.core import *
-import shap
-
-from google.cloud import storage, bigquery, secretmanager
-import warnings
-
-logging.basicConfig(**log_config)
-logger = logging.getLogger(__name__)
 
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
-pd.set_option('display.float_format', '{{:.5f}}'.format)
+pd.set_option('display.float_format', '{{:.3f}}'.format)
 
 warnings.simplefilter(action='ignore')
+"""
+
+big_query: str = """client_bq = bigquery.Client()
+df.to_gbq(destination_table='dataset.some_data',
+            project_id=os.environ['GCLOUD_PROJECT'],
+            if_exists='replace',
+            location='europe-west2')
 """
 
 deep_learning: str = """import torch.nn as nn

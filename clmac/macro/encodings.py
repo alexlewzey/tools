@@ -114,7 +114,7 @@ ENCODINGS = [
     MacroEncoding(cat='writer', name='logging', encoding=';lg', func=typer(boilerplate.logger)),
     MacroEncoding(cat='writer', name='log_config', encoding=';lc', func=typer(boilerplate.log_config)),
     MacroEncoding(cat='writer', name='super().__init__()', encoding=';su', func=typer('super().__init__()')),
-    # MacroEncoding(cat='writer', name='modules_data_sci', encoding=';ds', func=typer(boilerplate.data_sci)),
+    MacroEncoding(cat='writer', name='modules_data_sci', encoding=';ds', func=typer(boilerplate.data_sci)),
     MacroEncoding(cat='writer', name='modules_deep_learning', encoding=';dl', func=typer(boilerplate.deep_learning)),
     MacroEncoding(cat='writer', name='iris_dataset', encoding=';is', func=typer(boilerplate.iris_dataset)),
     MacroEncoding(cat='writer', name='months', encoding=';mh', func=typer(boilerplate.months)),
@@ -156,7 +156,6 @@ ENCODINGS = [
     MacroEncoding(cat='writer', name="git_branch", encoding=';gb', func=typer("git branch")),
     MacroEncoding(cat='writer', name="git_status", encoding=';gs', func=typer("git status")),
     MacroEncoding(cat='writer', name="git_checkout", encoding=';gc', func=typer("git checkout")),
-    MacroEncoding(cat='writer', name="data-science-db-", encoding=';ds', func=typer("data-science-db-")),
     # numkey writers 0
     MacroEncoding(cat='numkeys', name='1', encoding=';;1', func=load_and_type_numkey_0(1)),
     MacroEncoding(cat='numkeys', name='2', encoding=';;2', func=load_and_type_numkey_0(2)),
