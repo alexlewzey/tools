@@ -243,7 +243,7 @@ def rm_blanklines() -> None:
 
 
 @clipboard_in_out
-def clean_whitespace(name: str) -> None:
+def clean_whitespace(name: str) -> str:
     return ' '.join(name.split())
 
 
