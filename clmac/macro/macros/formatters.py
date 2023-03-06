@@ -51,19 +51,6 @@ def wrap_for_loop() -> None:
     typer.enter()
 
 
-def fmt_as_slug() -> None:
-    clip: str = auto.read_clipboard()
-    slug = to_slug(clip)
-    logger.info(f'formatted slug: {slug}')
-    pyperclip.copy(slug)
-    typer.type_text(slug)
-
-
-def fmt_as_slugs() -> None:
-    fmt = lambda clip: '\n'.join([to_slug(line) for line in clip.splitlines()])
-    clipboard_in_out(fmt)
-
-
 def clipboard_in_out(func):
     """Decorator that grabs text from the clipboard passes it to the decorated function then copies the
     text returned by the decorated function to the clipboard"""
@@ -93,6 +80,12 @@ def clipboard_in_out_paste(func):
 
 
 @clipboard_in_out
+def to_snake(text: str) -> str:
+    lines = [re.sub('[\s_]+', '_', line).lower() for line in text.splitlines()]
+    return '\n'.join(lines)
+
+
+@clipboard_in_out
 def snake_to_camel(name: str) -> str:
     return ''.join(word.title() for word in name.split('_'))
 
@@ -103,11 +96,6 @@ def camel_to_snake(name: str) -> str:
     name = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
     name = re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).lower()
     return re.sub('_+', '_', name)
-
-
-def to_slug(text):
-    text = re.sub('[^\w\s_]', '', text)
-    return '_'.join([word.lower() for word in text.split()])
 
 
 def set_equal_to_self() -> None:
