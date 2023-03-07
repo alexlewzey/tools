@@ -2,36 +2,37 @@
 import functools
 import inspect
 import logging
-import time
-from typing import *
-from pathlib import Path
 import pickle
+import time
+from pathlib import Path
+from typing import *
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
-    format='%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
-    datefmt='%d-%m-%Y %H:%M:%S',
+    format="%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s",
+    datefmt="%d-%m-%Y %H:%M:%S",
     level=logging.DEBUG,
 )
 
 
 def hr_secs(secs: float) -> str:
-    """format seconds human readable format hours:mins:seconds"""
+    """Format seconds human readable format hours:mins:seconds."""
     secs_per_hour: int = 3600
     secs_per_min: int = 60
     hours, remainder = divmod(secs, secs_per_hour)
     mins, seconds = divmod(remainder, secs_per_min)
 
-    return f'{int(hours):02}:{int(mins):02}:{seconds:05.2f}'
+    return f"{int(hours):02}:{int(mins):02}:{seconds:05.2f}"
 
 
 def whitespacer(s):
-    return ' '.join(s.split())
+    return " ".join(s.split())
 
 
 def log_input(positional_input_index: int = 0, kw_input_key: Optional[Hashable] = None):
-    """logs the input (first positional argument) and output of decorated function, you can specify a specific kw
-     arg to be logged as input by specifying its corresponding param key"""
+    """Logs the input (first positional argument) and output of decorated
+    function, you can specify a specific kw arg to be logged as input by
+    specifying its corresponding param key."""
 
     def outer_wrapper(func):
         @functools.wraps(func)
@@ -41,7 +42,7 @@ def log_input(positional_input_index: int = 0, kw_input_key: Optional[Hashable] 
                 input_arg = kwargs[kw_input_key]
             else:
                 input_arg = _get_positional_arg(args, kwargs, positional_input_index)
-            logger.info(f'{func.__name__}: input={input_arg}'[:300])
+            logger.info(f"{func.__name__}: input={input_arg}"[:300])
 
             result = func(*args, **kwargs)
             return result
@@ -52,14 +53,15 @@ def log_input(positional_input_index: int = 0, kw_input_key: Optional[Hashable] 
 
 
 def log_output():
-    """logs the input (first positional argument) and output of decorated function, you can specify a specific kw
-     arg to be logged as input by specifying its corresponding param key"""
+    """Logs the input (first positional argument) and output of decorated
+    function, you can specify a specific kw arg to be logged as input by
+    specifying its corresponding param key."""
 
     def outer_wrapper(func):
         @functools.wraps(func)
         def inner_wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
-            logger.info(f'{func.__name__}: output={result}'[:300])
+            logger.info(f"{func.__name__}: output={result}"[:300])
             return result
 
         return inner_wrapper
@@ -67,10 +69,15 @@ def log_output():
     return outer_wrapper
 
 
-def log_input_and_output(input_flag=True, output_flag=True, positional_input_index: int = 0,
-                         kw_input_key: Optional[Hashable] = None):
-    """logs the input (first positional argument) and output of decorated function, you can specify a specific kw
-     arg to be logged as input by specifying its corresponding param key"""
+def log_input_and_output(
+    input_flag=True,
+    output_flag=True,
+    positional_input_index: int = 0,
+    kw_input_key: Optional[Hashable] = None,
+):
+    """Logs the input (first positional argument) and output of decorated
+    function, you can specify a specific kw arg to be logged as input by
+    specifying its corresponding param key."""
 
     def outer_wrapper(func):
         @functools.wraps(func)
@@ -80,12 +87,14 @@ def log_input_and_output(input_flag=True, output_flag=True, positional_input_ind
                     # noinspection PyTypeChecker
                     input_arg = kwargs[kw_input_key]
                 else:
-                    input_arg = _get_positional_arg(args, kwargs, positional_input_index)
-                logger.info(f'{func.__name__}: input={input_arg}'[:300])
+                    input_arg = _get_positional_arg(
+                        args, kwargs, positional_input_index
+                    )
+                logger.info(f"{func.__name__}: input={input_arg}"[:300])
 
             result = func(*args, **kwargs)
             if output_flag:
-                logger.info(f'{func.__name__}: output={result}'[:300])
+                logger.info(f"{func.__name__}: output={result}"[:300])
             return result
 
         return inner_wrapper
@@ -103,7 +112,8 @@ def is_iterable(o: Any) -> bool:
 
 
 def _get_positional_arg(args, kwargs, index: int = 0) -> Any:
-    """returns the first positional arg if there are any, if there are only kw args it returns the first kw arg"""
+    """Returns the first positional arg if there are any, if there are only kw
+    args it returns the first kw arg."""
     try:
         input_arg = args[index]
     except KeyError:
@@ -112,15 +122,16 @@ def _get_positional_arg(args, kwargs, index: int = 0) -> Any:
 
 
 def log_func():
-    """logs the input (first positional argument) and output of decorated function, you can specify a specific kw
-     arg to be logged as input by specifying its corresponding param key"""
+    """Logs the input (first positional argument) and output of decorated
+    function, you can specify a specific kw arg to be logged as input by
+    specifying its corresponding param key."""
 
     def outer_wrapper(func):
         @functools.wraps(func)
         def inner_wrapper(*args, **kwargs):
-            logger.info(f'calling: {func.__name__}')
+            logger.info(f"calling: {func.__name__}")
             result = func(*args, **kwargs)
-            logger.info(f'completed: {func.__name__}')
+            logger.info(f"completed: {func.__name__}")
             return result
 
         return inner_wrapper
@@ -129,26 +140,29 @@ def log_func():
 
 
 def log_func_start():
-    logger.info(f'start {inspect.stack()[1][3]}')
+    logger.info(f"start {inspect.stack()[1][3]}")
 
 
 def log_func_end():
-    logger.info(f'end {inspect.stack()[1][3]}')
+    logger.info(f"end {inspect.stack()[1][3]}")
 
 
 def sleep_before(secs_before: float):
-    """call the sleep function before the decorated function is called"""
+    """Call the sleep function before the decorated function is called."""
     return sleep_before_and_after(secs_before=secs_before, secs_after=0)
 
 
 def sleep_after(secs_after: float):
-    """call the sleep function after the decorated function is called"""
+    """Call the sleep function after the decorated function is called."""
     return sleep_before_and_after(secs_before=0, secs_after=secs_after)
 
 
 def sleep_before_and_after(secs_before: float = 0, secs_after: float = 0):
-    """call the sleep method before and after the decorated function is called, pass in the sleep duration in
-    seconds. Default values are 0."""
+    """call the sleep method before and after the decorated function is called,
+    pass in the sleep duration in seconds.
+
+    Default values are 0.
+    """
 
     def outer_wrapper(func):
         @functools.wraps(func)
@@ -166,35 +180,37 @@ def sleep_before_and_after(secs_before: float = 0, secs_after: float = 0):
 
 
 def timer(func):
-    """decorator that logs the time taken for the decorated func to run"""
+    """Decorator that logs the time taken for the decorated func to run."""
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         start: float = time.time()
         result = func(*args, **kwargs)
         hr_time_elapsed: str = hr_secs(time.time() - start)
-        logger.info(f'time taken {func.__name__}: {hr_time_elapsed}')
+        logger.info(f"time taken {func.__name__}: {hr_time_elapsed}")
         return result
 
     return wrapper
 
 
 def runtimes(arg_values: Sequence):
-    """decorator that records the runtime (seconds) for several values of a single
-    argument that is passed to the decorated func, returning the argument: second
-    pairs in a dictionary"""
+    """Decorator that records the runtime (seconds) for several values of a
+    single argument that is passed to the decorated func, returning the
+    argument: second pairs in a dictionary."""
 
     def outer_wrapper(func: Callable):
         @functools.wraps(func)
         def inner_wrapper(*args, **kwargs):
-            logger.info(f'monitoring runtimes for func={func.__name__}, values={arg_values}')
+            logger.info(
+                f"monitoring runtimes for func={func.__name__}, values={arg_values}"
+            )
             times = {}
             for value in arg_values:
                 start = time.time()
                 func(value, *args, **kwargs)
                 seconds = time.time() - start
                 times[value] = seconds
-                logger.info(f'param={value} seconds={seconds}')
+                logger.info(f"param={value} seconds={seconds}")
 
             return times
 
@@ -206,18 +222,18 @@ def runtimes(arg_values: Sequence):
 @timer
 @log_input()
 def write_pickle(obj, path: Optional[Union[Path, str]]) -> None:
-    """write object to a pickle on your computer"""
+    """Write object to a pickle on your computer."""
     path = Path(path)
-    with path.open('wb') as f:
+    with path.open("wb") as f:
         pickle.dump(obj, f)
 
 
 @timer
 @log_output()
 def read_pickle(path: Optional[Union[Path, str]]):
-    """return stored object from a pickle file"""
+    """Return stored object from a pickle file."""
     path = Path(path)
-    logger.info(f'reading pickle: {path}')
-    with path.open('rb') as f:
+    logger.info(f"reading pickle: {path}")
+    with path.open("rb") as f:
         obj = pickle.load(f)
     return obj

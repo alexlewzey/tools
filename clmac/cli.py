@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-"""
-command line tool app / main interface
-"""
+"""Command line tool app / main interface."""
 import shutil
 import sys
 from distutils.dir_util import copy_tree
@@ -11,12 +9,10 @@ import yaml
 from PyPDF2 import PdfFileMerger
 from tabulate import tabulate
 
-from clmac.helpers import core
 import clmac.macro.app as app
 from clmac.cltools import clipurls
 from clmac.cltools.tunings import show_tuning
-from clmac.config import conftk
-from clmac.config import definitions
+from clmac.config import conftk, definitions
 from clmac.helpers.core import *
 from clmac.helpers.typer import Typer
 from clmac.macro.encodings import ENCODINGS, MacroEncoding
@@ -33,26 +29,26 @@ def cli():
 
 @cli.group()
 def clt():
-    """command line tool-box"""
-    pass
+    """Command line tool-box."""
 
 
 @clt.command()
-@click.argument('semitones', type=int)
+@click.argument("semitones", type=int)
 def tuning(semitones):
-    """print a seven string tuning to the terminal dropped by the passed number of semitones"""
+    """Print a seven string tuning to the terminal dropped by the passed number
+    of semitones."""
     show_tuning(semitones)
 
 
 @clt.command()
 def mvg(src: str, glob: str, dst: str) -> None:
-    """move files in clmac that match glob to dst"""
+    """Move files in clmac that match glob to dst."""
     globed = Path(src).glob(glob)
     _move_files(src_paths=globed, dst=dst)
 
 
 def _move_files(src_paths, dst: str) -> None:
-    """move a list of files to dst"""
+    """Move a list of files to dst."""
     path_pairs = [(path, Path(dst) / path.name) for path in src_paths]
 
     for src, dst in path_pairs:
@@ -60,67 +56,80 @@ def _move_files(src_paths, dst: str) -> None:
 
 
 @clt.command()
-@click.argument('new_file', type=click.Path(file_okay=True))
-@click.argument('input_files', type=click.Path(exists=True), nargs=-1)
+@click.argument("new_file", type=click.Path(file_okay=True))
+@click.argument("input_files", type=click.Path(exists=True), nargs=-1)
 def pdf_merge(new_file, input_files) -> None:
-    """merge together an arbitrary number of pdfs and save as a new file"""
+    """Merge together an arbitrary number of pdfs and save as a new file."""
     merger = PdfFileMerger()
     for file in input_files:
         merger.append(file)
     merger.write(new_file)
     merger.close()
-    click.echo(f'new_file: {new_file}, inputs: {input_files}')
+    click.echo(f"new_file: {new_file}, inputs: {input_files}")
 
 
 @clt.command()
-@click.option('-n', default=None, type=int)
+@click.option("-n", default=None, type=int)
 def urlclipper(n):
-    """copy all (or given no.) of urls from open chrome browser saving out to clipboard"""
+    """Copy all (or given no.) of urls from open chrome browser saving out to
+    clipboard."""
     clipurls.clipurls(n_urls=n)
 
 
 def to_unix(path: Path) -> Path:
-    """convert tilde to the home directory of the current operating system"""
-    if path.parts[0] == '~':
+    """Convert tilde to the home directory of the current operating system."""
+    if path.parts[0] == "~":
         path = Path.home() / Path(*path.parts[1:])
     return path
 
 
 def get_tree(path: Union[Path, str], cond: Callable) -> List[Tuple[Path, int]]:
-    tree = Path(path).rglob('*')
-    return sorted([(p, p.stat().st_size) for p in tree if cond(p)], key=lambda x: x[1], reverse=True)
+    tree = Path(path).rglob("*")
+    return sorted(
+        [(p, p.stat().st_size) for p in tree if cond(p)],
+        key=lambda x: x[1],
+        reverse=True,
+    )
 
 
 @clt.command()
-@click.argument('path', type=click.Path(exists=True, file_okay=False))
-@click.option('-n', type=int, default=10, help='Max no. of files displayed', show_default=True)
+@click.argument("path", type=click.Path(exists=True, file_okay=False))
+@click.option(
+    "-n", type=int, default=10, help="Max no. of files displayed", show_default=True
+)
 def file_sizes(path: Union[Path, str], n: int = 10) -> None:
-    """list the largest file child files of a directory"""
+    """List the largest file child files of a directory."""
     path = Path(path)
     sizes = get_tree(to_unix(path), cond=lambda p: p.is_file())
-    file_out = tabulate([(p.as_posix(), hr_bytes(size)) for p, size in sizes[:n]],
-                        headers=('file', 'size'))
+    file_out = tabulate(
+        [(p.as_posix(), hr_bytes(size)) for p, size in sizes[:n]],
+        headers=("file", "size"),
+    )
     click.echo(file_out)
 
 
 @clt.command()
-@click.argument('path', type=click.Path(exists=True, file_okay=False))
-@click.option('-n', type=int, default=10, help='Max no. of files displayed', show_default=True)
+@click.argument("path", type=click.Path(exists=True, file_okay=False))
+@click.option(
+    "-n", type=int, default=10, help="Max no. of files displayed", show_default=True
+)
 def dir_sizes(path: Union[Path, str], n: int = 10) -> None:
-    """list the largest child directories of a directory"""
+    """List the largest child directories of a directory."""
     path = Path(path)
     sizes = get_tree(to_unix(path), cond=lambda p: p.is_dir())
-    dir_out = tabulate([(p.as_posix(), hr_bytes(size)) for p, size in sizes[:n]],
-                       headers=('directory', 'size'))
+    dir_out = tabulate(
+        [(p.as_posix(), hr_bytes(size)) for p, size in sizes[:n]],
+        headers=("directory", "size"),
+    )
     click.echo(dir_out)
 
 
 def hr_bytes(n_bytes: int, binary=False, decimal_places=1):
-    """return bytes in a human readable format"""
+    """Return bytes in a human readable format."""
     if binary:
-        factor, units = 1024, ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB']
+        factor, units = 1024, ["B", "KiB", "MiB", "GiB", "TiB", "PiB"]
     else:
-        factor, units = 1000, ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
+        factor, units = 1000, ["B", "KB", "MB", "GB", "TB", "PB"]
     for unit in units:
         if n_bytes < factor:
             break
@@ -129,19 +138,19 @@ def hr_bytes(n_bytes: int, binary=False, decimal_places=1):
 
 
 @clt.command()
-@click.argument('src', type=click.Path(exists=True))
-@click.argument('dest', type=click.Path())
+@click.argument("src", type=click.Path(exists=True))
+@click.argument("dest", type=click.Path())
 def mv(src: Union[Path, str], dest: Union[Path, str]) -> None:
-    """python implementation of unix mv command"""
+    """Python implementation of unix mv command."""
     src, dest = to_unix(Path(src)), to_unix(Path(dest))
     if src.is_dir():
         (dest / src).mkdir()
-        for path in sorted(src.rglob('*'), key=lambda p: p.is_file()):
+        for path in sorted(src.rglob("*"), key=lambda p: p.is_file()):
             if path.is_dir():
-                print(f'making dir {dest / path}')
+                print(f"making dir {dest / path}")
                 (dest / path).mkdir(parents=True, exist_ok=True)
             else:
-                print(f'moving file {dest / path}')
+                print(f"moving file {dest / path}")
                 path.rename(dest / path)
         shutil.rmtree(src)
     elif src.is_file():
@@ -152,10 +161,10 @@ def mv(src: Union[Path, str], dest: Union[Path, str]) -> None:
 
 
 @clt.command()
-@click.argument('src', type=click.Path(exists=True))
-@click.argument('dest', type=click.Path())
+@click.argument("src", type=click.Path(exists=True))
+@click.argument("dest", type=click.Path())
 def cp(src: Union[Path, str], dest: Union[Path, str]) -> None:
-    """python implementation of unix cp command"""
+    """Python implementation of unix cp command."""
     src, dest = to_unix(Path(src)), to_unix(Path(dest))
     if src.is_dir():
         copy_tree(src.as_posix(), (dest / src).as_posix())
@@ -167,9 +176,9 @@ def cp(src: Union[Path, str], dest: Union[Path, str]) -> None:
 
 
 @clt.command()
-@click.argument('src', type=click.Path(exists=True))
+@click.argument("src", type=click.Path(exists=True))
 def rm(src) -> None:
-    """python implementation of unix rm command"""
+    """Python implementation of unix rm command."""
     src = to_unix(Path(src))
     if src.is_dir():
         shutil.rmtree(src)
@@ -178,109 +187,116 @@ def rm(src) -> None:
 
 
 @clt.command()
-@click.argument('path', nargs=-1, type=click.Path(file_okay=False))
+@click.argument("path", nargs=-1, type=click.Path(file_okay=False))
 def cd(path: Optional[Union[Path, str]]) -> None:
     typer = Typer()
     if path:
-        typer.type_text(f'cd {to_unix(Path((path[0]))).as_posix()}')
+        typer.type_text(f"cd {to_unix(Path((path[0]))).as_posix()}")
     else:
-        typer.type_text(f'cd {Path.home().as_posix()}')
+        typer.type_text(f"cd {Path.home().as_posix()}")
     typer.enter()
 
 
 @cli.group()
 def kel():
-    """keyboard event listener"""
-    pass
+    """Keyboard event listener."""
 
 
-@kel.command('run')
+@kel.command("run")
 def macros_run():
-    """run the macro script"""
+    """Run the macro script."""
     app.run()
 
 
-@kel.command('ls')
-@click.option('--search', '-s', help='Filter table by name')
+@kel.command("ls")
+@click.option("--search", "-s", help="Filter table by name")
 def macros_ls(search):
     """List all available macro in the terminal."""
     text = _make_macro_table_text(ENCODINGS, search=search)
     click.echo(text)
 
 
-def _make_macro_table_text(encodings: List[MacroEncoding], search: Optional[str] = None) -> str:
-    """Print in tabular format the type name and encoding of every macro in the program"""
+def _make_macro_table_text(
+    encodings: List[MacroEncoding], search: Optional[str] = None
+) -> str:
+    """Print in tabular format the type name and encoding of every macro in the
+    program."""
     macros_tabular = [e.get_text_properties() for e in encodings]
     if search:
         macros_tabular = [macro for macro in macros_tabular if search in macro[1]]
     macros_tabular = sorted(macros_tabular, key=lambda x: (x[0], x[1]))
-    return tabulate(macros_tabular, headers=('type', 'name', 'encoding'))
+    return tabulate(macros_tabular, headers=("type", "name", "encoding"))
 
 
-@kel.command('lp')
+@kel.command("lp")
 def ls_config():
-    """list the current personal configuration settings"""
+    """List the current personal configuration settings."""
     settings = conftk.load_personal()
-    click.echo(tabulate(settings.items(), headers=('setting', 'value')))
+    click.echo(tabulate(settings.items(), headers=("setting", "value")))
 
 
-@kel.command('sp')
+@kel.command("sp")
 def set_config() -> None:
-    """gives option to change any of the personal string settings where the existing setting is the default"""
+    """Gives option to change any of the personal string settings where the
+    existing setting is the default."""
     settings = conftk.load_personal()
     new_settings = {}
     for k, v in settings.items():
-        new_settings[k] = click.prompt(k, default=v or '...', type=str)
+        new_settings[k] = click.prompt(k, default=v or "...", type=str)
 
-    with definitions.PERSONAL_YAML.open('w') as f:
+    with definitions.PERSONAL_YAML.open("w") as f:
         yaml.dump(new_settings, f)
 
-    click.echo('saved new settings...')
+    click.echo("saved new settings...")
 
 
 def _set_nums(keys, settings, path_yaml) -> None:
-    """set the text associated with the num key macros"""
+    """Set the text associated with the num key macros."""
     if not keys:
-        click.echo('Requires num key args')
+        click.echo("Requires num key args")
         sys.exit()
     for n in keys:
-        settings[int(n)] = click.prompt(f'macro {n}', type=str)
+        settings[int(n)] = click.prompt(f"macro {n}", type=str)
 
-    with path_yaml.open('w') as f:
+    with path_yaml.open("w") as f:
         yaml.dump(settings, f)
-    click.echo('saved new settings...')
+    click.echo("saved new settings...")
 
 
-@click.argument('keys', nargs=-1)
-@kel.command('sn0')
+@click.argument("keys", nargs=-1)
+@kel.command("sn0")
 def set_nums_0(keys) -> None:
     """set the text associated with the num key macros (set 0)"""
-    _set_nums(keys, settings=conftk.load_numkeys_0(), path_yaml=definitions.NUMKEYS_YAML_0)
+    _set_nums(
+        keys, settings=conftk.load_numkeys_0(), path_yaml=definitions.NUMKEYS_YAML_0
+    )
 
 
-@click.argument('keys', nargs=-1)
-@kel.command('sn1')
+@click.argument("keys", nargs=-1)
+@kel.command("sn1")
 def set_nums_1(keys) -> None:
     """set the text associated with the num key macros (set 1)"""
-    _set_nums(keys, settings=conftk.load_numkeys_1(), path_yaml=definitions.NUMKEYS_YAML_1)
+    _set_nums(
+        keys, settings=conftk.load_numkeys_1(), path_yaml=definitions.NUMKEYS_YAML_1
+    )
 
 
 def _ls_nums(settings):
-    """list current numkey macro assignments"""
-    click.echo(tabulate(settings.items(), headers=('setting', 'value')))
+    """List current numkey macro assignments."""
+    click.echo(tabulate(settings.items(), headers=("setting", "value")))
 
 
-@kel.command('ln0')
+@kel.command("ln0")
 def ls_nums_0():
     """list current numkey macro assignments (set 0)"""
     _ls_nums(conftk.load_numkeys_0())
 
 
-@kel.command('ln1')
+@kel.command("ln1")
 def ls_nums_1():
     """list current numkey macro assignments (set 1)"""
     _ls_nums(conftk.load_numkeys_1())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cli()

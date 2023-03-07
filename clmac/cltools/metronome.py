@@ -1,23 +1,24 @@
-"""metronome where the user inputs the bpm with a timer printed in the terminal"""
+"""Metronome where the user inputs the bpm with a timer printed in the
+terminal."""
 import time
 from threading import Thread
 
 
 def input_bpm(default: int = 130) -> int:
-    bpm: str = input(f'BPM [{default}]:')
+    bpm: str = input(f"BPM [{default}]:")
     try:
         bpm_int = int(bpm) if bpm else default
     except ValueError:
-        raise ValueError('Enter a valid integer you dingus...')
+        raise ValueError("Enter a valid integer you dingus...")
     return bpm_int
 
 
 def terminal_timer(refresh_period: float = 1) -> None:
-    """periodically print time elapsed to the terminal"""
+    """Periodically print time elapsed to the terminal."""
     start = time.time()
     while True:
         secs_elapsed = int(time.time() - start)
-        print(f'time elapsed: {slibtk.human_readable_seconds(secs_elapsed)}', end='\r')
+        print(f"time elapsed: {slibtk.human_readable_seconds(secs_elapsed)}", end="\r")
         time.sleep(refresh_period)
 
 
@@ -34,5 +35,5 @@ def main():
         time.sleep(secs_per_beat)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

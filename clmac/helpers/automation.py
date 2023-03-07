@@ -1,8 +1,9 @@
-"""NOTE should be removed and refactored to pynputs"""
+"""NOTE should be removed and refactored to pynputs."""
 import logging
 
 import pyautogui
 import pyperclip
+
 from clmac.helpers import core
 
 logger = logging.getLogger(__name__)
@@ -21,6 +22,6 @@ def copy_to_clipboard(text: str) -> None:
 
 @core.sleep_after(0.2)
 def refocus() -> None:
-    """use the hot key alt + tab to switch back to the previous gui, required at the start of any pyautowin script
-    that is run from the run window"""
-    pyautogui.hotkey('alt', 'tab')
+    """Use the hot key alt + tab to switch back to the previous gui, required
+    at the start of any pyautowin script that is run from the run window."""
+    pyautogui.hotkey("alt", "tab")

@@ -16,8 +16,8 @@ from clmac.macro.encodings import ENCODINGS, test_for_duplicates
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
-    format='%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
-    datefmt='%d-%m-%Y %H:%M:%S',
+    format="%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s",
+    datefmt="%d-%m-%Y %H:%M:%S",
     level=logging.DEBUG,
 )
 
@@ -26,7 +26,8 @@ typer = lh.Typer()
 
 
 class KeyHistory(list):
-    """a holder of fixed length for Key and KeyCode types passed from the on_press listener"""
+    """A holder of fixed length for Key and KeyCode types passed from the
+    on_press listener."""
 
     def __init__(self, max_length: int = 20):
         super().__init__()
@@ -44,9 +45,9 @@ class KeyHistory(list):
 
 
 class GlobalInputs:
-    CTRL_SHIFT_Q = (Key.ctrl_l, Key.shift, KeyCode(char='q'))
-    CTRL_SHIFT_R = (Key.ctrl_l, Key.shift, KeyCode(char='r'))
-    CTRL_C = (Key.ctrl_l, KeyCode(char='\x03'))
+    CTRL_SHIFT_Q = (Key.ctrl_l, Key.shift, KeyCode(char="q"))
+    CTRL_SHIFT_R = (Key.ctrl_l, Key.shift, KeyCode(char="r"))
+    CTRL_C = (Key.ctrl_l, KeyCode(char="\x03"))
 
     currently_pressed = set()
     key_history = KeyHistory(MAX_KEY_HISTORY_LENGTH)
@@ -54,8 +55,9 @@ class GlobalInputs:
 
 
 def listen_for_encoding() -> None:
-    """checks if the last three keys that were typed exist in the macro encoding indexes, if there are it indexes and
-    calls the function corresponding to that three char encoding"""
+    """Checks if the last three keys that were typed exist in the macro
+    encoding indexes, if there are it indexes and calls the function
+    corresponding to that three char encoding."""
     last_three: Tuple = tuple(GlobalInputs.key_history[-3:])
     if last_three == GlobalInputs.CTRL_SHIFT_Q:
         raise SystemExit
@@ -67,7 +69,7 @@ def listen_for_encoding() -> None:
 
 
 def restart_app() -> None:
-    subprocess.run('clmac kel run', shell=True)
+    subprocess.run("clmac kel run", shell=True)
     time.sleep(0.2)
     quit()
 
@@ -83,17 +85,15 @@ def on_release(key):
     try:
         GlobalInputs.currently_pressed.remove(key)
     except KeyError:
-        logger.debug(f'failed to remove: {key}')
+        logger.debug(f"failed to remove: {key}")
 
 
 def run():
-    """run the macro script"""
+    """Run the macro script."""
     test_for_duplicates()
     with Listener(on_press=on_press, on_release=on_release) as listener:
         listener.join()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     run()
-
-

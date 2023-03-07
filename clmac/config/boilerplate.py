@@ -1,4 +1,5 @@
-"""name space for large string literals used as into to callable typing macro"""
+"""Name space for large string literals used as into to callable typing
+macro."""
 
 logger = """import logging
 
@@ -51,6 +52,7 @@ model_selection,
  inspection,
  linear_model
 )
+from sklearn.neighbors import NearestNeighbors
 from sklearn.metrics.pairwise import euclidean_distances, cosine_similarity
 import xgboost as xgb
 import lightgbm as lgb
@@ -108,9 +110,9 @@ months: str = """'January',
 
 months_abbr: str = """'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',"""
 
-please_info = 'Please let me know if you require any more information.'
-any_help = 'Any help would be much appreciated.'
-please_queries = 'Please let me know if you have any queries.'
+please_info = "Please let me know if you require any more information."
+any_help = "Any help would be much appreciated."
+please_queries = "Please let me know if you have any queries."
 
 sql_template_cum_sum: str = """with wrapped as (
 select col,

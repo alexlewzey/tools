@@ -1,16 +1,16 @@
-"""
-save the urls and webpage titles of the current chrome tabs to the clipboard in a dictionary format
-"""
+"""Save the urls and webpage titles of the current chrome tabs to the clipboard
+in a dictionary format."""
 import logging
 import re
 import time
-from clmac.helpers import core
+
 import pyperclip
 import requests
 from lxml import html
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
+from clmac.helpers import core
 from clmac.helpers.core import *
 from clmac.helpers.typer import Typer
 
@@ -28,7 +28,7 @@ class DriverChrome:
 
     @core.sleep_after(PAGE_LOAD_TIME)
     def load_page(self, url: str):
-        """url must have http protocol"""
+        """Url must have http protocol."""
         self.driver.get(url)
 
     @core.sleep_after(JS_LOAD_TIME)
@@ -48,15 +48,16 @@ class DriverChrome:
 
 
 def enforce_url_protocol(url: str):
-    protocol = 'https://www.'
-    if not re.search(r'^https?://(www\.)?', url):
+    protocol = "https://www."
+    if not re.search(r"^https?://(www\.)?", url):
         return protocol + url
     else:
         return url
 
 
 def render_page_source(driver, url: str, wait: float = 2) -> str:
-    """load page with driver wait for a few seconds and retrieve the rendered html returning it as a string"""
+    """Load page with driver wait for a few seconds and retrieve the rendered
+    html returning it as a string."""
     url = enforce_url_protocol(url)
     driver.get(url)
     time.sleep(wait)
@@ -65,10 +66,13 @@ def render_page_source(driver, url: str, wait: float = 2) -> str:
 
 
 def request_page_source(url: str) -> str:
-    """return the webpage title corresponding to the url that is passed into the function"""
+    """Return the webpage title corresponding to the url that is passed into
+    the function."""
     headers = {
-        'User-Agent': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) '
-                       'Chrome/61.0.3163.100 Safari/537.36')
+        "User-Agent": (
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/61.0.3163.100 Safari/537.36"
+        )
     }
     url = enforce_url_protocol(url)
     return requests.get(url, headers=headers).text
@@ -76,17 +80,17 @@ def request_page_source(url: str) -> str:
 
 def parse_page_title(page_source: str) -> str:
     page = html.fromstring(page_source)
-    title = page.xpath('.//title')[0].text
-    return title if isinstance(title, str) else 'no title found'
+    title = page.xpath(".//title")[0].text
+    return title if isinstance(title, str) else "no title found"
 
 
 def link_urls_to_page_titles(urls: List[str]) -> List[Tuple[str, str]]:
-    """take a list of urls and find the corresponding webpage title for each and them as a key value pair to a
-    dictionary"""
+    """Take a list of urls and find the corresponding webpage title for each
+    and them as a key value pair to a dictionary."""
     url_pairs = []
     for url in urls:
         title = request_page_source(url)
-        logger.debug(f'page_title: {title}')
+        logger.debug(f"page_title: {title}")
         url_pairs.append(
             (title, url),
         )
@@ -100,7 +104,7 @@ def render_and_parse_pages(urls: List[str]) -> List[Tuple[str, str]]:
     for url in urls:
         page_source = driver.get_page_content(url)
         title = parse_page_title(page_source)
-        logger.debug(f'page_title: {title}')
+        logger.debug(f"page_title: {title}")
         url_pairs.append(
             (whitespacer(title), whitespacer(url)),
         )
@@ -109,18 +113,18 @@ def render_and_parse_pages(urls: List[str]) -> List[Tuple[str, str]]:
 
 
 def dict2string(url_pairs: Dict) -> str:
-    """convert a dict into a string where each key pair value is a line"""
-    output: str = ''
+    """Convert a dict into a string where each key pair value is a line."""
+    output: str = ""
     for k, v in url_pairs.items():
-        output += f'{k}: {v}\n'
+        output += f"{k}: {v}\n"
     return output
 
 
 def tuples2string(url_pairs: List[Tuple[str, str]]) -> str:
-    """convert a list of tuples into a string where each tuple is a line"""
-    output: str = ''
+    """Convert a list of tuples into a string where each tuple is a line."""
+    output: str = ""
     for title, url in url_pairs:
-        output += f'{title}: {url}\n'
+        output += f"{title}: {url}\n"
     return output
 
 
@@ -131,11 +135,11 @@ def clipurls(n_urls: Optional[int] = None) -> None:
 
     url_pairs = render_and_parse_pages(urls)
 
-    logger.debug(f'url_pairs: {url_pairs}')
+    logger.debug(f"url_pairs: {url_pairs}")
     output_str = tuples2string(url_pairs)
-    logger.debug(f'output_str: {output_str}')
+    logger.debug(f"output_str: {output_str}")
     pyperclip.copy(output_str.strip())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     clipurls()

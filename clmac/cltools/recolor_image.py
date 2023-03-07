@@ -8,19 +8,19 @@ Rgb = Tuple[int, int, int]
 
 
 def glob_search_dir(directory: str, glob: str) -> GenPath:
-    """ return a generator of Path objects that match glob """
+    """Return a generator of Path objects that match glob."""
     return Path(directory).glob(glob)
 
 
 def show_colors(path: str) -> None:
-    """print all colors in the image"""
+    """Print all colors in the image."""
     pic = Image.open(path)
     for color in pic.getcolors():
         print(color)
 
 
 def recolor_img(path: str, new_path: str, new_color: Rgb) -> None:
-    """recolor an image and save at new path"""
+    """Recolor an image and save at new path."""
     pic = Image.open(path)
     width, height = pic.size
     for x in range(width):
@@ -32,16 +32,17 @@ def recolor_img(path: str, new_path: str, new_color: Rgb) -> None:
 
 
 def make_dir(dir_new: str) -> Path:
-    """make a new dir and return path object"""
-    new_dir = Path('.') / dir_new
+    """Make a new dir and return path object."""
+    new_dir = Path(".") / dir_new
     new_dir.mkdir(exist_ok=True)
     return new_dir
 
 
 def batch_recolor(src: str, color: Rgb) -> None:
-    """take all images in a folder, recolor them and save them in a new directory"""
-    globed = glob_search_dir(src, '*.png')
-    rgb_str = '_'.join([str(n) for n in color])
+    """Take all images in a folder, recolor them and save them in a new
+    directory."""
+    globed = glob_search_dir(src, "*.png")
+    rgb_str = "_".join([str(n) for n in color])
     dst = make_dir(rgb_str)
 
     for path in globed:
@@ -50,6 +51,6 @@ def batch_recolor(src: str, color: Rgb) -> None:
         recolor_img(path=path.name, new_path=new_dst, new_color=color)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     new_color = (246, 119, 192)
-    batch_recolor('..', new_color)
+    batch_recolor("..", new_color)
