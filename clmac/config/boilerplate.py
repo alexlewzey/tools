@@ -12,7 +12,8 @@ log_config = """logging.basicConfig(
         level=logging.INFO,
 )"""
 
-standard_lib: str = """from typing import *
+standard_lib: str = """from __future__ import annotations
+from typing import *
 import logging
 import collections
 from datetime import datetime, timedelta
