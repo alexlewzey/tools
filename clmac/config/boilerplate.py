@@ -39,6 +39,7 @@ import shutil
 data_sci: str = f"""{standard_lib}
 import numpy as np
 from scipy import stats
+import scipy
 from tqdm.auto import tqdm
 import pandas as pd
 from sklearn import (
