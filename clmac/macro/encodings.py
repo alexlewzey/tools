@@ -128,7 +128,7 @@ ENCODINGS = [
         func=typer("Please find attached the "),
     ),
     MacroEncoding(
-        cat="writer", name="best_alex", encoding=";ca", func=typer("\nBest\nAlex")
+        cat="writer", name="best_alex", encoding=";ba", func=typer("\nBest\nAlex")
     ),
     MacroEncoding(
         cat="writer",
@@ -165,7 +165,7 @@ ENCODINGS = [
     MacroEncoding(
         cat="writer",
         name="conda activate",
-        encoding=";co",
+        encoding=";ca",
         func=typer("conda activate "),
     ),
     MacroEncoding(
@@ -187,6 +187,12 @@ ENCODINGS = [
         name="docker_container",
         encoding=";dc",
         func=typer("docker container "),
+    ),
+    MacroEncoding(
+        cat="writer",
+        name="docker_compose",
+        encoding=";ce",
+        func=typer("docker compose "),
     ),
     MacroEncoding(
         cat="writer", name="docker_image", encoding=";di", func=typer("docker image ")
@@ -432,6 +438,12 @@ ENCODINGS = [
         encoding=";hl",
         func=typer("human-in-the-loop"),
     ),
+    MacroEncoding(
+        cat="writer",
+        name="localhost",
+        encoding=";lh",
+        func=typer("http://localhost:"),
+    ),
     # numkey writers 0
     MacroEncoding(
         cat="numkeys", name="1", encoding=";;1", func=load_and_type_numkey_0(1)
@@ -654,7 +666,7 @@ ENCODINGS = [
         cat="formatter", name="fmt_repr", encoding=";rr", func=formatters.fmt_repr
     ),
     MacroEncoding(
-        cat="formatter", name="fmt_slug", encoding=";2s", func=formatters.to_snake
+        cat="formatter", name="fmt_slug", encoding=";sg", func=formatters.to_snake
     ),
     MacroEncoding(
         cat="formatter", name="fmt_hash", encoding=";hh", func=formatters.fmt_hash
@@ -749,14 +761,20 @@ ENCODINGS = [
     MacroEncoding(
         cat="formatter",
         name="camel_to_snake",
-        encoding=";cs",
+        encoding=";2s",
         func=formatters.camel_to_snake,
     ),
     MacroEncoding(
         cat="formatter",
         name="snake_to_camel",
-        encoding=";sc",
+        encoding=";2c",
         func=formatters.snake_to_camel,
+    ),
+    MacroEncoding(
+        cat="formatter",
+        name="correct_spelling",
+        encoding=";sc",
+        func=formatters.correct_spelling,
     ),
     MacroEncoding(
         cat="formatter",
