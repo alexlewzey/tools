@@ -409,7 +409,7 @@ ENCODINGS = [
         func=typer(".agg(fn.count('*').alias('n_request'))"),
     ),
     MacroEncoding(
-        cat="writer", name="n_request", encoding=";nr", func=typer("n_requestd")
+        cat="writer", name="n_request", encoding=";nr", func=typer("n_request")
     ),
     MacroEncoding(
         cat="writer",
@@ -419,6 +419,9 @@ ENCODINGS = [
     ),
     MacroEncoding(
         cat="writer", name="git_branch", encoding=";gb", func=typer("git branch")
+    ),
+    MacroEncoding(
+        cat="writer", name="git_log", encoding=";gl", func=typer("git log --graph --decorate --oneline")
     ),
     MacroEncoding(
         cat="writer", name="git_status", encoding=";gs", func=typer("git status")

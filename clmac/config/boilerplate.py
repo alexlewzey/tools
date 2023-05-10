@@ -52,7 +52,8 @@ model_selection,
  cluster,
  decomposition,
  inspection,
- linear_model
+ linear_model,
+ pipeline
 )
 from sklearn.neighbors import NearestNeighbors
 from sklearn.metrics.pairwise import euclidean_distances, cosine_similarity

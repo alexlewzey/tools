@@ -10,7 +10,6 @@ import traceback
 from typing import *
 
 import pyperclip
-from autocorrect import Speller
 from pynput.keyboard import Key
 from textblob import TextBlob
 
