@@ -20,6 +20,7 @@ jobs:
           black .
           isort .
 
+      - id: s1
       - name: Check for changes
         run: |
           if git diff --exit-code; then
@@ -28,6 +29,7 @@ jobs:
           fi
 
       - name: Commit changes
+        if: steps.s1.conclusion == 'failure'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
