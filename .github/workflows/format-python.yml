@@ -20,6 +20,13 @@ jobs:
           black .
           isort .
 
+      - name: Check for changes
+        run: |
+          if git diff --exit-code; then
+            echo "No changes made by Black and isort. Skipping commit and push."
+            exit 0
+          fi
+
       - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
