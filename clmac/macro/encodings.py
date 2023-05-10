@@ -866,15 +866,7 @@ def test_for_duplicates() -> None:
         raise DuplicateEncodingError(err_msg)
 
 
-t = [
-    "alsdjkfasdlkj",
-    "asldkfjasldkjf",
-    "alsdkfjalksdjf",
-    "alskdfjalsdkjfasd",
-    "ajksldfjasldkfjas",
-    "aalsdkfjalskdjf",
-    "alsdkfjaslkdjf",
-    "hello",
-    "new",
-    "another",
-]
+t = ["alsdjkfasdlkj", "asldkfjasldkjf", "alsdkfjalksdjf", "alskdfjalsdkjfasd", "ajksldfjasldkfjas", "aalsdkfjalskdjf", "alsdkfjaslkdjf", "hello", "new", "another",]
+t = ["alsdjkfasdlkj", "asldkfjasldkjf", "alsdkfjalksdjf", "alskdfjalsdkjfasd", "ajksldfjasldkfjas", "aalsdkfjalskdjf", "alsdkfjaslkdjf", "hello", "new", "another",]
+t = ["alsdjkfasdlkj", "asldkfjasldkjf", "alsdkfjalksdjf", "alskdfjalsdkjfasd", "ajksldfjasldkfjas", "aalsdkfjalskdjf", "alsdkfjaslkdjf", "hello", "new", "another",]
+
