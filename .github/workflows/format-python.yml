@@ -21,20 +21,20 @@ jobs:
           isort .
 
       - name: Check for changes
+        id: step1
         run: |
           if [git diff --exit-code]; then
-            echo "export COMMIT_CHANGES=false" >> $GITHUB_ENV
+            run: echo "::set-output name=my_output::false"
             echo "No changes made by Black and isort. Skipping commit and push."
           else
-              echo "export COMMIT_CHANGES=true" >> $GITHUB_ENV
+            run: echo "::set-output name=my_output::true"
           fi
 
       - name: Commit changes
-        if: $COMMIT_CHANGES == 'true'
+        if: steps.step1.outputs.my_output == 'true'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
           git commit -m "Format code with Black and isort"
           git push
-          
