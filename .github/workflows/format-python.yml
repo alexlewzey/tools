@@ -24,10 +24,10 @@ jobs:
         id: step1
         run: |
           if git diff --exit-code; then
-            run: echo "::set-output name=my_output::false"
+            echo "::set-output name=my_output::false"
             echo "No changes made by Black and isort. Skipping commit and push."
           else
-            run: echo "::set-output name=my_output::true"
+            echo "::set-output name=my_output::true"
           fi
 
       - name: Commit changes
