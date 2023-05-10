@@ -1,7 +1,7 @@
+personal.yaml
+
 .DS_Store
 run.sh
-*.yaml
-*.yml
 clmac/data/*
 clmac/data
 *.pk
