@@ -421,7 +421,10 @@ ENCODINGS = [
         cat="writer", name="git_branch", encoding=";gb", func=typer("git branch")
     ),
     MacroEncoding(
-        cat="writer", name="git_log", encoding=";gl", func=typer("git log --graph --decorate --oneline")
+        cat="writer",
+        name="git_log",
+        encoding=";gl",
+        func=typer("git log --graph --decorate --oneline"),
     ),
     MacroEncoding(
         cat="writer", name="git_status", encoding=";gs", func=typer("git status")
@@ -863,5 +866,14 @@ def test_for_duplicates() -> None:
         raise DuplicateEncodingError(err_msg)
 
 
-
-testing = ['asdjflaksdj', 'alsdfkjadslk', 'asjdflaksdjf', 'alsdfkjalsdkfj', 'lasdkfjlaskdjfsa', 'lasdkfasdldfjk', 'alsdkfjaksldf', 'alsdkfjalsdkfj', 'alsdkfalskdjf']
+testing = [
+    "asdjflaksdj",
+    "alsdfkjadslk",
+    "asjdflaksdjf",
+    "alsdfkjalsdkfj",
+    "lasdkfjlaskdjfsa",
+    "lasdkfasdldfjk",
+    "alsdkfjaksldf",
+    "alsdkfjalsdkfj",
+    "alsdkfalskdjf",
+]
