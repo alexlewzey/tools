@@ -866,17 +866,3 @@ def test_for_duplicates() -> None:
         raise DuplicateEncodingError(err_msg)
 
 
-test = [
-    "alsdkjfjas",
-    "alsdkfjalsd",
-    "asdlfkasjdf",
-    "alsdkjfjas",
-    "alsdkfjalsd",
-    "asdlfkasjdf",
-    "alsdkjfjas",
-    "alsdkfjalsd",
-    "asdlfkasjdf",
-    "alsdkjfjas",
-    "alsdkfjalsd",
-    "asdlfkasjdf",
-]
