@@ -21,7 +21,7 @@ jobs:
           isort .
 
       - id: s1
-      - name: Check for changes
+        name: Check for changes
         run: |
           if git diff --exit-code; then
             echo "No changes made by Black and isort. Skipping commit and push."
