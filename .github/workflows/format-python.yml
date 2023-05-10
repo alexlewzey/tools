@@ -28,6 +28,7 @@ jobs:
             echo "No changes made by Black and isort. Skipping commit and push."
           else
             echo "my_output=true" >> $GITHUB_OUTPUT
+            echo "Changes made by Black and isort. Executing commit and push."
           fi
 
       - name: Commit changes
