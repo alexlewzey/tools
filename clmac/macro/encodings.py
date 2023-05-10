@@ -874,6 +874,6 @@ t = [
     "ajksldfjasldkfjas",
     "aalsdkfjalskdjf",
     "alsdkfjaslkdjf",
-    'hello',
-    'new',
+    "hello",
+    "new",
 ]
