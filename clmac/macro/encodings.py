@@ -866,5 +866,4 @@ def test_for_duplicates() -> None:
         raise DuplicateEncodingError(err_msg)
 
 
-
-f1 = 'an f1 change'
+f1 = "an f1 change"
