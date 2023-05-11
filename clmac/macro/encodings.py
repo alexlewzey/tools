@@ -867,3 +867,4 @@ def test_for_duplicates() -> None:
 
 
 f1 = "an f1 change"
+i = ["f2", "f2", "f2", "f2"]
