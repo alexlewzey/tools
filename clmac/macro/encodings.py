@@ -452,6 +452,12 @@ ENCODINGS = [
         cat="writer", name="groupBy", encoding=";gp", func=typer(".groupBy(")
     ),
     MacroEncoding(
+        cat="writer",
+        name="git_log",
+        encoding=";gl",
+        func=typer("git log --graph --decorate --oneline"),
+    ),
+    MacroEncoding(
         cat="writer", name="git_status", encoding=";gs", func=typer("git status")
     ),
     MacroEncoding(
