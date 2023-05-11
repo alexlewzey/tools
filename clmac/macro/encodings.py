@@ -866,4 +866,4 @@ def test_for_duplicates() -> None:
         raise DuplicateEncodingError(err_msg)
 
 
-i = ['f2', 'f2', 'f2', 'f2']
+i = ["f2", "f2", "f2", "f2"]
