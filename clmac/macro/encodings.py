@@ -13,7 +13,6 @@ from clmac.macro.macros import (clipper, formatters, img2text, launchers,
 from clmac.macro.macros.launchers import clipboard2browser
 
 
-
 class MacroEncoding:
     """Represents a specific macro including its name, callable functionality
     and the keyboard encoding that triggers it."""
@@ -181,9 +180,7 @@ ENCODINGS = [
         encoding=";cd",
         func=typer("conda deactivate"),
     ),
-    MacroEncoding(
-        cat="writer", name=".head()", encoding=";;h", func=typer(".head(9)")
-    ),
+    MacroEncoding(cat="writer", name=".head()", encoding=";;h", func=typer(".head(9)")),
     MacroEncoding(cat="writer", name=".dtype()", encoding=";;d", func=typer(".dtypes")),
     MacroEncoding(cat="writer", name=".shape", encoding=";;s", func=typer(".shape")),
     MacroEncoding(
@@ -310,7 +307,10 @@ ENCODINGS = [
         func=typer(".sample(frac=1.).head(100)"),
     ),
     MacroEncoding(
-        cat="writer", name="value_counts", encoding=";vc", func=typer(".value_counts(dropna=False)")
+        cat="writer",
+        name="value_counts",
+        encoding=";vc",
+        func=typer(".value_counts(dropna=False)"),
     ),
     MacroEncoding(
         cat="writer",
@@ -464,7 +464,10 @@ ENCODINGS = [
         cat="writer", name="git_add", encoding=";ga", func=typer("git add -A")
     ),
     MacroEncoding(
-        cat="writer", name="git_commit", encoding=";gc", func=typer('git commit -m ""', 1)
+        cat="writer",
+        name="git_commit",
+        encoding=";gc",
+        func=typer('git commit -m ""', 1),
     ),
     MacroEncoding(
         cat="writer", name="git_checkout", encoding=";co", func=typer("git checkout ")
@@ -491,33 +494,15 @@ ENCODINGS = [
         func=typer("http://localhost:"),
     ),
     # numkey writers 0
-    MacroEncoding(
-        cat="numkeys", name="1", encoding=";;1", func=typer(custom_0.one)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="2", encoding=";;2", func=typer(custom_0.two)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="3", encoding=";;3", func=typer(custom_0.three)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="4", encoding=";;4", func=typer(custom_0.four)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="5", encoding=";;5", func=typer(custom_0.five)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="6", encoding=";;6", func=typer(custom_0.six)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="7", encoding=";;7", func=typer(custom_0.seven)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="8", encoding=";;8", func=typer(custom_0.eight)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="9", encoding=";;9", func=typer(custom_0.nine)
-    ),
+    MacroEncoding(cat="numkeys", name="1", encoding=";;1", func=typer(custom_0.one)),
+    MacroEncoding(cat="numkeys", name="2", encoding=";;2", func=typer(custom_0.two)),
+    MacroEncoding(cat="numkeys", name="3", encoding=";;3", func=typer(custom_0.three)),
+    MacroEncoding(cat="numkeys", name="4", encoding=";;4", func=typer(custom_0.four)),
+    MacroEncoding(cat="numkeys", name="5", encoding=";;5", func=typer(custom_0.five)),
+    MacroEncoding(cat="numkeys", name="6", encoding=";;6", func=typer(custom_0.six)),
+    MacroEncoding(cat="numkeys", name="7", encoding=";;7", func=typer(custom_0.seven)),
+    MacroEncoding(cat="numkeys", name="8", encoding=";;8", func=typer(custom_0.eight)),
+    MacroEncoding(cat="numkeys", name="9", encoding=";;9", func=typer(custom_0.nine)),
     # numkey writers 1
     MacroEncoding(
         cat="numkeys", name="1", encoding=";11", func=load_and_type_numkey_1(1)
