@@ -1,3 +1,6 @@
+custom*
+custom_0.py
+
 .DS_Store
 run.sh
 *.yaml

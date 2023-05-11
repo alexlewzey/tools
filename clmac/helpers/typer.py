@@ -103,14 +103,6 @@ class Typer(Controller):
     def type_timestamp(self) -> None:
         self.type(get_timestamp())
 
-    def type_cycled_case(self) -> None:
-        self.select_word_at_caret_and_copy()
-        selection = pyperclip.paste()
-        self.type(cycle_case(selection))
-        self.select_text_before(len(selection))
-        self.copy()
-        self.press_key(Key.right)
-
     def next_lines(self) -> None:
         self.caret_to_line_end()
         self.press_key(Key.enter)

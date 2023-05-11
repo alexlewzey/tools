@@ -6,11 +6,12 @@ from typing import Callable, Tuple
 
 from pynput.keyboard import KeyCode
 
-from clmac.config import boilerplate, conftk
+from clmac.config import boilerplate, conftk, custom_0
 from clmac.helpers.typer import Typer
 from clmac.macro.macros import (clipper, formatters, img2text, launchers,
                                 text2speech, writers)
 from clmac.macro.macros.launchers import clipboard2browser
+
 
 
 class MacroEncoding:
@@ -102,6 +103,12 @@ ENCODINGS = [
     MacroEncoding(
         cat="personal", name="address", encoding=";ad", func=load_and_type("address")
     ),
+    MacroEncoding(
+        cat="writer",
+        name="user_agent",
+        encoding=";ua",
+        func=typer("user_agent"),
+    ),
     # email writer
     MacroEncoding(
         cat="writer",
@@ -175,7 +182,7 @@ ENCODINGS = [
         func=typer("conda deactivate"),
     ),
     MacroEncoding(
-        cat="writer", name=".head()", encoding=";;h", func=typer(".head(15)")
+        cat="writer", name=".head()", encoding=";;h", func=typer(".head(9)")
     ),
     MacroEncoding(cat="writer", name=".dtype()", encoding=";;d", func=typer(".dtypes")),
     MacroEncoding(cat="writer", name=".shape", encoding=";;s", func=typer(".shape")),
@@ -187,6 +194,12 @@ ENCODINGS = [
         name="docker_container",
         encoding=";dc",
         func=typer("docker container "),
+    ),
+    MacroEncoding(
+        cat="writer",
+        name=".withColumn(",
+        encoding=";wc",
+        func=typer(".withColumn("),
     ),
     MacroEncoding(
         cat="writer",
@@ -228,7 +241,25 @@ ENCODINGS = [
         cat="writer",
         name="log_config",
         encoding=";lc",
-        func=typer(boilerplate.log_config),
+        func=typer(boilerplate.list_comprehension),
+    ),
+    MacroEncoding(
+        cat="writer",
+        name="loop",
+        encoding=";lp",
+        func=typer(boilerplate.loop),
+    ),
+    MacroEncoding(
+        cat="writer",
+        name="loop",
+        encoding=";3d",
+        func=typer(boilerplate.px_3d_scatter),
+    ),
+    MacroEncoding(
+        cat="writer",
+        name="melt_plot",
+        encoding=";mp",
+        func=typer(boilerplate.melt_plot),
     ),
     MacroEncoding(
         cat="writer",
@@ -279,7 +310,7 @@ ENCODINGS = [
         func=typer(".sample(frac=1.).head(100)"),
     ),
     MacroEncoding(
-        cat="writer", name="value_counts", encoding=";vc", func=typer(".value_counts()")
+        cat="writer", name="value_counts", encoding=";vc", func=typer(".value_counts(dropna=False)")
     ),
     MacroEncoding(
         cat="writer",
@@ -409,7 +440,7 @@ ENCODINGS = [
         func=typer(".agg(fn.count('*').alias('n_request'))"),
     ),
     MacroEncoding(
-        cat="writer", name="n_request", encoding=";nr", func=typer("n_requestd")
+        cat="writer", name="n_request", encoding=";nr", func=typer("n_request")
     ),
     MacroEncoding(
         cat="writer",
@@ -418,13 +449,22 @@ ENCODINGS = [
         func=typer("display_plotly(fig)"),
     ),
     MacroEncoding(
-        cat="writer", name="git_branch", encoding=";gb", func=typer("git branch")
+        cat="writer", name="groupBy", encoding=";gp", func=typer(".groupBy(")
     ),
     MacroEncoding(
         cat="writer", name="git_status", encoding=";gs", func=typer("git status")
     ),
     MacroEncoding(
-        cat="writer", name="git_checkout", encoding=";gc", func=typer("git checkout")
+        cat="writer", name="git_add", encoding=";ga", func=typer("git add -A")
+    ),
+    MacroEncoding(
+        cat="writer", name="git_commit", encoding=";gc", func=typer('git commit -m ""', 1)
+    ),
+    MacroEncoding(
+        cat="writer", name="git_checkout", encoding=";co", func=typer("git checkout ")
+    ),
+    MacroEncoding(
+        cat="writer", name="git_branch", encoding=";gb", func=typer("git branch")
     ),
     MacroEncoding(
         cat="writer",
@@ -446,31 +486,31 @@ ENCODINGS = [
     ),
     # numkey writers 0
     MacroEncoding(
-        cat="numkeys", name="1", encoding=";;1", func=load_and_type_numkey_0(1)
+        cat="numkeys", name="1", encoding=";;1", func=typer(custom_0.one)
     ),
     MacroEncoding(
-        cat="numkeys", name="2", encoding=";;2", func=load_and_type_numkey_0(2)
+        cat="numkeys", name="2", encoding=";;2", func=typer(custom_0.two)
     ),
     MacroEncoding(
-        cat="numkeys", name="3", encoding=";;3", func=load_and_type_numkey_0(3)
+        cat="numkeys", name="3", encoding=";;3", func=typer(custom_0.three)
     ),
     MacroEncoding(
-        cat="numkeys", name="4", encoding=";;4", func=load_and_type_numkey_0(4)
+        cat="numkeys", name="4", encoding=";;4", func=typer(custom_0.four)
     ),
     MacroEncoding(
-        cat="numkeys", name="5", encoding=";;5", func=load_and_type_numkey_0(5)
+        cat="numkeys", name="5", encoding=";;5", func=typer(custom_0.five)
     ),
     MacroEncoding(
-        cat="numkeys", name="6", encoding=";;6", func=load_and_type_numkey_0(6)
+        cat="numkeys", name="6", encoding=";;6", func=typer(custom_0.six)
     ),
     MacroEncoding(
-        cat="numkeys", name="7", encoding=";;7", func=load_and_type_numkey_0(7)
+        cat="numkeys", name="7", encoding=";;7", func=typer(custom_0.seven)
     ),
     MacroEncoding(
-        cat="numkeys", name="8", encoding=";;8", func=load_and_type_numkey_0(8)
+        cat="numkeys", name="8", encoding=";;8", func=typer(custom_0.eight)
     ),
     MacroEncoding(
-        cat="numkeys", name="9", encoding=";;9", func=load_and_type_numkey_0(9)
+        cat="numkeys", name="9", encoding=";;9", func=typer(custom_0.nine)
     ),
     # numkey writers 1
     MacroEncoding(
@@ -544,75 +584,9 @@ ENCODINGS = [
     ),
     MacroEncoding(
         cat="formatter",
-        name="wrap_print",
-        encoding=";wp",
-        func=partial(formatters.wrap_cb, prefix="print"),
-    ),
-    MacroEncoding(
-        cat="formatter",
-        name="wrap_range",
-        encoding=";wr",
-        func=partial(formatters.wrap_cb, prefix="range"),
-    ),
-    MacroEncoding(
-        cat="formatter",
-        name="wrap_type",
-        encoding=";wt",
-        func=partial(formatters.wrap_cb, prefix="type"),
-    ),
-    MacroEncoding(
-        cat="formatter",
-        name="wrap_sum",
-        encoding=";ws",
-        func=partial(formatters.wrap_cb, prefix="sum"),
-    ),
-    MacroEncoding(
-        cat="formatter",
-        name="wrap_int",
-        encoding=";wi",
-        func=partial(formatters.wrap_cb, prefix="int"),
-    ),
-    MacroEncoding(
-        cat="formatter",
         name="wrap_join",
         encoding=";wj",
         func=partial(formatters.wrap_cb, prefix="' '.join"),
-    ),
-    MacroEncoding(
-        cat="formatter",
-        name="wrap_dict",
-        encoding=";wd",
-        func=partial(formatters.wrap_cb, prefix="dict"),
-    ),
-    MacroEncoding(
-        cat="formatter",
-        name="wrap_list",
-        encoding=";wl",
-        func=partial(formatters.wrap_cb, prefix="list"),
-    ),
-    MacroEncoding(
-        cat="formatter",
-        name="wrap_len",
-        encoding=";;l",
-        func=partial(formatters.wrap_cb, prefix="len"),
-    ),
-    MacroEncoding(
-        cat="formatter",
-        name="wrap_next",
-        encoding=";wn",
-        func=partial(formatters.wrap_cb, prefix="next"),
-    ),
-    MacroEncoding(
-        cat="formatter",
-        name="wrap_next",
-        encoding=";wq",
-        func=partial(formatters.wrap_cb, prefix="tqdm"),
-    ),
-    MacroEncoding(
-        cat="formatter",
-        name="wrap_enumerate",
-        encoding=";we",
-        func=partial(formatters.wrap_cb, prefix="enumerate"),
     ),
     MacroEncoding(
         cat="formatter",
@@ -696,7 +670,7 @@ ENCODINGS = [
         func=formatters.rm_blanklines,
     ),
     MacroEncoding(
-        cat="formatter", name="fmt_text_wrap", encoding=";tw", func=formatters.wrap_text
+        cat="formatter", name="wrap_text", encoding=";wt", func=formatters.wrap_text
     ),
     MacroEncoding(
         cat="formatter", name="fmt_list", encoding=";lt", func=formatters.fmt_list
@@ -721,36 +695,15 @@ ENCODINGS = [
     ),
     MacroEncoding(
         cat="formatter",
-        name="fmt_as_one_line",
-        encoding=";ol",
-        func=formatters.fmt_as_one_line,
-    ),
-    MacroEncoding(
-        cat="formatter",
         name="fmt_underline",
         encoding=";ul",
         func=formatters.fmt_underline,
     ),
     MacroEncoding(
-        cat="formatter", name="cycle_case", encoding=";cc", func=typer.type_cycled_case
+        cat="formatter", name="to_upper", encoding=";2u", func=formatters.to_upper
     ),
     MacroEncoding(
-        cat="formatter",
-        name="sql_col_as_mil",
-        encoding=";sm",
-        func=formatters.sql_col_as_mil,
-    ),
-    MacroEncoding(
-        cat="formatter",
-        name="fmt_query",
-        encoding=";fq",
-        func=formatters.fmt_sql_table_as_python,
-    ),
-    MacroEncoding(
-        cat="formatter",
-        name="parse_sql_table",
-        encoding=";pt",
-        func=formatters.parse_sql_table,
+        cat="formatter", name="to_lower", encoding=";2l", func=formatters.to_lower
     ),
     MacroEncoding(
         cat="formatter",
@@ -784,9 +737,9 @@ ENCODINGS = [
     ),
     MacroEncoding(
         cat="formatter",
-        name="clean_whitespace",
-        encoding=";cw",
-        func=formatters.clean_whitespace,
+        name="split_join",
+        encoding=";sj",
+        func=formatters.split_join,
     ),
     # select previous lines
     MacroEncoding(

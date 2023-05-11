@@ -203,7 +203,7 @@ def unnest_parathesis():
         typer.hotkey(Key.shift, Key.left)
 
 
-def wrap_text(max_len: int = 100) -> None:
+def wrap_text(max_len: int = 79) -> None:
     """Wrap text to a maximum line length."""
     wrapped = textwrap.fill(pyperclip.paste(), width=max_len).strip()
     pyperclip.copy(wrapped)
@@ -246,27 +246,8 @@ def rm_blanklines() -> None:
 
 
 @clipboard_in_out
-def clean_whitespace(name: str) -> str:
+def split_join(name: str) -> str:
     return " ".join(name.split())
-
-
-def fmt_as_one_line() -> None:
-    """Strip all white space apart from single spaces.
-
-    input
-    -----
-    hello    world
-
-    hello
-    world
-
-    output
-    ------
-    hello world hello world
-    """
-    cb = pyperclip.paste()
-    output = " ".join(cb.split())
-    pyperclip.copy(output)
 
 
 def fmt_repr():
@@ -612,3 +593,13 @@ def correct_spelling(s: str) -> str:
     sentence = TextBlob(s)
     corrected = sentence.correct()
     return str(corrected)
+
+
+@clipboard_in_out_paste
+def to_lower(s: str) -> str:
+    return s.lower()
+
+
+@clipboard_in_out_paste
+def to_upper(s: str) -> str:
+    return s.upper()

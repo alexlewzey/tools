@@ -52,7 +52,8 @@ model_selection,
  cluster,
  decomposition,
  inspection,
- linear_model
+ linear_model,
+ pipeline
 )
 from sklearn.neighbors import NearestNeighbors
 from sklearn.metrics.pairwise import euclidean_distances, cosine_similarity
@@ -72,14 +73,6 @@ pd.set_option('display.width', 1000)
 pd.set_option('display.float_format', '{{:.3f}}'.format)
 
 
-warnings.simplefilter(action='ignore')
-"""
-
-big_query: str = """client_bq = bigquery.Client()
-df.to_gbq(destination_table='dataset.some_data',
-            project_id=os.environ['GCLOUD_PROJECT'],
-            if_exists='replace',
-            location='europe-west2')
 """
 
 deep_learning: str = """import torch.nn as nn
@@ -135,3 +128,25 @@ sql_template_duplicates: str = """select col, count(*) as n
 from table
 group by col
 having n > 1"""
+
+melt_plot: str = """melt = df.melt(['cat'])
+fig = px.line(melt, 'cat', 'value', color='variable')
+display_plotly(fig)
+"""
+
+list_comprehension: str = """[f't{i}' for i in range(x.shape[1])]"""
+
+loop: str = """data = []
+for i in tqdm(range(5, 31, 5)):
+    model = TimeSeriesKMeans(n_clusters=i, metric="dtw", max_iter=10, random_state=5, n_jobs=-1)
+    model.fit(x)
+    score = metrics.silhouette_score(x, model.labels_)
+    data.append([i, score])
+df = pd.DataFrame(data, columns=['score', 'i']).reset_index().rename(columns={'index': 'time'})
+fig = px.line(df, 'time', 'score')
+plot(fig)"""
+
+
+px_3d_scatter: str = """fig = px.scatter_3d(df, "dim0", "dim1", "dim2", color="")
+fig.update_traces(marker=dict(size=3))
+display_plotly(fig)"""
