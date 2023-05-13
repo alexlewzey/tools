@@ -15,18 +15,18 @@ logging.basicConfig(
 )
 
 dir_src = Path(__file__).parent.parent
-dir_config = dir_src / 'config'
+dir_config = dir_src / "config"
 
-file_custom_0 = dir_config / 'custom_0.py'
-file_custom_1 = dir_config / 'custom_1.py'
+file_custom_0 = dir_config / "custom_0.py"
+file_custom_1 = dir_config / "custom_1.py"
 
-numbers = 'one,two,three,four,five,six,seven,eight,nine'.split(',')
+numbers = "one,two,three,four,five,six,seven,eight,nine".split(",")
 if not file_custom_0.exists():
-    with file_custom_0.open('w') as f:
+    with file_custom_0.open("w") as f:
         for number in numbers:
             f.write(f'{number} = ""\n')
 if not file_custom_1.exists():
-    with file_custom_1.open('w') as f:
+    with file_custom_1.open("w") as f:
         for number in numbers:
             f.write(f'{number} = ""\n')
 
@@ -86,10 +86,10 @@ def log_output():
 
 
 def log_input_and_output(
-        input_flag=True,
-        output_flag=True,
-        positional_input_index: int = 0,
-        kw_input_key: Optional[Hashable] = None,
+    input_flag=True,
+    output_flag=True,
+    positional_input_index: int = 0,
+    kw_input_key: Optional[Hashable] = None,
 ):
     """Logs the input (first positional argument) and output of decorated
     function, you can specify a specific kw arg to be logged as input by
