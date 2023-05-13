@@ -5,7 +5,7 @@ import logging
 import pickle
 import time
 from pathlib import Path
-from typing import *
+from typing import Any, Callable, Hashable, Optional, Sequence, Union
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -32,7 +32,7 @@ if not file_custom_1.exists():
 
 
 def hr_secs(secs: float) -> str:
-    """Format seconds human readable format hours:mins:seconds."""
+    """Format seconds human-readable format hours:mins:seconds."""
     secs_per_hour: int = 3600
     secs_per_min: int = 60
     hours, remainder = divmod(secs, secs_per_hour)

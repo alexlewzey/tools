@@ -1,4 +1,4 @@
-"""Save the urls and webpage titles of the current chrome tabs to the clipboard
+"""Save the urls and webpage titles of the current Chrome tabs to the clipboard
 in a dictionary format."""
 import logging
 import re
@@ -11,7 +11,7 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
 from clmac.helpers import core
-from clmac.helpers.core import *
+from clmac.helpers.core import Optional, whitespacer
 from clmac.helpers.typer import Typer
 
 logger = logging.getLogger(__name__)
@@ -84,7 +84,7 @@ def parse_page_title(page_source: str) -> str:
     return title if isinstance(title, str) else "no title found"
 
 
-def link_urls_to_page_titles(urls: List[str]) -> List[Tuple[str, str]]:
+def link_urls_to_page_titles(urls: list[str]) -> list[tuple[str, str]]:
     """Take a list of urls and find the corresponding webpage title for each
     and them as a key value pair to a dictionary."""
     url_pairs = []
@@ -97,7 +97,7 @@ def link_urls_to_page_titles(urls: List[str]) -> List[Tuple[str, str]]:
     return url_pairs
 
 
-def render_and_parse_pages(urls: List[str]) -> List[Tuple[str, str]]:
+def render_and_parse_pages(urls: list[str]) -> list[tuple[str, str]]:
     """"""
     driver = DriverChrome()
     url_pairs = []
@@ -112,7 +112,7 @@ def render_and_parse_pages(urls: List[str]) -> List[Tuple[str, str]]:
     return url_pairs
 
 
-def dict2string(url_pairs: Dict) -> str:
+def dict2string(url_pairs: dict) -> str:
     """Convert a dict into a string where each key pair value is a line."""
     output: str = ""
     for k, v in url_pairs.items():
@@ -120,7 +120,7 @@ def dict2string(url_pairs: Dict) -> str:
     return output
 
 
-def tuples2string(url_pairs: List[Tuple[str, str]]) -> str:
+def tuples2string(url_pairs: list[tuple[str, str]]) -> str:
     """Convert a list of tuples into a string where each tuple is a line."""
     output: str = ""
     for title, url in url_pairs:
@@ -128,7 +128,7 @@ def tuples2string(url_pairs: List[Tuple[str, str]]) -> str:
     return output
 
 
-def clipurls(n_urls: Optional[int] = None) -> None:
+def clip_urls(n_urls: Optional[int] = None) -> None:
     typer = Typer()
     typer.alt_tab()
     urls = typer.get_urls(n_urls=n_urls)
@@ -142,4 +142,4 @@ def clipurls(n_urls: Optional[int] = None) -> None:
 
 
 if __name__ == "__main__":
-    clipurls()
+    clip_urls()

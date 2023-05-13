@@ -1,4 +1,4 @@
-"""Script that allows you to workout lower scale tunings on a 7 string
+"""Script that allows you to work out lower scale tunings on a 7-string
 guitar."""
 
 notes = [

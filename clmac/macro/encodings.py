@@ -554,9 +554,6 @@ ENCODINGS = [
     ),
     MacroEncoding(cat="app", name="date", encoding=";de", func=typer.type_date),
     MacroEncoding(
-        cat="app", name="start_guitar", encoding=";gr", func=launchers.guitar_practice
-    ),
-    MacroEncoding(
         cat="app", name="text2speech", encoding=";ee", func=text2speech.text2speech
     ),
     MacroEncoding(

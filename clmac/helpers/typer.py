@@ -153,14 +153,14 @@ class Typer(Controller):
         return self.selection_to_clipboard()
 
     def next_chrome_tab(self) -> None:
-        """Cycle to the next chrome tab."""
+        """Cycle to the next Chrome tab."""
         if sys.platform == "win32":
             self.hotkey(Key.ctrl_l, Key.page_down)
         elif sys.platform == "darwin":
             self.hotkey(Key.ctrl, Key.page_down)
 
     def previous_chrome_tab(self) -> None:
-        """Cycle to the previous chrome tab."""
+        """Cycle to the previous Chrome tab."""
         if sys.platform == "win32":
             self.hotkey(Key.ctrl_l, Key.page_up)
         elif sys.platform == "darwin":
@@ -207,8 +207,7 @@ class Typer(Controller):
 
     def get_urls(self, n_urls: Optional[int] = None) -> List[str]:
         """"""
-        urls = []
-        urls.append(self.select_browser_url())
+        urls = [self.select_browser_url()]
 
         if n_urls:
             print(f"n_urls: {n_urls}")

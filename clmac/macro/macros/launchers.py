@@ -1,4 +1,4 @@
-"""Automates opening frequently used websites across multiple chrome
+"""Automates opening frequently used websites across multiple Chrome
 browsers."""
 import time
 import webbrowser
@@ -29,11 +29,6 @@ def morning_sites() -> None:
         open_urls(urls)
 
 
-def guitar_practice():
-    """Open the guitar practice urls in browser."""
-    with URLS_YAML.open("r") as f:
-        urls = yaml.load(f)["guitar"]
-    open_urls(urls.values())
 
 
 def clipboard2browser() -> None:

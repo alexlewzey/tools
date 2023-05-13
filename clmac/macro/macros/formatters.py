@@ -7,7 +7,7 @@ import re
 import textwrap
 import time
 import traceback
-from typing import *
+from typing import List
 
 import pyperclip
 from pynput.keyboard import Key
@@ -250,7 +250,7 @@ def split_join(name: str) -> str:
 
 
 def fmt_repr():
-    """Copy class properties to the clipboard, run this program and it will
+    """Copy class properties to the clipboard, run this program, and it will
     format the properties as a human readable repr string that you can add to
     your class.
 
@@ -360,7 +360,7 @@ def fmt_as_multiple_lines() -> None:
     ]
     """
     text = re.sub(r"([,\[{])", r"\1\n", pyperclip.paste())
-    text = re.sub(r"([\]}])", r"\n\1", text)
+    text = re.sub(r"([]}])", r"\n\1", text)
     text = re.sub(r"(\()([^)]+)", r"\1\n\2", text)
     text = re.sub(r"([^(]+)(\))", r"\1\n\2", text)
     pyperclip.copy(text)
@@ -486,7 +486,7 @@ def fmt_class_properties_multiassign():
 def get_class_properties(text: str) -> List[str]:
     if "self" in text:
         text = text.split("self,")[-1]
-    params = re.search(r"\w[^\)]+", text).group(0).split(",")
+    params = re.search(r"\w[^)]+", text).group(0).split(",")
     return [clean_param(param) for param in params]
 
 
@@ -531,12 +531,6 @@ def parse_sql_table() -> None:
         logger.error(f"error: {traceback.format_exc()}")
 
 
-def test_parse_sql_table():
-    query = """create or replace table `petsathome-sb-datascience`.sandbox_tm.transaction_statistics_base_brand_date as"""
-    pyperclip.copy(query)
-    parse_sql_table()
-    cb = pyperclip.paste()
-    cb == "`petsathome-sb-datascience`.sandbox_tm.transaction_statistics_base_brand_date"
 
 
 def fmt_sql_table_as_python() -> None:
