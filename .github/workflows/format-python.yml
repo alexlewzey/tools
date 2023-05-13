@@ -17,7 +17,7 @@ jobs:
           black .
           autoflake --remove-all-unused-imports --remove-unused-variables --in-place -r .
           isort .
-          find . -name '*.py' -exec docformatter --in-place {} \;
+          find . -name '*.py' -exec docformatter --wrap-summaries 88 --wrap-descriptions 88 --in-place {} \;
           find . -name '*.json' -exec python -m json.tool --indent 4 {} {} \;
           find . \( -name "*.yml" -o -name "*.yaml" \) -exec yq --prettyPrint --indent 2 -i {} \;
       - name: Check for changes
