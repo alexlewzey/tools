@@ -26,7 +26,6 @@ MAX_KEY_HISTORY_LENGTH: int = 30
 typer = lh.Typer()
 
 
-
 class KeyHistory(list):
     """A holder of fixed length for Key and KeyCode types passed from the
     on_press listener."""
