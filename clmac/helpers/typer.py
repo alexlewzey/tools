@@ -64,10 +64,10 @@ class Typer(Controller):
         """Hotkey alt + tab, includes a sleep after so typing does not occur
         while the windows are cycling."""
         if sys.platform == "win32":
-            logger.info(f"alt_tab: windows")
+            logger.info("alt_tab: windows")
             self.hotkey(Key.alt_l, Key.tab)
         else:
-            logger.info(f"alt_tab: mac")
+            logger.info("alt_tab: mac")
             self.hotkey(Key.cmd, Key.tab)
         time.sleep(sleep_after)
 

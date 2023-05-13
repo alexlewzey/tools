@@ -19,7 +19,7 @@ from clmac.helpers.typer import Typer
 logger = logging.getLogger(__name__)
 
 typer = Typer()
-LINE_CHAR_LIMIT = 120
+LINE_CHAR_LIMIT = 88
 
 
 def wrap_cb(prefix: str) -> None:
@@ -140,7 +140,7 @@ def word_at_caret_to_cb() -> str:
 
 def pad_right_full(char: str, left_len: int = 1) -> None:
     """Add a left justify fill of hash characters to the current clipboard item
-    to a length of 120 character and return it to the clipboard.
+    to a length of 88 character and return it to the clipboard.
 
     pad_right_full('#')
     input:
@@ -167,7 +167,7 @@ def fmt_dash():
 
 def fmt_hash_center():
     """Add a center justify fill of hash characters to the current clipboard
-    item to a length of 120 character and return it to the clipboard.
+    item to a length of 88 character and return it to the clipboard.
 
     input:
     hello world
@@ -176,7 +176,7 @@ def fmt_hash_center():
     """
     title: str = pyperclip.paste()[:LINE_CHAR_LIMIT]
     title = " " + title.strip() + " "
-    output = f"{title:#^120}"
+    output = f"{title:#^88}"
     pyperclip.copy(output)
     typer.type_text(output)
 
@@ -202,7 +202,7 @@ def unnest_parathesis():
         typer.hotkey(Key.shift, Key.left)
 
 
-def wrap_text(max_len: int = 79) -> None:
+def wrap_text(max_len: int = 88) -> None:
     """Wrap text to a maximum line length."""
     wrapped = textwrap.fill(pyperclip.paste(), width=max_len).strip()
     pyperclip.copy(wrapped)
@@ -557,7 +557,7 @@ def fmt_print_variables(s: str) -> str:
     variables = re.sub("[^\w\s]", "", s).split()
     variables = [f"{v}={{{v}:.3f}}" for v in variables]
     output = f"print(f'{', '.join(variables)}')"
-    if len(output) > 120:
+    if len(output) > 88:
         output = "', \n      f'".join(output.split(", "))
     return output
 
