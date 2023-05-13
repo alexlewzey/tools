@@ -14,8 +14,8 @@ from clmac.macro.macros.launchers import clipboard2browser
 
 
 class MacroEncoding:
-    """Represents a specific macro including its name, callable functionality
-    and the keyboard encoding that triggers it."""
+    """Represents a specific macro including its name, callable functionality and the
+    keyboard encoding that triggers it."""
 
     def __init__(self, cat: str, name: str, encoding: str, func: Callable):
         self.category = cat
@@ -42,8 +42,8 @@ class MacroEncoding:
 
 
 def load_and_type(setting: str) -> Callable:
-    """Load a setting from the config file and pass into a function (that will
-    type out the setting) that is returned."""
+    """Load a setting from the config file and pass into a function (that will type out
+    the setting) that is returned."""
 
     def type_detail():
         settings = conftk.load_personal()
@@ -792,8 +792,8 @@ class DuplicateEncodingError(ValueError):
 
 
 def test_for_duplicates() -> None:
-    """On program start check for duplicate encodings across the macro that
-    would result in two macro being called at once."""
+    """On program start check for duplicate encodings across the macro that would result
+    in two macro being called at once."""
     codes = [macro.encoding for macro in ENCODINGS]
     if len(codes) != len(set(codes)):
         err_msg = f"you have added a duplicate encoding: \n{Counter(codes)}"

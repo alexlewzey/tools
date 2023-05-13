@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
-"""Functions that automate typing which features control character which cannot
-be fed into the macro encoding as callable text."""
+"""Functions that automate typing which features control character which cannot be fed
+into the macro encoding as callable text."""
 from typing import List
 
 from pynput.keyboard import Key, KeyCode
@@ -52,8 +52,7 @@ def write_print() -> None:
 
 
 def git_commit() -> None:
-    """When run at the git terminal will automate add, commit and push
-    commands."""
+    """When run at the git terminal will automate add, commit and push commands."""
     text = "git add -A\n git commit -m '"
     typer.type_text(text)
 

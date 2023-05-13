@@ -1,5 +1,5 @@
-"""Save the urls and webpage titles of the current Chrome tabs to the clipboard
-in a dictionary format."""
+"""Save the urls and webpage titles of the current Chrome tabs to the clipboard in a
+dictionary format."""
 import logging
 import re
 import time
@@ -56,8 +56,8 @@ def enforce_url_protocol(url: str):
 
 
 def render_page_source(driver, url: str, wait: float = 2) -> str:
-    """Load page with driver wait for a few seconds and retrieve the rendered
-    html returning it as a string."""
+    """Load page with driver wait for a few seconds and retrieve the rendered html
+    returning it as a string."""
     url = enforce_url_protocol(url)
     driver.get(url)
     time.sleep(wait)
@@ -66,8 +66,8 @@ def render_page_source(driver, url: str, wait: float = 2) -> str:
 
 
 def request_page_source(url: str) -> str:
-    """Return the webpage title corresponding to the url that is passed into
-    the function."""
+    """Return the webpage title corresponding to the url that is passed into the
+    function."""
     headers = {
         "User-Agent": (
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -85,8 +85,8 @@ def parse_page_title(page_source: str) -> str:
 
 
 def link_urls_to_page_titles(urls: list[str]) -> list[tuple[str, str]]:
-    """Take a list of urls and find the corresponding webpage title for each
-    and them as a key value pair to a dictionary."""
+    """Take a list of urls and find the corresponding webpage title for each and them as
+    a key value pair to a dictionary."""
     url_pairs = []
     for url in urls:
         title = request_page_source(url)

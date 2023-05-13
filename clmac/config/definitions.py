@@ -1,7 +1,6 @@
 """A name space for program constants.
 
-Paths (dirs, files, executables), large string literals and personal
-info.
+Paths (dirs, files, executables), large string literals and personal info.
 """
 import sys
 from pathlib import Path

@@ -8,8 +8,8 @@ from clmac.config import definitions
 
 
 def load_personal() -> Dict:
-    """Load personal settings file if exists else create file with null setting
-    and return it."""
+    """Load personal settings file if exists else create file with null setting and
+    return it."""
     return _load_yaml(definitions.PERSONAL_YAML, _set_default_personal)
 
 
@@ -37,8 +37,8 @@ def _load_yaml(path_yaml: Path, default_setter: Callable):
 
 
 def _set_default_personal(path: Path) -> Dict:
-    """Return default config key value structure with null values and save as
-    personal yaml file in config."""
+    """Return default config key value structure with null values and save as personal
+    yaml file in config."""
     settings = {
         "gmail": "",
         "hotmail": "",
@@ -54,8 +54,8 @@ def _set_default_personal(path: Path) -> Dict:
 
 
 def _set_default_numkeys(path: Path) -> Dict:
-    """Return default config key value structure with null values and save as
-    personal yaml file in config."""
+    """Return default config key value structure with null values and save as personal
+    yaml file in config."""
     settings = {
         1: "",
         2: "",

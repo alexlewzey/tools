@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
-"""Wrap the clipboard with a function specified as a cmd line arg (if fun from
-run window) or via user interface is run from listener_standard script."""
+"""Wrap the clipboard with a function specified as a cmd line arg (if fun from run
+window) or via user interface is run from listener_standard script."""
 import functools
 import logging
 import re
@@ -52,9 +52,8 @@ def wrap_for_loop() -> None:
 
 
 def clipboard_in_out(func):
-    """Decorator that grabs text from the clipboard passes it to the decorated
-    function then copies the text returned by the decorated function to the
-    clipboard."""
+    """Decorator that grabs text from the clipboard passes it to the decorated function
+    then copies the text returned by the decorated function to the clipboard."""
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -67,9 +66,8 @@ def clipboard_in_out(func):
 
 
 def clipboard_in_out_paste(func):
-    """Decorator that grabs text from the clipboard passes it to the decorated
-    function then copies the text returned by the decorated function to the
-    clipboard."""
+    """Decorator that grabs text from the clipboard passes it to the decorated function
+    then copies the text returned by the decorated function to the clipboard."""
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -131,16 +129,16 @@ def line_at_caret_to_cb() -> str:
 
 
 def word_at_caret_to_cb() -> str:
-    """Select word to the left of the cursor and copy to clipboard, Equivalent
-    to shift + alt + left."""
+    """Select word to the left of the cursor and copy to clipboard, Equivalent to shift
+    + alt + left."""
     line = typer.select_word_at_caret_and_copy()
     logger.info(f"line at the caret: {line}")
     return line
 
 
 def pad_right_full(char: str, left_len: int = 1) -> None:
-    """Add a left justify fill of hash characters to the current clipboard item
-    to a length of 88 character and return it to the clipboard.
+    """Add a left justify fill of hash characters to the current clipboard item to a
+    length of 88 character and return it to the clipboard.
 
     pad_right_full('#')
     input:
@@ -166,8 +164,8 @@ def fmt_dash():
 
 
 def fmt_hash_center():
-    """Add a center justify fill of hash characters to the current clipboard
-    item to a length of 88 character and return it to the clipboard.
+    """Add a center justify fill of hash characters to the current clipboard item to a
+    length of 88 character and return it to the clipboard.
 
     input:
     hello world
@@ -182,8 +180,8 @@ def fmt_hash_center():
 
 
 def unnest_parathesis():
-    """Extract the content of the paraenthesis from the current clipboard
-    selection and type it out.
+    """Extract the content of the paraenthesis from the current clipboard selection and
+    type it out.
 
     input:
     print(''.join('hello world'))
@@ -209,8 +207,8 @@ def wrap_text(max_len: int = 88) -> None:
 
 
 def rm_doublespace() -> None:
-    """Copy selected text to clipboard format any consecutive spaces as a
-    single space and add the return string to the clipboard."""
+    """Copy selected text to clipboard format any consecutive spaces as a single space
+    and add the return string to the clipboard."""
     clipboard = pyperclip.paste()
     text_cleaned = remove_consecutive_space(clipboard)
     pyperclip.copy(text_cleaned)
@@ -250,9 +248,8 @@ def split_join(name: str) -> str:
 
 
 def fmt_repr():
-    """Copy class properties to the clipboard, run this program, and it will
-    format the properties as a human readable repr string that you can add to
-    your class.
+    """Copy class properties to the clipboard, run this program, and it will format the
+    properties as a human readable repr string that you can add to your class.
 
     input from clipboard:
         self.id = id_
@@ -290,8 +287,8 @@ class InvalidInputError(TypeError):
 
 
 def fmt_pycharm_params():
-    """Format pycharm params (from clipboard) as args and copies to clipboard.
-    you can return multi-line params by passing in the command line arg nl.
+    """Format pycharm params (from clipboard) as args and copies to clipboard. you can
+    return multi-line params by passing in the command line arg nl.
 
     clipboard inputs
     ----------------
@@ -319,8 +316,8 @@ def fmt_pycharm_params():
 
 
 def fmt_list() -> None:
-    """Format the clipboard as a python style list where each line represents a
-    list item."""
+    """Format the clipboard as a python style list where each line represents a list
+    item."""
     text = pyperclip.paste()
     items = text2list(text)
     items_str = list2str(items)
@@ -343,8 +340,8 @@ def to_list() -> None:
 
 
 def fmt_as_multiple_lines() -> None:
-    """Transform a sequence separated by white space into a string where every
-    item in the sequence is on a new line.
+    """Transform a sequence separated by white space into a string where every item in
+    the sequence is on a new line.
 
     input
     -----
@@ -387,8 +384,8 @@ def fmt_params_as_multiline() -> None:
 
 
 def fmt_as_pipe() -> None:
-    """Transform a sequence separated by white space into a string where every
-    item in the sequence is on a new line.
+    """Transform a sequence separated by white space into a string where every item in
+    the sequence is on a new line.
 
     input
     -----
@@ -404,8 +401,8 @@ def fmt_as_pipe() -> None:
 
 
 def text2list(text: str) -> List[str]:
-    """Convert a multi-line segment of text and convert it into a list where
-    every line represent a list item."""
+    """Convert a multi-line segment of text and convert it into a list where every line
+    represent a list item."""
     return [x.strip(" ,\n") for x in text.split("\n") if x]
 
 
@@ -444,8 +441,8 @@ def make_underline(text: str) -> str:
 
 
 def fmt_class_properties_multiline():
-    """Format the arguments of a class as class properties to paste into the
-    __init__ function of the class.
+    """Format the arguments of a class as class properties to paste into the __init__
+    function of the class.
 
     clipboard output
     ----------------
@@ -464,8 +461,8 @@ def fmt_class_properties_multiline():
 
 
 def fmt_class_properties_multiassign():
-    """Format the arguments of a class as class properties to paste into the
-    __init__ function of the class.
+    """Format the arguments of a class as class properties to paste into the __init__
+    function of the class.
 
     clipboard output
     ----------------
@@ -542,8 +539,8 @@ def fmt_sql_table_as_python() -> None:
 
 @clipboard_in_out_paste
 def fmt_print_variables(s: str) -> str:
-    """Take the variables from the clipboard and format them as a string to be
-    printed and return to clipboard.
+    """Take the variables from the clipboard and format them as a string to be printed
+    and return to clipboard.
 
     input
     ------
@@ -564,10 +561,9 @@ def fmt_print_variables(s: str) -> str:
 
 @clipboard_in_out_paste
 def swap_quotation_marks(s: str) -> str:
-    """For a string taken from the clipboard replace all the quotation marks of
-    one type with the other type i.e. single for double and vice versa. If a
-    string contains a single quote it will all replace single marks with
-    doubles.
+    """For a string taken from the clipboard replace all the quotation marks of one type
+    with the other type i.e. single for double and vice versa. If a string contains a
+    single quote it will all replace single marks with doubles.
 
     input
     -----

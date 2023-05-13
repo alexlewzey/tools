@@ -46,9 +46,9 @@ def whitespacer(s):
 
 
 def log_input(positional_input_index: int = 0, kw_input_key: Optional[Hashable] = None):
-    """Logs the input (first positional argument) and output of decorated
-    function, you can specify a specific kw arg to be logged as input by
-    specifying its corresponding param key."""
+    """Logs the input (first positional argument) and output of decorated function, you
+    can specify a specific kw arg to be logged as input by specifying its corresponding
+    param key."""
 
     def outer_wrapper(func):
         @functools.wraps(func)
@@ -69,9 +69,9 @@ def log_input(positional_input_index: int = 0, kw_input_key: Optional[Hashable] 
 
 
 def log_output():
-    """Logs the input (first positional argument) and output of decorated
-    function, you can specify a specific kw arg to be logged as input by
-    specifying its corresponding param key."""
+    """Logs the input (first positional argument) and output of decorated function, you
+    can specify a specific kw arg to be logged as input by specifying its corresponding
+    param key."""
 
     def outer_wrapper(func):
         @functools.wraps(func)
@@ -91,9 +91,9 @@ def log_input_and_output(
     positional_input_index: int = 0,
     kw_input_key: Optional[Hashable] = None,
 ):
-    """Logs the input (first positional argument) and output of decorated
-    function, you can specify a specific kw arg to be logged as input by
-    specifying its corresponding param key."""
+    """Logs the input (first positional argument) and output of decorated function, you
+    can specify a specific kw arg to be logged as input by specifying its corresponding
+    param key."""
 
     def outer_wrapper(func):
         @functools.wraps(func)
@@ -128,8 +128,8 @@ def is_iterable(o: Any) -> bool:
 
 
 def _get_positional_arg(args, kwargs, index: int = 0) -> Any:
-    """Returns the first positional arg if there are any, if there are only kw
-    args it returns the first kw arg."""
+    """Returns the first positional arg if there are any, if there are only kw args it
+    returns the first kw arg."""
     try:
         input_arg = args[index]
     except KeyError:
@@ -138,9 +138,9 @@ def _get_positional_arg(args, kwargs, index: int = 0) -> Any:
 
 
 def log_func():
-    """Logs the input (first positional argument) and output of decorated
-    function, you can specify a specific kw arg to be logged as input by
-    specifying its corresponding param key."""
+    """Logs the input (first positional argument) and output of decorated function, you
+    can specify a specific kw arg to be logged as input by specifying its corresponding
+    param key."""
 
     def outer_wrapper(func):
         @functools.wraps(func)
@@ -174,8 +174,8 @@ def sleep_after(secs_after: float):
 
 
 def sleep_before_and_after(secs_before: float = 0, secs_after: float = 0):
-    """Call the sleep method before and after the decorated function is called,
-    pass in the sleep duration in seconds.
+    """Call the sleep method before and after the decorated function is called, pass in
+    the sleep duration in seconds.
 
     Default values are 0.
     """
