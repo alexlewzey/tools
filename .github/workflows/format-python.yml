@@ -17,9 +17,14 @@ jobs:
 
       - name: Format code with formatters
         run: |
+          set -x
+          echo "running black"
           black .
+          echo "running autoflake"
           autoflake --remove-all-unused-imports --remove-unused-variables --in-place -r .
+          echo "running isort"
           isort .
+          echo "running docformatter"
           docformatter -r --in-place .
 
       - name: Check for changes
