@@ -531,8 +531,6 @@ def parse_sql_table() -> None:
         logger.error(f"error: {traceback.format_exc()}")
 
 
-
-
 def fmt_sql_table_as_python() -> None:
     """"""
     cb: str = " ".join(pyperclip.paste().split()).replace("select * from ", "")

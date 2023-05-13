@@ -6,9 +6,8 @@ from pathlib import Path
 from typing import Iterable
 
 import pyperclip
-import yaml
 
-from clmac.config.definitions import LAUNCH_TXT, URLS_YAML
+from clmac.config.definitions import LAUNCH_TXT
 
 path = Path.cwd()
 
@@ -27,8 +26,6 @@ def morning_sites() -> None:
     with LAUNCH_TXT.open() as f:
         urls = f.read().splitlines()
         open_urls(urls)
-
-
 
 
 def clipboard2browser() -> None:

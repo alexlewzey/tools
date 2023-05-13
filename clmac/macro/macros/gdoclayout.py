@@ -40,8 +40,7 @@ def set_pagelayout() -> None:
 
 
 def move_mouse_out_the_way() -> None:
-    """Move mouse to a safe location in the bottom right of the
-    screen."""
+    """Move mouse to a safe location in the bottom right of the screen."""
     position_xy = [x * 0.9 for x in pyautogui.size()]
     pyautogui.moveTo(position_xy[0], position_xy[1])
 
