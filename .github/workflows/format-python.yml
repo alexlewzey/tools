@@ -21,7 +21,7 @@ jobs:
           black .
           autoflake --remove-all-unused-imports --remove-unused-variables --in-place -r .
           isort .
-          docformatter -r --in-place .
+          find . -name '*.py' -exec docformatter --in-place {} \;
 
       - name: Check for changes
         id: step1
