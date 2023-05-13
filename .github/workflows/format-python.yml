@@ -18,6 +18,8 @@ jobs:
           autoflake --remove-all-unused-imports --remove-unused-variables --in-place -r .
           isort .
           find . -name '*.py' -exec docformatter --in-place {} \;
+          find . -name '*.json' -exec python -m json.tool --indent 4 {} {} \;
+          find . \( -name "*.yml" -o -name "*.yaml" \) -exec yq --prettyPrint --indent 2 -i {} \;
       - name: Check for changes
         id: step1
         run: |

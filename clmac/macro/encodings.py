@@ -802,3 +802,11 @@ def test_for_duplicates() -> None:
         err_msg = f"you have added a duplicate encoding: \n{Counter(codes)}"
         input(err_msg + ", press any key to continue...")
         raise DuplicateEncodingError(err_msg)
+
+
+
+
+
+
+
+
