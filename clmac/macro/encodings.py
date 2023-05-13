@@ -473,7 +473,7 @@ ENCODINGS = [
         cat="writer", name="git_checkout", encoding=";co", func=typer("git checkout ")
     ),
     MacroEncoding(
-        cat="writer", name="git_branch", encoding=";gb", func=typer("git branch")
+        cat="writer", name="git_branch", encoding=";gb", func=typer("git branch ")
     ),
     MacroEncoding(
         cat="writer",
