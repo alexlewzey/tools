@@ -174,7 +174,7 @@ def sleep_after(secs_after: float):
 
 
 def sleep_before_and_after(secs_before: float = 0, secs_after: float = 0):
-    """call the sleep method before and after the decorated function is called,
+    """Call the sleep method before and after the decorated function is called,
     pass in the sleep duration in seconds.
 
     Default values are 0.

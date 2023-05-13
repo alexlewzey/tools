@@ -1,4 +1,4 @@
-"""tools for triggering functionality with keyboard presses.
+"""Tools for triggering functionality with keyboard presses.
 
 includes a keyboard listener, key history and currently pressed keys
 """

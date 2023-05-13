@@ -266,7 +266,7 @@ def _set_nums(keys, settings, path_yaml) -> None:
 @click.argument("keys", nargs=-1)
 @kel.command("sn0")
 def set_nums_0(keys) -> None:
-    """set the text associated with the num key macros (set 0)"""
+    """Set the text associated with the num key macros (set 0)"""
     _set_nums(
         keys, settings=conftk.load_numkeys_0(), path_yaml=definitions.NUMKEYS_YAML_0
     )
@@ -275,7 +275,7 @@ def set_nums_0(keys) -> None:
 @click.argument("keys", nargs=-1)
 @kel.command("sn1")
 def set_nums_1(keys) -> None:
-    """set the text associated with the num key macros (set 1)"""
+    """Set the text associated with the num key macros (set 1)"""
     _set_nums(
         keys, settings=conftk.load_numkeys_1(), path_yaml=definitions.NUMKEYS_YAML_1
     )
@@ -288,13 +288,13 @@ def _ls_nums(settings):
 
 @kel.command("ln0")
 def ls_nums_0():
-    """list current numkey macro assignments (set 0)"""
+    """List current numkey macro assignments (set 0)"""
     _ls_nums(conftk.load_numkeys_0())
 
 
 @kel.command("ln1")
 def ls_nums_1():
-    """list current numkey macro assignments (set 1)"""
+    """List current numkey macro assignments (set 1)"""
     _ls_nums(conftk.load_numkeys_1())
 
 

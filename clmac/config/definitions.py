@@ -1,4 +1,4 @@
-"""a name space for program constants.
+"""A name space for program constants.
 
 Paths (dirs, files, executables), large string literals and personal
 info.

@@ -491,7 +491,8 @@ def get_class_properties(text: str) -> List[str]:
 
 
 def clean_param(param):
-    """for a single parameter string truncate anything beyond the param name
+    """For a single parameter string truncate anything beyond the param name.
+
     input
     -----
     cbs: int = None
@@ -503,7 +504,8 @@ def clean_param(param):
 
 
 def sql_col_as_mil() -> None:
-    """format numeric sql clause as millions
+    """Format numeric sql clause as millions.
+
     input
     -----
     sum(spend) as spend,

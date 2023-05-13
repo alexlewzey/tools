@@ -1,4 +1,6 @@
-"""All my main macro and commonly used python scripts are run using a keyboard listener that recognises sequential key strokes that typically start with a semi colon.
+"""All my main macro and commonly used python scripts are run using a keyboard
+listener that recognises sequential key strokes that typically start with a
+semi colon.
 
 note: do not call your module macro as that name is already taken in the path
 """
