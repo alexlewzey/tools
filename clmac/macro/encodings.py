@@ -640,7 +640,10 @@ ENCODINGS = [
         cat="formatter", name="fmt_dash", encoding=";dh", func=formatters.fmt_dash
     ),
     MacroEncoding(
-        cat="formatter", name="imports2requirements", encoding=";ir", func=formatters.imports_to_requirements
+        cat="formatter",
+        name="imports2requirements",
+        encoding=";ir",
+        func=formatters.imports_to_requirements,
     ),
     MacroEncoding(
         cat="formatter",

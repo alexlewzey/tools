@@ -267,7 +267,7 @@ def fmt_repr():
     names = [x.split("=")[0].strip() for x in properties]
 
     output_text: str = (
-            "(" + ", ".join([f"{name}={{self.{name}}}" for name in names]) + ")"
+        "(" + ", ".join([f"{name}={{self.{name}}}" for name in names]) + ")"
     )
     output_text: str = (
         f"def __repr__(self):\n\treturn f'{{self.__class__.__name__}}{output_text}'"
@@ -471,8 +471,8 @@ def fmt_class_properties_multiassign():
 
     fmt_multiassign = (
         lambda params: ", ".join([f"self.{param}" for param in params])
-                       + " = "
-                       + ", ".join([f"{param}" for param in params])
+        + " = "
+        + ", ".join([f"{param}" for param in params])
     )
     output = fmt_multiassign(get_class_properties(pyperclip.paste()))
     pyperclip.copy(output)
@@ -614,6 +614,5 @@ def imports_to_requirements(s: str) -> str:
     plotly
     selenium
     """
-    modules = set([re.split(r'[ .]', line)[1] for line in s.splitlines() if line])
-    return '\n'.join(modules)
-
+    modules = set([re.split(r"[ .]", line)[1] for line in s.splitlines() if line])
+    return "\n".join(modules)
