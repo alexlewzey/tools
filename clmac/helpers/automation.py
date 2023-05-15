@@ -22,6 +22,6 @@ def copy_to_clipboard(text: str) -> None:
 
 @core.sleep_after(0.2)
 def refocus() -> None:
-    """Use the hot key alt + tab to switch back to the previous gui, required
-    at the start of any pyautowin script that is run from the run window."""
+    """Use the hot key alt + tab to switch back to the previous gui, required at the
+    start of any pyautowin script that is run from the run window."""
     pyautogui.hotkey("alt", "tab")

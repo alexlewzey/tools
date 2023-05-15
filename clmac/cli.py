@@ -36,8 +36,8 @@ def clt():
 @clt.command()
 @click.argument("semitones", type=int)
 def tuning(semitones):
-    """Print a seven string tuning to the terminal dropped by the passed number
-    of semitones."""
+    """Print a seven string tuning to the terminal dropped by the passed number of
+    semitones."""
     show_tuning(semitones)
 
 
@@ -238,8 +238,8 @@ def ls_config():
 
 @kel.command("sp")
 def set_config() -> None:
-    """Gives option to change any of the personal string settings where the
-    existing setting is the default."""
+    """Gives option to change any of the personal string settings where the existing
+    setting is the default."""
     settings = conftk.load_personal()
     new_settings = {}
     for k, v in settings.items():

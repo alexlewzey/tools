@@ -46,8 +46,7 @@ def move_mouse_out_the_way() -> None:
 
 
 def main():
-    """Automate setting the page layout in google doc to be as big as it
-    can."""
+    """Automate setting the page layout in google doc to be as big as it can."""
     automation.refocus()
     move_mouse_out_the_way()
     set_pagelayout()

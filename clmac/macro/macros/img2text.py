@@ -10,8 +10,7 @@ from clmac.config.definitions import EXE_TESSERACT
 
 
 def img2text():
-    """Convert image on clipboard to text and return to the clipboard command
-    line args:
+    """Convert image on clipboard to text and return to the clipboard command line args:
 
     nl: remove all new line characters from the return string
     """

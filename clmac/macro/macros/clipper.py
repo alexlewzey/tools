@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
-"""When activated will periodically check if any new items have been added to
-the clipboard and add them to a list when the user ends the program by pressing
-esc all the collected clipboard items will be added to the clipboard."""
+"""When activated will periodically check if any new items have been added to the
+clipboard and add them to a list when the user ends the program by pressing esc all the
+collected clipboard items will be added to the clipboard."""
 
 import logging
 import time

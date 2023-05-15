@@ -20,8 +20,8 @@ from clmac.helpers.clipboard_listener import clipboard_history_file
 def create_clipboard_index_menu(
     clipboard_history: List[str], max_length: int = 20
 ) -> Dict[Tuple[KeyCode, KeyCode], str]:
-    """Create mapping of pynput keycodes to the most recent items in the
-    clipboard history.
+    """Create mapping of pynput keycodes to the most recent items in the clipboard
+    history.
 
     Parameters
     ----------

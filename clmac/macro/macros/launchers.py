@@ -1,5 +1,4 @@
-"""Automates opening frequently used websites across multiple Chrome
-browsers."""
+"""Automates opening frequently used websites across multiple Chrome browsers."""
 import time
 import webbrowser
 from pathlib import Path
@@ -29,8 +28,8 @@ def morning_sites() -> None:
 
 
 def clipboard2browser() -> None:
-    """Take a line separated list of urls from the clipboard and open each one
-    in a separate tab."""
+    """Take a line separated list of urls from the clipboard and open each one in a
+    separate tab."""
     cb = pyperclip.paste()
     for url in cb.splitlines():
         url = url if url.startswith("http") else "http://" + url

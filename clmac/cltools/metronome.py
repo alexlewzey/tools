@@ -1,5 +1,4 @@
-"""Metronome where the user inputs the bpm with a timer printed in the
-terminal."""
+"""Metronome where the user inputs the bpm with a timer printed in the terminal."""
 import time
 from threading import Thread
 
