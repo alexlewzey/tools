@@ -634,10 +634,13 @@ ENCODINGS = [
         cat="formatter", name="fmt_hash", encoding=";hh", func=formatters.fmt_hash
     ),
     MacroEncoding(
-        cat="formatter", name="fmt_hash", encoding=";hj", func=typer("#" * 120)
+        cat="formatter", name="fmt_hash", encoding=";hj", func=typer("#" * 88)
     ),
     MacroEncoding(
         cat="formatter", name="fmt_dash", encoding=";dh", func=formatters.fmt_dash
+    ),
+    MacroEncoding(
+        cat="formatter", name="imports2requirements", encoding=";ir", func=formatters.imports_to_requirements
     ),
     MacroEncoding(
         cat="formatter",
