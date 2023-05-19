@@ -1,6 +1,6 @@
-"""
-all my main macro and commonly used python scripts are run using a keyboard listener that recognises sequential
-key strokes that typically start with a semi colon
+"""All my main macro and commonly used python scripts are run using a keyboard listener
+that recognises sequential keystrokes that typically start with a semicolon.
+
 note: do not call your module macro as that name is already taken in the path
 """
 import logging
@@ -26,8 +26,8 @@ typer = lh.Typer()
 
 
 class KeyHistory(list):
-    """A holder of fixed length for Key and KeyCode types passed from the
-    on_press listener."""
+    """A holder of fixed length for Key and KeyCode types passed from the on_press
+    listener."""
 
     def __init__(self, max_length: int = 20):
         super().__init__()
@@ -55,9 +55,9 @@ class GlobalInputs:
 
 
 def listen_for_encoding() -> None:
-    """Checks if the last three keys that were typed exist in the macro
-    encoding indexes, if there are it indexes and calls the function
-    corresponding to that three char encoding."""
+    """Checks if the last three keys that were typed exist in the macro encoding
+    indexes, if there are it indexes and calls the function corresponding to that three
+    char encoding."""
     last_three: Tuple = tuple(GlobalInputs.key_history[-3:])
     if last_three == GlobalInputs.CTRL_SHIFT_Q:
         raise SystemExit

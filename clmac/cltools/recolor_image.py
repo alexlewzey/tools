@@ -39,8 +39,7 @@ def make_dir(dir_new: str) -> Path:
 
 
 def batch_recolor(src: str, color: Rgb) -> None:
-    """Take all images in a folder, recolor them and save them in a new
-    directory."""
+    """Take all images in a folder, recolor them and save them in a new directory."""
     globed = glob_search_dir(src, "*.png")
     rgb_str = "_".join([str(n) for n in color])
     dst = make_dir(rgb_str)

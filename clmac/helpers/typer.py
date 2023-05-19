@@ -1,4 +1,4 @@
-"""tools for triggering functionality with keyboard presses.
+"""Tools for triggering functionality with keyboard presses.
 
 includes a keyboard listener, key history and currently pressed keys
 """
@@ -20,8 +20,7 @@ typer = Controller()
 
 
 class Typer(Controller):
-    """Container for all functionality relating to pressing keys on the
-    keyboard."""
+    """Container for all functionality relating to pressing keys on the keyboard."""
 
     def __init__(self):
         super().__init__()
@@ -34,8 +33,7 @@ class Typer(Controller):
             self.release(key)
 
     def hotkey(self, key_hold, key_press, rest: float = 0) -> None:
-        """Perform a simple hotkey where two keys are pressed
-        simultaneously."""
+        """Perform a simple hotkey where two keys are pressed simultaneously."""
         with self.pressed(key_hold):
             self.press(key_press)
             self.release(key_press)
@@ -61,13 +59,13 @@ class Typer(Controller):
             time.sleep(rest)
 
     def alt_tab(self, sleep_after: float = 0.2) -> None:
-        """Hotkey alt + tab, includes a sleep after so typing does not occur
-        while the windows are cycling."""
+        """Hotkey alt + tab, includes a sleep after so typing does not occur while the
+        windows are cycling."""
         if sys.platform == "win32":
-            logger.info(f"alt_tab: windows")
+            logger.info("alt_tab: windows")
             self.hotkey(Key.alt_l, Key.tab)
         else:
-            logger.info(f"alt_tab: mac")
+            logger.info("alt_tab: mac")
             self.hotkey(Key.cmd, Key.tab)
         time.sleep(sleep_after)
 
@@ -108,8 +106,7 @@ class Typer(Controller):
         self.press_key(Key.enter)
 
     def partial_typing(self, text: str, n_left: Optional[int] = None) -> Callable:
-        """Return a callable that will simulate typing text when subsequently
-        called."""
+        """Return a callable that will simulate typing text when subsequently called."""
 
         def call_typing() -> None:
             self.type(text)
@@ -143,8 +140,8 @@ class Typer(Controller):
             self.hotkey_three(Key.cmd, Key.shift, Key.left)
 
     def select_word_at_caret_and_copy(self) -> str:
-        """Selects the word at the cursor, if cursor is within word it will go
-        to end of word and then select it."""
+        """Selects the word at the cursor, if cursor is within word it will go to end of
+        word and then select it."""
         self.hotkey_three(Key.alt, Key.shift, Key.left)
         return self.selection_to_clipboard()
 
@@ -153,14 +150,14 @@ class Typer(Controller):
         return self.selection_to_clipboard()
 
     def next_chrome_tab(self) -> None:
-        """Cycle to the next chrome tab."""
+        """Cycle to the next Chrome tab."""
         if sys.platform == "win32":
             self.hotkey(Key.ctrl_l, Key.page_down)
         elif sys.platform == "darwin":
             self.hotkey(Key.ctrl, Key.page_down)
 
     def previous_chrome_tab(self) -> None:
-        """Cycle to the previous chrome tab."""
+        """Cycle to the previous Chrome tab."""
         if sys.platform == "win32":
             self.hotkey(Key.ctrl_l, Key.page_up)
         elif sys.platform == "darwin":
@@ -192,8 +189,8 @@ class Typer(Controller):
             self.hotkey(Key.cmd, Key.left)
 
     def select_previous_lines(self, n_lines: int) -> None:
-        """Select a specified number of lines preceding and including the
-        current line of the cursor."""
+        """Select a specified number of lines preceding and including the current line
+        of the cursor."""
         self.press_key(Key.up, num_presses=n_lines)
         self.caret_to_line_start()
         for _ in range(n_lines):
@@ -207,8 +204,7 @@ class Typer(Controller):
 
     def get_urls(self, n_urls: Optional[int] = None) -> List[str]:
         """"""
-        urls = []
-        urls.append(self.select_browser_url())
+        urls = [self.select_browser_url()]
 
         if n_urls:
             print(f"n_urls: {n_urls}")

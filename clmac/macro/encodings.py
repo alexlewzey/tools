@@ -13,10 +13,9 @@ from clmac.macro.macros import (clipper, formatters, img2text, launchers,
 from clmac.macro.macros.launchers import clipboard2browser
 
 
-
 class MacroEncoding:
-    """Represents a specific macro including its name, callable functionality
-    and the keyboard encoding that triggers it."""
+    """Represents a specific macro including its name, callable functionality and the
+    keyboard encoding that triggers it."""
 
     def __init__(self, cat: str, name: str, encoding: str, func: Callable):
         self.category = cat
@@ -43,8 +42,8 @@ class MacroEncoding:
 
 
 def load_and_type(setting: str) -> Callable:
-    """Load a setting from the config file and pass into a function (that will
-    type out the setting) that is returned."""
+    """Load a setting from the config file and pass into a function (that will type out
+    the setting) that is returned."""
 
     def type_detail():
         settings = conftk.load_personal()
@@ -173,9 +172,7 @@ ENCODINGS = [
         encoding=";cd",
         func=typer("conda deactivate"),
     ),
-    MacroEncoding(
-        cat="writer", name=".head()", encoding=";;h", func=typer(".head(9)")
-    ),
+    MacroEncoding(cat="writer", name=".head()", encoding=";;h", func=typer(".head(9)")),
     MacroEncoding(cat="writer", name=".dtype()", encoding=";;d", func=typer(".dtypes")),
     MacroEncoding(cat="writer", name=".shape", encoding=";;s", func=typer(".shape")),
     MacroEncoding(
@@ -302,7 +299,10 @@ ENCODINGS = [
         func=typer(".sample(frac=1.).head(100)"),
     ),
     MacroEncoding(
-        cat="writer", name="value_counts", encoding=";vc", func=typer(".value_counts(dropna=False)")
+        cat="writer",
+        name="value_counts",
+        encoding=";vc",
+        func=typer(".value_counts(dropna=False)"),
     ),
     MacroEncoding(
         cat="writer",
@@ -456,13 +456,16 @@ ENCODINGS = [
         cat="writer", name="git_add", encoding=";ga", func=typer("git add -A")
     ),
     MacroEncoding(
-        cat="writer", name="git_commit", encoding=";gc", func=typer('git commit -m ""', 1)
+        cat="writer",
+        name="git_commit",
+        encoding=";gc",
+        func=typer('git commit -m ""', 1),
     ),
     MacroEncoding(
         cat="writer", name="git_checkout", encoding=";co", func=typer("git checkout ")
     ),
     MacroEncoding(
-        cat="writer", name="git_branch", encoding=";gb", func=typer("git branch")
+        cat="writer", name="git_branch", encoding=";gb", func=typer("git branch ")
     ),
     MacroEncoding(
         cat="writer",
@@ -483,33 +486,15 @@ ENCODINGS = [
         func=typer("http://localhost:"),
     ),
     # numkey writers 0
-    MacroEncoding(
-        cat="numkeys", name="1", encoding=";;1", func=typer(custom_0.one)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="2", encoding=";;2", func=typer(custom_0.two)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="3", encoding=";;3", func=typer(custom_0.three)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="4", encoding=";;4", func=typer(custom_0.four)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="5", encoding=";;5", func=typer(custom_0.five)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="6", encoding=";;6", func=typer(custom_0.six)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="7", encoding=";;7", func=typer(custom_0.seven)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="8", encoding=";;8", func=typer(custom_0.eight)
-    ),
-    MacroEncoding(
-        cat="numkeys", name="9", encoding=";;9", func=typer(custom_0.nine)
-    ),
+    MacroEncoding(cat="numkeys", name="1", encoding=";;1", func=typer(custom_0.one)),
+    MacroEncoding(cat="numkeys", name="2", encoding=";;2", func=typer(custom_0.two)),
+    MacroEncoding(cat="numkeys", name="3", encoding=";;3", func=typer(custom_0.three)),
+    MacroEncoding(cat="numkeys", name="4", encoding=";;4", func=typer(custom_0.four)),
+    MacroEncoding(cat="numkeys", name="5", encoding=";;5", func=typer(custom_0.five)),
+    MacroEncoding(cat="numkeys", name="6", encoding=";;6", func=typer(custom_0.six)),
+    MacroEncoding(cat="numkeys", name="7", encoding=";;7", func=typer(custom_0.seven)),
+    MacroEncoding(cat="numkeys", name="8", encoding=";;8", func=typer(custom_0.eight)),
+    MacroEncoding(cat="numkeys", name="9", encoding=";;9", func=typer(custom_0.nine)),
     # numkey writers 1
     MacroEncoding(
         cat="numkeys", name="1", encoding=";11", func=load_and_type_numkey_1(1)
@@ -560,9 +545,6 @@ ENCODINGS = [
         cat="app", name="timestamp", encoding=";ts", func=typer.type_timestamp
     ),
     MacroEncoding(cat="app", name="date", encoding=";de", func=typer.type_date),
-    MacroEncoding(
-        cat="app", name="start_guitar", encoding=";gr", func=launchers.guitar_practice
-    ),
     MacroEncoding(
         cat="app", name="text2speech", encoding=";ee", func=text2speech.text2speech
     ),
@@ -644,10 +626,16 @@ ENCODINGS = [
         cat="formatter", name="fmt_hash", encoding=";hh", func=formatters.fmt_hash
     ),
     MacroEncoding(
-        cat="formatter", name="fmt_hash", encoding=";hj", func=typer("#" * 120)
+        cat="formatter", name="fmt_hash", encoding=";hj", func=typer("#" * 88)
     ),
     MacroEncoding(
         cat="formatter", name="fmt_dash", encoding=";dh", func=formatters.fmt_dash
+    ),
+    MacroEncoding(
+        cat="formatter",
+        name="imports2requirements",
+        encoding=";ir",
+        func=formatters.imports_to_requirements,
     ),
     MacroEncoding(
         cat="formatter",
@@ -802,8 +790,8 @@ class DuplicateEncodingError(ValueError):
 
 
 def test_for_duplicates() -> None:
-    """On program start check for duplicate encodings across the macro that
-    would result in two macro being called at once."""
+    """On program start check for duplicate encodings across the macro that would result
+    in two macro being called at once."""
     codes = [macro.encoding for macro in ENCODINGS]
     if len(codes) != len(set(codes)):
         err_msg = f"you have added a duplicate encoding: \n{Counter(codes)}"

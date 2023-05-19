@@ -26,8 +26,7 @@ class ClipboardHistoryFile:
             core.write_pickle([], self.file)
 
     def load(self) -> List:
-        """Load clipboard history flagging an error if it is not of type
-        list."""
+        """Load clipboard history flagging an error if it is not of type list."""
         try:
             core.history = core.read_pickle(self.file)
         except UnicodeError:
@@ -44,8 +43,8 @@ class ClipboardHistoryFile:
         core.write_pickle(history, self.file)
 
     def clean(self) -> None:
-        """Clean up the clipboard history file by removing duplicates, white
-        spaces and writing over the original."""
+        """Clean up the clipboard history file by removing duplicates, white spaces and
+        writing over the original."""
         clipboard_history: List = self.load()
         try:
             clipboard_history_unique = list(dict.fromkeys(clipboard_history))[-10:]

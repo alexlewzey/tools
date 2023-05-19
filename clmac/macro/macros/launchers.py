@@ -1,14 +1,12 @@
-"""Automates opening frequently used websites across multiple chrome
-browsers."""
+"""Automates opening frequently used websites across multiple Chrome browsers."""
 import time
 import webbrowser
 from pathlib import Path
 from typing import Iterable
 
 import pyperclip
-import yaml
 
-from clmac.config.definitions import LAUNCH_TXT, URLS_YAML
+from clmac.config.definitions import LAUNCH_TXT
 
 path = Path.cwd()
 
@@ -29,16 +27,9 @@ def morning_sites() -> None:
         open_urls(urls)
 
 
-def guitar_practice():
-    """Open the guitar practice urls in browser."""
-    with URLS_YAML.open("r") as f:
-        urls = yaml.load(f)["guitar"]
-    open_urls(urls.values())
-
-
 def clipboard2browser() -> None:
-    """Take a line separated list of urls from the clipboard and open each one
-    in a separate tab."""
+    """Take a line separated list of urls from the clipboard and open each one in a
+    separate tab."""
     cb = pyperclip.paste()
     for url in cb.splitlines():
         url = url if url.startswith("http") else "http://" + url

@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
-"""Add the rgb of current mouse cursor position to the clipboard, default rgb
-will return hex code if hex is passed as cmdline arg."""
+"""Add the rgb of current mouse cursor position to the clipboard, default rgb will
+return hex code if hex is passed as cmdline arg."""
 import time
 
 import pyautogui

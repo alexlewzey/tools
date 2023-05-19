@@ -3,6 +3,7 @@
 import shutil
 import sys
 from distutils.dir_util import copy_tree
+from typing import Generator
 
 import click
 import yaml
@@ -13,7 +14,7 @@ import clmac.macro.app as app
 from clmac.cltools import clipurls
 from clmac.cltools.tunings import show_tuning
 from clmac.config import conftk, definitions
-from clmac.helpers.core import *
+from clmac.helpers.core import Callable, Optional, Path, Union, logging
 from clmac.helpers.typer import Typer
 from clmac.macro.encodings import ENCODINGS, MacroEncoding
 
@@ -35,8 +36,8 @@ def clt():
 @clt.command()
 @click.argument("semitones", type=int)
 def tuning(semitones):
-    """Print a seven string tuning to the terminal dropped by the passed number
-    of semitones."""
+    """Print a seven string tuning to the terminal dropped by the passed number of
+    semitones."""
     show_tuning(semitones)
 
 
@@ -71,9 +72,9 @@ def pdf_merge(new_file, input_files) -> None:
 @clt.command()
 @click.option("-n", default=None, type=int)
 def urlclipper(n):
-    """Copy all (or given no.) of urls from open chrome browser saving out to
+    """Copy all (or given no.) of urls from open Chrome browser saving out to
     clipboard."""
-    clipurls.clipurls(n_urls=n)
+    clipurls.clip_urls(n_urls=n)
 
 
 def to_unix(path: Path) -> Path:
@@ -83,7 +84,7 @@ def to_unix(path: Path) -> Path:
     return path
 
 
-def get_tree(path: Union[Path, str], cond: Callable) -> List[Tuple[Path, int]]:
+def get_tree(path: Union[Path, str], cond: Callable) -> list[tuple[Path, int]]:
     tree = Path(path).rglob("*")
     return sorted(
         [(p, p.stat().st_size) for p in tree if cond(p)],
@@ -125,7 +126,7 @@ def dir_sizes(path: Union[Path, str], n: int = 10) -> None:
 
 
 def hr_bytes(n_bytes: int, binary=False, decimal_places=1):
-    """Return bytes in a human readable format."""
+    """Return bytes in a human-readable format."""
     if binary:
         factor, units = 1024, ["B", "KiB", "MiB", "GiB", "TiB", "PiB"]
     else:
@@ -217,7 +218,7 @@ def macros_ls(search):
 
 
 def _make_macro_table_text(
-    encodings: List[MacroEncoding], search: Optional[str] = None
+    encodings: list[MacroEncoding], search: Optional[str] = None
 ) -> str:
     """Print in tabular format the type name and encoding of every macro in the
     program."""
@@ -237,8 +238,8 @@ def ls_config():
 
 @kel.command("sp")
 def set_config() -> None:
-    """Gives option to change any of the personal string settings where the
-    existing setting is the default."""
+    """Gives option to change any of the personal string settings where the existing
+    setting is the default."""
     settings = conftk.load_personal()
     new_settings = {}
     for k, v in settings.items():
@@ -266,7 +267,7 @@ def _set_nums(keys, settings, path_yaml) -> None:
 @click.argument("keys", nargs=-1)
 @kel.command("sn0")
 def set_nums_0(keys) -> None:
-    """set the text associated with the num key macros (set 0)"""
+    """Set the text associated with the num key macros (set 0)"""
     _set_nums(
         keys, settings=conftk.load_numkeys_0(), path_yaml=definitions.NUMKEYS_YAML_0
     )
@@ -275,7 +276,7 @@ def set_nums_0(keys) -> None:
 @click.argument("keys", nargs=-1)
 @kel.command("sn1")
 def set_nums_1(keys) -> None:
-    """set the text associated with the num key macros (set 1)"""
+    """Set the text associated with the num key macros (set 1)"""
     _set_nums(
         keys, settings=conftk.load_numkeys_1(), path_yaml=definitions.NUMKEYS_YAML_1
     )
@@ -288,13 +289,13 @@ def _ls_nums(settings):
 
 @kel.command("ln0")
 def ls_nums_0():
-    """list current numkey macro assignments (set 0)"""
+    """List current numkey macro assignments (set 0)"""
     _ls_nums(conftk.load_numkeys_0())
 
 
 @kel.command("ln1")
 def ls_nums_1():
-    """list current numkey macro assignments (set 1)"""
+    """List current numkey macro assignments (set 1)"""
     _ls_nums(conftk.load_numkeys_1())
 
 

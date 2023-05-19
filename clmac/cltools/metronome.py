@@ -1,5 +1,4 @@
-"""Metronome where the user inputs the bpm with a timer printed in the
-terminal."""
+"""Metronome where the user inputs the bpm with a timer printed in the terminal."""
 import time
 from threading import Thread
 
@@ -18,7 +17,7 @@ def terminal_timer(refresh_period: float = 1) -> None:
     start = time.time()
     while True:
         secs_elapsed = int(time.time() - start)
-        print(f"time elapsed: {slibtk.human_readable_seconds(secs_elapsed)}", end="\r")
+        print(f"time elapsed: {secs_elapsed}", end="\r")
         time.sleep(refresh_period)
 
 

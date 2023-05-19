@@ -5,7 +5,7 @@ import logging
 import pickle
 import time
 from pathlib import Path
-from typing import *
+from typing import Any, Callable, Hashable, Optional, Sequence, Union
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -14,9 +14,25 @@ logging.basicConfig(
     level=logging.DEBUG,
 )
 
+dir_src = Path(__file__).parent.parent
+dir_config = dir_src / "config"
+
+file_custom_0 = dir_config / "custom_0.py"
+file_custom_1 = dir_config / "custom_1.py"
+
+numbers = "one,two,three,four,five,six,seven,eight,nine".split(",")
+if not file_custom_0.exists():
+    with file_custom_0.open("w") as f:
+        for number in numbers:
+            f.write(f'{number} = ""\n')
+if not file_custom_1.exists():
+    with file_custom_1.open("w") as f:
+        for number in numbers:
+            f.write(f'{number} = ""\n')
+
 
 def hr_secs(secs: float) -> str:
-    """Format seconds human readable format hours:mins:seconds."""
+    """Format seconds human-readable format hours:mins:seconds."""
     secs_per_hour: int = 3600
     secs_per_min: int = 60
     hours, remainder = divmod(secs, secs_per_hour)
@@ -30,9 +46,9 @@ def whitespacer(s):
 
 
 def log_input(positional_input_index: int = 0, kw_input_key: Optional[Hashable] = None):
-    """Logs the input (first positional argument) and output of decorated
-    function, you can specify a specific kw arg to be logged as input by
-    specifying its corresponding param key."""
+    """Logs the input (first positional argument) and output of decorated function, you
+    can specify a specific kw arg to be logged as input by specifying its corresponding
+    param key."""
 
     def outer_wrapper(func):
         @functools.wraps(func)
@@ -53,9 +69,9 @@ def log_input(positional_input_index: int = 0, kw_input_key: Optional[Hashable] 
 
 
 def log_output():
-    """Logs the input (first positional argument) and output of decorated
-    function, you can specify a specific kw arg to be logged as input by
-    specifying its corresponding param key."""
+    """Logs the input (first positional argument) and output of decorated function, you
+    can specify a specific kw arg to be logged as input by specifying its corresponding
+    param key."""
 
     def outer_wrapper(func):
         @functools.wraps(func)
@@ -75,9 +91,9 @@ def log_input_and_output(
     positional_input_index: int = 0,
     kw_input_key: Optional[Hashable] = None,
 ):
-    """Logs the input (first positional argument) and output of decorated
-    function, you can specify a specific kw arg to be logged as input by
-    specifying its corresponding param key."""
+    """Logs the input (first positional argument) and output of decorated function, you
+    can specify a specific kw arg to be logged as input by specifying its corresponding
+    param key."""
 
     def outer_wrapper(func):
         @functools.wraps(func)
@@ -112,8 +128,8 @@ def is_iterable(o: Any) -> bool:
 
 
 def _get_positional_arg(args, kwargs, index: int = 0) -> Any:
-    """Returns the first positional arg if there are any, if there are only kw
-    args it returns the first kw arg."""
+    """Returns the first positional arg if there are any, if there are only kw args it
+    returns the first kw arg."""
     try:
         input_arg = args[index]
     except KeyError:
@@ -122,9 +138,9 @@ def _get_positional_arg(args, kwargs, index: int = 0) -> Any:
 
 
 def log_func():
-    """Logs the input (first positional argument) and output of decorated
-    function, you can specify a specific kw arg to be logged as input by
-    specifying its corresponding param key."""
+    """Logs the input (first positional argument) and output of decorated function, you
+    can specify a specific kw arg to be logged as input by specifying its corresponding
+    param key."""
 
     def outer_wrapper(func):
         @functools.wraps(func)
@@ -158,8 +174,8 @@ def sleep_after(secs_after: float):
 
 
 def sleep_before_and_after(secs_before: float = 0, secs_after: float = 0):
-    """call the sleep method before and after the decorated function is called,
-    pass in the sleep duration in seconds.
+    """Call the sleep method before and after the decorated function is called, pass in
+    the sleep duration in seconds.
 
     Default values are 0.
     """

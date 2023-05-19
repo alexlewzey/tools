@@ -1,5 +1,4 @@
-"""Name space for large string literals used as into to callable typing
-macro."""
+"""Name space for large string literals used as into to callable typing macro."""
 
 logger = """import logging
 

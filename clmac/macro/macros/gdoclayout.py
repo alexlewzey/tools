@@ -40,15 +40,13 @@ def set_pagelayout() -> None:
 
 
 def move_mouse_out_the_way() -> None:
-    """Move mouse to a safe location in the bottom right right of the
-    screen."""
+    """Move mouse to a safe location in the bottom right of the screen."""
     position_xy = [x * 0.9 for x in pyautogui.size()]
     pyautogui.moveTo(position_xy[0], position_xy[1])
 
 
 def main():
-    """Automate setting the page layout in google doc to be as big as it
-    can."""
+    """Automate setting the page layout in google doc to be as big as it can."""
     automation.refocus()
     move_mouse_out_the_way()
     set_pagelayout()

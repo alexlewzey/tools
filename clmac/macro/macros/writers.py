@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
-"""Functions that automate typing which features control character which cannot
-be fed into the macro encoding as callable text."""
-from typing import *
+"""Functions that automate typing which features control character which cannot be fed
+into the macro encoding as callable text."""
+from typing import List
 
 from pynput.keyboard import Key, KeyCode
 
@@ -18,14 +18,16 @@ class GDocWriter:
     def __init__(self, lst: List[str]):
         self.lst = lst
 
-    def indent(self):
+    @staticmethod
+    def indent():
         typer.hotkey(Key.cmd, KeyCode(char="]"))
 
-    def dedent(self):
+    @staticmethod
+    def dedent():
         typer.hotkey(Key.cmd, KeyCode(char="["))
 
     def type_headers(self):
-        """Type out list as bulleted headers in Google docs with indented sub
+        """Type out list as bulleted headers in Google Docs with indented sub
         bullets."""
         for char in self.lst:
             typer.type_text(char)
@@ -50,8 +52,7 @@ def write_print() -> None:
 
 
 def git_commit() -> None:
-    """When run at the git terminal will automate add, commit and push
-    commands."""
+    """When run at the git terminal will automate add, commit and push commands."""
     text = "git add -A\n git commit -m '"
     typer.type_text(text)
 
