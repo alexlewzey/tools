@@ -150,9 +150,11 @@ ENCODINGS = [
     MacroEncoding(
         cat="writer", name="set_index", encoding=";si", func=typer(".set_index()", 1)
     ),
-
     MacroEncoding(
-        cat="writer", name="datetime.now()", encoding=";dt", func=typer("dt.datetime.now().replace(microsecond=0)")
+        cat="writer",
+        name="datetime.now()",
+        encoding=";dt",
+        func=typer("dt.datetime.now().replace(microsecond=0)"),
     ),
     MacroEncoding(
         cat="writer",
