@@ -151,17 +151,9 @@ ENCODINGS = [
     MacroEncoding(
         cat="writer", name="set_index", encoding=";si", func=typer(".set_index()", 1)
     ),
+
     MacroEncoding(
-        cat="writer",
-        name="start_time",
-        encoding=";st",
-        func=typer("start = time.time()\nprint(str(datetime.now()))"),
-    ),
-    MacroEncoding(
-        cat="writer",
-        name="end_time",
-        encoding=";et",
-        func=typer("print(slibtk.hr_secs(time.time() - start))"),
+        cat="writer", name="datetime.now()", encoding=";dt", func=typer("dt.datetime.now().replace(microsecond=0)")
     ),
     MacroEncoding(
         cat="writer",
