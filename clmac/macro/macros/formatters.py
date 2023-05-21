@@ -4,9 +4,6 @@ window) or via user interface is run from listener_standard script."""
 import functools
 import logging
 import re
-import textwrap
-import time
-import traceback
 from typing import List
 
 import pyperclip
@@ -196,13 +193,13 @@ def _pad_right_full(s: str, char: str, left_len: int = 1) -> str:
 
 @clipboard_in_out_paste
 def format_hash(s: str) -> str:
-    """see: pad_right_full()"""
+    """See: pad_right_full()"""
     return _pad_right_full(s, "#")
 
 
 @clipboard_in_out_paste
 def format_dash(s: str) -> str:
-    """see: pad_right_full()"""
+    """See: pad_right_full()"""
     return _pad_right_full(s, "-", left_len=2)
 
 

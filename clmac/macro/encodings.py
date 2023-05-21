@@ -8,14 +8,7 @@ from pynput.keyboard import KeyCode
 
 from clmac.config import boilerplate, conftk, custom_0
 from clmac.helpers.typer import Typer
-from clmac.macro.macros import (
-    clipper,
-    formatters,
-    img2text,
-    launchers,
-    text2speech,
-    writers,
-)
+from clmac.macro.macros import formatters, img2text, text2speech, writers
 from clmac.macro.macros.launchers import clipboard2browser
 
 
@@ -189,7 +182,6 @@ ENCODINGS = [
         encoding=";fs",
         func=typer("select * \nfrom "),
     ),
-    
     MacroEncoding(
         encoding=";sd",
         func=typer(boilerplate.sql_template_duplicates),
