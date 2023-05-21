@@ -120,6 +120,10 @@ ENCODINGS = [
         encoding=";ll",
         func=typer(".limit(5).toPandas()"),
     ),
+    MacroEncoding(
+        encoding=";dt",
+        func=typer("dt.datetime.now().replace(microsecond=0)"),
+    ),
     MacroEncoding(encoding=";tp", func=typer(".toPandas()")),
     MacroEncoding(encoding=";nr", func=typer("n_request")),
     MacroEncoding(
