@@ -1,15 +1,5 @@
 """Name space for large string literals used as into to callable typing macro."""
 
-logger = """import logging
-
-logging.basicConfig(**log_config)
-logger = logging.getLogger(__name__)"""
-
-log_config = """logging.basicConfig(
-        format='%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
-        datefmt = '%d-%m-%Y %H:%M:%S',
-        level=logging.INFO,
-)"""
 
 standard_lib: str = """from __future__ import annotations
 from typing import *
@@ -43,16 +33,16 @@ import scipy
 from tqdm.auto import tqdm
 import pandas as pd
 from sklearn import (
-model_selection,
- metrics,
- preprocessing,
- ensemble,
- neighbors,
- cluster,
- decomposition,
- inspection,
- linear_model,
- pipeline
+    model_selection,
+    metrics,
+    preprocessing,
+    ensemble,
+    neighbors,
+    cluster,
+    decomposition,
+    inspection,
+    linear_model,
+    pipeline
 )
 from sklearn.neighbors import NearestNeighbors
 from sklearn.metrics.pairwise import euclidean_distances, cosine_similarity
@@ -70,56 +60,21 @@ pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
 pd.set_option('display.float_format', '{{:.3f}}'.format)
-
-
-"""
-
-deep_learning: str = """import torch.nn as nn
-import torch
-import torch.nn.functional as F
-from fastai import *
-from fastai.vision import *
 """
 
 train_test_split: str = """train, test = model_selection.train_test_split(x, stratify=x['y'], test_size=0.2)"""
-
-iris_dataset: str = """import seaborn as sns
-x = sns.load_dataset('iris').rename({'species': 'y'}, axis=1)
-train, test = model_selection.train_test_split(x, stratify=x['y'], test_size=0.2)
-"""
-
-months: str = """'January',
-'February',
-'March',
-'April',
-'May',
-'June',
-'July',
-'August',
-'September',
-'October',
-'November',
-'December',
-"""
-
-months_abbr: str = """'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',"""
 
 please_info = "Please let me know if you require any more information."
 any_help = "Any help would be much appreciated."
 please_queries = "Please let me know if you have any queries."
 
-sql_template_cum_sum: str = """with wrapped as (
-select col,
-       count(*) as n,
-       count(*) / sum(count(*)) over() as pct,
-       row_number() over (order by count(*) desc) as rank,
+sql_template_sum: str = """select col,
+    count(*) as n,
+    count(*) / sum(count(*)) over() as pct,
+    row_number() over (order by count(*) desc) as rank,
 from table
     group by col
 order by n desc
-    )
-select * except (rank),
-       sum(pct) over (order by rank) as cum_pct,
-from wrapped;
 ;
 """
 
@@ -132,19 +87,6 @@ melt_plot: str = """melt = df.melt(['cat'])
 fig = px.line(melt, 'cat', 'value', color='variable')
 display_plotly(fig)
 """
-
-list_comprehension: str = """[f't{i}' for i in range(x.shape[1])]"""
-
-loop: str = """data = []
-for i in tqdm(range(5, 31, 5)):
-    model = TimeSeriesKMeans(n_clusters=i, metric="dtw", max_iter=10, random_state=5, n_jobs=-1)
-    model.fit(x)
-    score = metrics.silhouette_score(x, model.labels_)
-    data.append([i, score])
-df = pd.DataFrame(data, columns=['score', 'i']).reset_index().rename(columns={'index': 'time'})
-fig = px.line(df, 'time', 'score')
-plot(fig)"""
-
 
 px_3d_scatter: str = """fig = px.scatter_3d(df, "dim0", "dim1", "dim2", color="")
 fig.update_traces(marker=dict(size=3))
