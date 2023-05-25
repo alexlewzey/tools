@@ -6,10 +6,10 @@ from typing import Callable, Tuple
 
 from pynput.keyboard import KeyCode
 
-from clmac.config import boilerplate, custom_0
 from clmac import conftk
-from clmac.typer import Typer
+from clmac.config import boilerplate, custom_0
 from clmac.macros import formatters, img2text, text2speech
+from clmac.typer import Typer
 
 
 class MacroEncoding:
@@ -150,7 +150,7 @@ ENCODINGS = [
         encoding=";nm",
         func=typer("if __name__ == '__main__':\n    "),
     ),
-    MacroEncoding(encoding=";;;", func=typer('print()', 1)),
+    MacroEncoding(encoding=";;;", func=typer("print()", 1)),
     MacroEncoding(encoding=";;c", func=typer(".columns")),
     MacroEncoding(
         encoding=";3d",
@@ -166,7 +166,7 @@ ENCODINGS = [
     ),
     MacroEncoding(
         encoding=";sv",
-        func=typer('sort_values()', 1),
+        func=typer("sort_values()", 1),
     ),
     MacroEncoding(
         encoding=";vc",
