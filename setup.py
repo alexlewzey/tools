@@ -8,26 +8,7 @@ with open("README.md") as readme_file:
     readme = readme_file.read()
 
 requirements = [
-    "pyautogui",
-    "pyperclip",
-    "measurement",
-    "pynput",
-    "schedule",
-    "Pillow",
-    "PyPDF2",
-    "hurry.filesize",
-    "opencv-python",
-    "pytesseract",
-    "numpy",
-    "requests",
-    "selenium",
-    "webdriver-manager",
-    "lxml",
-    "Click",
-    "pyyaml",
-    "tabulate",
-    "gTTS",
-    "pyttsx3",
+    
 ]
 
 setup(

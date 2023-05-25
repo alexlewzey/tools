@@ -11,7 +11,7 @@ from typing import Callable, List, Optional
 import pyperclip
 from pynput.keyboard import Controller, Key, KeyCode
 
-from clmac.helpers import core
+from clmac import core
 
 logger = logging.getLogger(__name__)
 

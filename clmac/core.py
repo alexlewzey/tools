@@ -14,7 +14,7 @@ logging.basicConfig(
     level=logging.DEBUG,
 )
 
-dir_src = Path(__file__).parent.parent
+dir_src = Path(__file__).parent
 dir_config = dir_src / "config"
 
 file_custom_0 = dir_config / "custom_0.py"
@@ -22,10 +22,12 @@ file_custom_1 = dir_config / "custom_1.py"
 
 numbers = "one,two,three,four,five,six,seven,eight,nine".split(",")
 if not file_custom_0.exists():
+    print("custom_0.py not found, creating...")
     with file_custom_0.open("w") as f:
         for number in numbers:
             f.write(f'{number} = ""\n')
 if not file_custom_1.exists():
+    print("custom_1.py not found, creating...")
     with file_custom_1.open("w") as f:
         for number in numbers:
             f.write(f'{number} = ""\n')

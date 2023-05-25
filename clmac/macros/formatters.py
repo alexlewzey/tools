@@ -10,8 +10,7 @@ import pyperclip
 from pynput.keyboard import Key
 from textblob import TextBlob
 
-import clmac.helpers.automation as auto
-from clmac.helpers.typer import Typer
+from clmac.typer import Typer
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +24,8 @@ def clipboard_in_out(func):
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        clip: str = auto.read_clipboard()
+        clip: str = pyperclip.paste().strip()
+        time.sleep(0.1)
         clip = func(clip)
         pyperclip.copy(clip)
         typer.type_text(clip)
@@ -39,7 +39,8 @@ def clipboard_in_out_paste(func):
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        clip: str = auto.read_clipboard()
+        clip: str = pyperclip.paste().strip()
+        time.sleep(0.1)
         clip = func(clip)
         pyperclip.copy(clip)
         typer.paste()
@@ -225,7 +226,7 @@ def format_hash_center(s: str) -> str:
 @clipboard_in_out
 def wrap_fstring(s: str) -> str:
     wrapped = "f'{" + s + "}'"
-    auto.copy_to_clipboard(wrapped)
+    pyperclip.copy(wrapped)
     typer.paste()
     typer.press_key(Key.left, num_presses=len(s) + 3)
     return wrapped

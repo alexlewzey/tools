@@ -6,10 +6,10 @@ from typing import Callable, Tuple
 
 from pynput.keyboard import KeyCode
 
-from clmac.config import boilerplate, conftk, custom_0
-from clmac.helpers.typer import Typer
-from clmac.macro.macros import formatters, img2text, text2speech, writers
-from clmac.macro.macros.launchers import clipboard2browser
+from clmac.config import boilerplate, custom_0
+from clmac import conftk
+from clmac.typer import Typer
+from clmac.macros import formatters, img2text, text2speech
 
 
 class MacroEncoding:
@@ -150,7 +150,7 @@ ENCODINGS = [
         encoding=";nm",
         func=typer("if __name__ == '__main__':\n    "),
     ),
-    MacroEncoding(encoding=";;;", func=writers.write_print),
+    MacroEncoding(encoding=";;;", func=typer('print()', 1)),
     MacroEncoding(encoding=";;c", func=typer(".columns")),
     MacroEncoding(
         encoding=";3d",
@@ -166,7 +166,7 @@ ENCODINGS = [
     ),
     MacroEncoding(
         encoding=";sv",
-        func=writers.type_sort_values,
+        func=typer('sort_values()', 1),
     ),
     MacroEncoding(
         encoding=";vc",
@@ -223,15 +223,6 @@ ENCODINGS = [
     MacroEncoding(encoding=";;9", func=typer(custom_0.nine)),
     ################################# script logic runners #################################
     MacroEncoding(encoding=";i2", func=img2text.img2text),
-    MacroEncoding(encoding=";cb", func=clipboard2browser),
-    MacroEncoding(
-        encoding=";ls",
-        func=writers.caret_to_line_start,
-    ),
-    MacroEncoding(
-        encoding=";le",
-        func=writers.caret_to_line_end,
-    ),
     MacroEncoding(encoding=";ts", func=typer.type_timestamp),
     MacroEncoding(encoding=";de", func=typer.type_date),
     MacroEncoding(encoding=";ee", func=text2speech.text2speech),
