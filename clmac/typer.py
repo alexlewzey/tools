@@ -5,13 +5,13 @@ includes a keyboard listener, key history and currently pressed keys
 import logging
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, date
 from typing import Callable, List, Optional
 
 import pyperclip
 from pynput.keyboard import Controller, Key, KeyCode
 
-from clmac import core
+import core
 
 logger = logging.getLogger(__name__)
 
@@ -96,10 +96,10 @@ class Typer(Controller):
             time.sleep(sleep_after)
 
     def type_date(self) -> None:
-        self.type_text(get_date())
+        self.type_text(date.today().isoformat())
 
     def type_timestamp(self) -> None:
-        self.type(get_timestamp())
+        self.type(datetime.now().replace(microsecond=0).isoformat())
 
     def next_lines(self) -> None:
         self.caret_to_line_end()
@@ -223,35 +223,3 @@ class Typer(Controller):
         return urls
 
 
-def get_date() -> str:
-    return str(datetime.now().date())
-
-
-def get_timestamp() -> str:
-    now = datetime.now()
-    return datetime.strftime(now, "%Y-%m-%d, %H:%M")
-
-
-def cycle_case(text: str) -> str:
-    """Cycle through lower > upper > capitalise etc."""
-    if not text.islower() and not text.isupper():
-        output = text.lower()
-    elif text.islower():
-        output = text.upper()
-    elif text.isupper():
-        output = capitalise_all(text)
-    else:
-        raise ValueError("cycle_case something went wrong")
-    return output
-
-
-def capitalise_all(text: str) -> str:
-    """Capitalise all word in a string, ignoring special cases."""
-    capitalise_ignore = ["of", "on", "an", "in", "and"]
-    capitalised = []
-    for word in text.split():
-        if word.lower() in capitalise_ignore:
-            capitalised.append(word.lower())
-        else:
-            capitalised.append(word.capitalize())
-    return " ".join(capitalised)

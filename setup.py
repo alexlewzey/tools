@@ -7,38 +7,13 @@ from setuptools import find_packages, setup
 with open("README.md") as readme_file:
     readme = readme_file.read()
 
-requirements = [
-    
-]
 
 setup(
-    author="Alexander Lewzey",
-    author_email="a.lewzey@hotmail.co.uk",
-    python_requires=">=3.5",
-    classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
-        "Intended Audience :: Developers",
-        "Natural Language :: English",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.5",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-    ],
-    description="A collection of scripts and macro to carry out various different task (mainly automating repetative "
-    "tasks)",
     entry_points={
         "console_scripts": [
-            "clmac=clmac.cli:cli",
+            "clmac=clmac.app",
         ],
     },
-    install_requires=requirements,
-    long_description=readme,
-    include_package_data=True,
-    keywords="clmac",
-    name="clmac",
     packages=find_packages(include=["clmac", "clmac.*"]),
     url="https://github.com/alexlewzey/clmac",
-    version="0.1.0",
-    zip_safe=False,
 )

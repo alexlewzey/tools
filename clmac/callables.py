@@ -6,10 +6,10 @@ from typing import Callable, Tuple
 
 from pynput.keyboard import KeyCode
 
-from clmac.config import boilerplate, custom_0
-from clmac import conftk
-from clmac.typer import Typer
-from clmac.macros import formatters, img2text, text2speech
+from config import boilerplate, custom_0
+import conftk
+from typer import Typer
+from macros import formatters, img2text, text2speech
 
 
 class MacroEncoding:

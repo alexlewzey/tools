@@ -10,9 +10,9 @@ from typing import Tuple
 
 from pynput.keyboard import Key, KeyCode, Listener
 
-import clmac.typer as lh
-from clmac import core
-from clmac.encodings import ENCODINGS, test_for_duplicates
+import typer as lh
+import core
+from clmac.callables import ENCODINGS, test_for_duplicates
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
