@@ -8,7 +8,7 @@ import time
 from datetime import date, datetime
 from typing import Callable, List, Optional
 
-import core
+from . import core
 import pyperclip
 from pynput.keyboard import Controller, Key, KeyCode
 

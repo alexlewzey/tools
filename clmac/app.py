@@ -8,8 +8,8 @@ import subprocess
 import time
 from typing import Tuple
 
-import core
-import typer as lh
+from . import core
+from . import typer as lh
 from pynput.keyboard import Key, KeyCode, Listener
 
 from clmac.callables import ENCODINGS, test_for_duplicates

@@ -4,24 +4,24 @@ from typing import Callable, Dict
 
 import yaml
 
-from clmac.config import definitions
+from clmac import core
 
 
 def load_personal() -> Dict:
     """Load personal settings file if exists else create file with null setting and
     return it."""
-    return _load_yaml(definitions.PERSONAL_YAML, _set_default_personal)
+    return _load_yaml(core.PERSONAL_YAML, _set_default_personal)
 
 
 def load_numkeys_0():
     return _load_yaml(
-        path_yaml=definitions.NUMKEYS_YAML_0, default_setter=_set_default_numkeys
+        path_yaml=core.NUMKEYS_YAML_0, default_setter=_set_default_numkeys
     )
 
 
 def load_numkeys_1():
     return _load_yaml(
-        path_yaml=definitions.NUMKEYS_YAML_1, default_setter=_set_default_numkeys
+        path_yaml=core.NUMKEYS_YAML_1, default_setter=_set_default_numkeys
     )
 
 
