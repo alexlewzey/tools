@@ -1,12 +1,10 @@
 """"""
 import functools
-import inspect
 import logging
-import pickle
-import time
 import sys
+import time
 from pathlib import Path
-from typing import Any, Callable, Hashable, Optional, Sequence, Union
+from typing import Any, Hashable, Optional
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -36,7 +34,6 @@ driver_file: str = "chromedriver.exe" if sys.platform == "win32" else "chromedri
 EXE_CHROMEDRIVER: str = (ROOT / "bins" / driver_file).as_posix()
 
 
-
 dir_src = Path(__file__).parent
 dir_config = dir_src / "config"
 
@@ -54,8 +51,6 @@ if not file_custom_1.exists():
     with file_custom_1.open("w") as f:
         for number in numbers:
             f.write(f'{number} = ""\n')
-
-
 
 
 def log_input(positional_input_index: int = 0, kw_input_key: Optional[Hashable] = None):
@@ -98,7 +93,6 @@ def log_output():
     return outer_wrapper
 
 
-
 def _get_positional_arg(args, kwargs, index: int = 0) -> Any:
     """Returns the first positional arg if there are any, if there are only kw args it
     returns the first kw arg."""
@@ -107,8 +101,6 @@ def _get_positional_arg(args, kwargs, index: int = 0) -> Any:
     except KeyError:
         input_arg = list(kwargs.values())[index]
     return input_arg
-
-
 
 
 def sleep_after(secs_after: float):
@@ -136,4 +128,3 @@ def sleep_before_and_after(secs_before: float = 0, secs_after: float = 0):
         return inner_wrapper
 
     return outer_wrapper
-

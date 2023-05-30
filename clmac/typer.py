@@ -8,9 +8,10 @@ import time
 from datetime import date, datetime
 from typing import Callable, List, Optional
 
-from . import core
 import pyperclip
 from pynput.keyboard import Controller, Key, KeyCode
+
+from . import core
 
 logger = logging.getLogger(__name__)
 
