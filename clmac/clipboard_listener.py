@@ -8,7 +8,6 @@ import pyperclip
 from clmac import core
 from clmac.config.definitions import FILE_CLIPBOARD_HISTORY
 
-
 logger = logging.getLogger(__name__)
 
 
