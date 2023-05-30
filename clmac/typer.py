@@ -5,13 +5,12 @@ includes a keyboard listener, key history and currently pressed keys
 import logging
 import sys
 import time
-from datetime import datetime, date
+from datetime import date, datetime
 from typing import Callable, List, Optional
 
+import core
 import pyperclip
 from pynput.keyboard import Controller, Key, KeyCode
-
-import core
 
 logger = logging.getLogger(__name__)
 
@@ -221,5 +220,3 @@ class Typer(Controller):
 
         logger.debug(f"returning urls: {urls}")
         return urls
-
-
