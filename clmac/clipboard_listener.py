@@ -5,8 +5,9 @@ from typing import Any, List
 
 import pyperclip
 
-from config.definitions import FILE_CLIPBOARD_HISTORY
-import core
+from clmac import core
+from clmac.config.definitions import FILE_CLIPBOARD_HISTORY
+
 
 logger = logging.getLogger(__name__)
 
