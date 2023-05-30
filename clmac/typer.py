@@ -16,7 +16,6 @@ import core
 logger = logging.getLogger(__name__)
 
 MAX_DEQUE_SIZE = 20
-typer = Controller()
 
 
 class Typer(Controller):
