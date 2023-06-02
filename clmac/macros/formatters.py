@@ -4,14 +4,15 @@ window) or via user interface is run from listener_standard script."""
 import functools
 import logging
 import re
-from typing import List
 import time
+from typing import List
+
 import pyperclip
+import sqlfluff
 from pynput.keyboard import Key
 from textblob import TextBlob
 
 from clmac.typer import Typer
-import sqlfluff
 
 logger = logging.getLogger(__name__)
 
@@ -311,13 +312,11 @@ def imports_to_requirements(s: str) -> str:
     return "\n".join(modules)
 
 
-
 @clipboard_in_out_paste
 def format_sql(s: str) -> str:
     """Format sql with sqlfluff."""
     s = sqlfluff.fix(s, dialect="databricks")
     return s
-
 
 
 # select line first formatters #########################################################
@@ -343,12 +342,3 @@ def cut_right_equality() -> None:
     left, right = line.split("=", maxsplit=1)
     pyperclip.copy(right.strip())
     typer.type_text(left + "= ")
-
-
-
-
-
-
-
-
-
