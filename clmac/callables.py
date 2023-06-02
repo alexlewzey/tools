@@ -237,7 +237,7 @@ ENCODINGS = [
     ),
     MacroEncoding(
         encoding=";sl",
-        func=formatters.typer.select_line_at_caret_and_copy(),
+        func=typer.select_line_at_caret_and_copy,
     ),
     MacroEncoding(
         encoding=";re",
@@ -282,6 +282,10 @@ ENCODINGS = [
     MacroEncoding(
         encoding=";sj",
         func=formatters.split_join,
+    ),
+    MacroEncoding(
+        encoding=";sq",
+        func=formatters.format_sql,
     ),
 ]
 
