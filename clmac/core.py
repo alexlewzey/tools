@@ -30,8 +30,7 @@ FILE_CLIPBOARD_HISTORY: Path = DIR_DATA / "clipboard_history.pk"
 EXE_TESSERACT: str = (
     Path.home() / "/AppData/Local/Tesseract-OCR/tesseract.exe"
 ).as_posix()
-driver_file: str = "chromedriver.exe" if sys.platform == "win32" else "chromedriver"
-EXE_CHROMEDRIVER: str = (ROOT / "bins" / driver_file).as_posix()
+
 
 
 dir_src = Path(__file__).parent
