@@ -1,7 +1,6 @@
 """"""
 import functools
 import logging
-import sys
 import time
 from pathlib import Path
 from typing import Any, Hashable, Optional
@@ -30,7 +29,6 @@ FILE_CLIPBOARD_HISTORY: Path = DIR_DATA / "clipboard_history.pk"
 EXE_TESSERACT: str = (
     Path.home() / "/AppData/Local/Tesseract-OCR/tesseract.exe"
 ).as_posix()
-
 
 
 dir_src = Path(__file__).parent
