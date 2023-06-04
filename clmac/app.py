@@ -10,10 +10,9 @@ from typing import Tuple
 
 from pynput.keyboard import Key, KeyCode, Listener
 
-from .callables import ENCODINGS, test_for_duplicates
-
 from . import core
 from . import typer as lh
+from .callables import ENCODINGS, test_for_duplicates
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
