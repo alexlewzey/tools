@@ -10,7 +10,7 @@ from typing import Tuple
 
 from pynput.keyboard import Key, KeyCode, Listener
 
-from clmac.callables import ENCODINGS, test_for_duplicates
+from .callables import ENCODINGS, test_for_duplicates
 
 from . import core
 from . import typer as lh

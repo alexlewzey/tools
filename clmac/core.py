@@ -13,10 +13,7 @@ logging.basicConfig(
     level=logging.DEBUG,
 )
 
-SRC: Path = Path(__file__).parent.parent
-ROOT = SRC.parent
-DIR_DATA = ROOT / "data"
-DIR_HELPERS = SRC / "helpers"
+SRC: Path = Path(__file__).parent
 DIR_CONFIG = SRC / "config"
 
 PERSONAL_YAML = DIR_CONFIG / "personal.yaml"
@@ -25,7 +22,6 @@ NUMKEYS_YAML_1 = DIR_CONFIG / "numkeys_1.yaml"
 URLS_YAML = DIR_CONFIG / "urls.yaml"
 LAUNCH_TXT = DIR_CONFIG / "launch.txt"
 
-FILE_CLIPBOARD_HISTORY: Path = DIR_DATA / "clipboard_history.pk"
 
 EXE_TESSERACT: str = (
     Path.home() / "/AppData/Local/Tesseract-OCR/tesseract.exe"
