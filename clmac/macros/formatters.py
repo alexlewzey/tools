@@ -5,8 +5,9 @@ import functools
 import logging
 import re
 import time
-from typing import List
 import webbrowser
+from typing import List
+
 import pyperclip
 import sqlfluff
 from pynput.keyboard import Key
