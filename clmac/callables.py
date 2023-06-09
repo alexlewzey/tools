@@ -1,5 +1,6 @@
 """A collection of all my available macro."""
 
+
 from collections import Counter
 from functools import partial
 from typing import Callable, Tuple
@@ -287,6 +288,10 @@ ENCODINGS = [
     MacroEncoding(
         encoding=";sq",
         func=formatters.format_sql,
+    ),
+    MacroEncoding(
+        encoding=";wb",
+        func=formatters.open_cb_url,
     ),
 ]
 

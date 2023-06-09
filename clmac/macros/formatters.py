@@ -6,7 +6,7 @@ import logging
 import re
 import time
 from typing import List
-
+import webbrowser
 import pyperclip
 import sqlfluff
 from pynput.keyboard import Key
@@ -317,6 +317,12 @@ def format_sql(s: str) -> str:
     """Format sql with sqlfluff."""
     s = sqlfluff.fix(s, dialect="databricks")
     return s
+
+
+def open_cb_url() -> None:
+    """Open the current clipboard url in the default browser."""
+    url = pyperclip.paste()
+    webbrowser.open(url)
 
 
 # select line first formatters #########################################################
