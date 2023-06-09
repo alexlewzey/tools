@@ -326,7 +326,7 @@ def set_equal_to_self() -> None:
     """Select text on the current line copy it and set it equal to itself
     in: df
     out: df = df"""
-    text = typer.select_line_at_caret_and_copy()()
+    text = typer.select_line_at_caret_and_copy()
     typer.caret_to_line_end()
     typer.type_text(" = " + text)
     logger.info(f"typed: {text}")
@@ -338,7 +338,7 @@ def cut_right_equality() -> None:
     in: greeting = 'hello world'
     out: greeting =
     """
-    line = typer.select_line_at_caret_and_copy()()
+    line = typer.select_line_at_caret_and_copy()
     left, right = line.split("=", maxsplit=1)
     pyperclip.copy(right.strip())
     typer.type_text(left + "= ")

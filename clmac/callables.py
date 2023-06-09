@@ -7,7 +7,7 @@ from typing import Callable, Tuple
 from pynput.keyboard import KeyCode
 
 from clmac import conftk
-from clmac.config import boilerplate, custom_0
+from .config import boilerplate, custom_0
 from clmac.macros import formatters, img2text, text2speech
 from clmac.typer import Typer
 
