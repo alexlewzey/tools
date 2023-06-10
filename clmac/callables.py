@@ -91,11 +91,11 @@ ENCODINGS = [
     ),
     MacroEncoding(
         encoding=";ah",
-        func=typer(boilerplate.any_help),
+        func=typer.partial_paste(boilerplate.any_help),
     ),
     MacroEncoding(
         encoding=";pl",
-        func=typer(boilerplate.please_queries),
+        func=typer.partial_paste(boilerplate.please_queries),
     ),
     MacroEncoding(
         encoding=";pf",
@@ -156,15 +156,15 @@ ENCODINGS = [
     MacroEncoding(encoding=";;c", func=typer(".columns")),
     MacroEncoding(
         encoding=";3d",
-        func=typer(boilerplate.px_3d_scatter),
+        func=typer.partial_paste(boilerplate.px_3d_scatter),
     ),
     MacroEncoding(
         encoding=";mp",
-        func=typer(boilerplate.melt_plot),
+        func=typer.partial_paste(boilerplate.melt_plot),
     ),
     MacroEncoding(
         encoding=";ds",
-        func=typer(boilerplate.data_sci),
+        func=typer.partial_paste(boilerplate.data_sci),
     ),
     MacroEncoding(
         encoding=";sv",
@@ -186,7 +186,7 @@ ENCODINGS = [
     ),
     MacroEncoding(
         encoding=";sd",
-        func=typer(boilerplate.sql_template_duplicates),
+        func=typer.partial_paste(boilerplate.sql_template_duplicates),
     ),
     MacroEncoding(
         encoding=";sx",
