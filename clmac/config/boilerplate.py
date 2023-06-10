@@ -1,7 +1,6 @@
 """Name space for large string literals used as into to callable typing macro."""
 
 
-
 standard_lib: str = """from __future__ import annotations
 from typing import *
 import logging
