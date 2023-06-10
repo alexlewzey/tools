@@ -6,8 +6,9 @@ import logging
 import sys
 import time
 from datetime import date, datetime
-from typing import Callable, List, Optional
 from functools import partial
+from typing import Callable, List, Optional
+
 import pyperclip
 from pynput.keyboard import Controller, Key, KeyCode
 
@@ -76,8 +77,6 @@ class Typer(Controller):
         else:
             raise ValueError(f"{self.paste.__name__} no handler for operating system")
 
-
-
     def copy(self) -> str:
         self.hotkey(self.cmd_ctrl, KeyCode(char="c"))
         time.sleep(0.2)
@@ -88,11 +87,10 @@ class Typer(Controller):
         self.paste()
         if n_left:
             self.press_key(Key.left, n_left)
-        
+
     def partial_paste(self, text: str, n_left: Optional[int] = None) -> Callable:
         return partial(self.paste_text, text, n_left)
-        
-    
+
     def type_text(self, text: str, sleep_after: Optional[float] = None) -> None:
         """Types text character by character and will handle newline escape
         characters."""
