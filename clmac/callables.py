@@ -160,7 +160,7 @@ ENCODINGS = [
     ),
     MacroEncoding(
         encoding=";mp",
-        func=typer.partial_paste(boilerplate.melt_plot),
+        func=typer.partial_paste(boilerplate.melt_plot, 58),
     ),
     MacroEncoding(
         encoding=";ds",
@@ -186,7 +186,11 @@ ENCODINGS = [
     ),
     MacroEncoding(
         encoding=";sd",
-        func=typer.partial_paste(boilerplate.sql_template_duplicates),
+        func=typer.partial_paste(boilerplate.sql_duplicates, 51),
+    ),
+    MacroEncoding(
+        encoding=";ss",
+        func=typer.partial_paste(boilerplate.sql_sum, 165),
     ),
     MacroEncoding(
         encoding=";sx",
