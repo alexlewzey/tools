@@ -29,24 +29,10 @@ import shutil
 
 data_sci: str = f"""{standard_lib}
 import numpy as np
-from scipy import stats
 import scipy
 from tqdm.auto import tqdm
 import pandas as pd
-from sklearn import (
-    model_selection,
-    metrics,
-    preprocessing,
-    ensemble,
-    neighbors,
-    cluster,
-    decomposition,
-    inspection,
-    linear_model,
-    pipeline
-)
-from sklearn.neighbors import NearestNeighbors
-from sklearn.metrics.pairwise import euclidean_distances, cosine_similarity
+from sklearn import *
 import lightgbm as lgb
 import optuna
 from optuna import Trial
@@ -56,9 +42,9 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.offline import plot
 
-pd.set_option('display.max_rows', 500)
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.width', 1000)
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', None)
 pd.set_option('display.float_format', '{{:.3f}}'.format)
 """
 
