@@ -24,3 +24,6 @@ def speak_clipboard():
 def text2speech() -> None:
     process = Process(target=speak_clipboard)
     process.start()
+
+print("text2speech.py loaded")
+
