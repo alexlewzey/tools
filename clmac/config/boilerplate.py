@@ -1,7 +1,8 @@
 """Name space for large string literals used as into to callable typing macro."""
 
 
-standard_lib: str = """from __future__ import annotations
+
+data_sci: str = f"""from __future__ import annotations
 from typing import *
 import logging
 from collections import defaultdict
@@ -9,6 +10,7 @@ from datetime import datetime, timedelta, date
 from pathlib import Path
 import itertools
 import functools
+from functools import partial
 import subprocess
 import io
 import os
@@ -24,28 +26,38 @@ import string
 import requests
 import copy
 import shutil
-"""
+import zipfile
+import pdb
+import warnings
 
 
-data_sci: str = f"""{standard_lib}
+from fastcore.all import *
 import numpy as np
 import scipy
 from tqdm.auto import tqdm
 import pandas as pd
 from sklearn import *
-import lightgbm as lgb
-import optuna
-from optuna import Trial
-import umap
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.offline import plot
+# import nbdev
+# import umap
+# import lightgbm as lgb
+# import optuna
+# from optuna import Trial
+
+# import torch
+# from torch import tensor
+# import torch.nn as nn
+# import torch.nn.functional as F
+
+warnings.filterwarnings('ignore')
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
-pd.set_option('display.float_format', '{{:.3f}}'.format)
+pd.set_option('display.float_format', '{:.3f}'.format)
 """
 
 
