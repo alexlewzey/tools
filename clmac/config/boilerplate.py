@@ -1,7 +1,6 @@
 """Name space for large string literals used as into to callable typing macro."""
 
 
-
 data_sci: str = f"""from __future__ import annotations
 from typing import *
 import logging
