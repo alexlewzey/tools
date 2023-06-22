@@ -31,7 +31,7 @@ import pdb
 import warnings
 
 
-from fastcore.all import *
+from fastcore.all import *  
 import numpy as np
 import scipy
 from tqdm.auto import tqdm
@@ -57,7 +57,7 @@ warnings.filterwarnings('ignore')
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
-pd.set_option('display.float_format', '{:.3f}'.format)
+pd.set_option('display.float_format', '{{:.3f}}'.format)
 """
 
 
