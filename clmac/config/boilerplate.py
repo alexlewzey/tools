@@ -51,6 +51,7 @@ from plotly.offline import plot
 # from torch import tensor
 # import torch.nn as nn
 # import torch.nn.functional as F
+# torch.set_printoptions(linewidth=140, sci_mode=False, edgeitems=7)
 
 warnings.filterwarnings('ignore')
 
@@ -58,6 +59,7 @@ pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
 pd.set_option('display.float_format', '{{:.3f}}'.format)
+np.set_printoptions(linewidth=140)
 """
 
 
