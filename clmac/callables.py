@@ -116,6 +116,10 @@ ENCODINGS = [
         func=typer(".limit(5).toPandas()"),
     ),
     MacroEncoding(
+        encoding=";tt",
+        func=typer("timestamp"),
+    ),
+    MacroEncoding(
         encoding=";dt",
         func=typer("dt.datetime.now().replace(microsecond=0)"),
     ),
