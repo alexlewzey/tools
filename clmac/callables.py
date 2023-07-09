@@ -303,9 +303,12 @@ ENCODINGS = [
 ]
 
 import sys
-if sys.platform != 'darwin':
+
+if sys.platform != "darwin":
     from clmac.macros import text2speech
+
     ENCODINGS.append(MacroEncoding(encoding=";ee", func=text2speech.text2speech))
+
 
 class DuplicateEncodingError(ValueError):
     pass
