@@ -8,7 +8,7 @@ from typing import Callable, Tuple
 from pynput.keyboard import KeyCode
 
 from clmac import conftk
-from clmac.macros import formatters, img2text, text2speech
+from clmac.macros import formatters, img2text
 from clmac.typer import Typer
 
 from .config import boilerplate, custom_0
@@ -231,7 +231,6 @@ ENCODINGS = [
     MacroEncoding(encoding=";i2", func=img2text.img2text),
     MacroEncoding(encoding=";ts", func=typer.type_timestamp),
     MacroEncoding(encoding=";de", func=typer.type_date),
-    MacroEncoding(encoding=";ee", func=text2speech.text2speech),
     ################################## string formatters ###################################
     MacroEncoding(
         encoding=";up",
@@ -299,6 +298,10 @@ ENCODINGS = [
     ),
 ]
 
+import sys
+if sys.platform != 'darwin':
+    from clmac.macros import text2speech
+    ENCODINGS.append(MacroEncoding(encoding=";ee", func=text2speech.text2speech))
 
 class DuplicateEncodingError(ValueError):
     pass
