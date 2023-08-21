@@ -307,10 +307,18 @@ ENCODINGS = [
     ),
 ]
 
+<<<<<<< HEAD
 
 if sys.platform != 'darwin':
+=======
+import sys
+
+if sys.platform != "darwin":
+>>>>>>> 2a047aaf8ecf707c3c427424c5e43bd1ba59b568
     from clmac.macros import text2speech
+
     ENCODINGS.append(MacroEncoding(encoding=";ee", func=text2speech.text2speech))
+
 
 class DuplicateEncodingError(ValueError):
     pass
