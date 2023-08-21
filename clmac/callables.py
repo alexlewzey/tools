@@ -4,6 +4,7 @@
 from collections import Counter
 from functools import partial
 from typing import Callable, Tuple
+import sys
 
 from pynput.keyboard import KeyCode
 
@@ -131,6 +132,7 @@ ENCODINGS = [
     ),
     MacroEncoding(encoding=";ri", func=typer(".reset_index()")),
     MacroEncoding(encoding=";si", func=typer(".set_index()", 1)),
+    MacroEncoding(encoding=";ii", func=typer("def __init__(self, ):", 2)),
     MacroEncoding(
         encoding=";ca",
         func=typer("conda activate "),
@@ -140,6 +142,7 @@ ENCODINGS = [
         func=typer("conda deactivate"),
     ),
     MacroEncoding(encoding=";;h", func=typer(".head(9)")),
+    MacroEncoding(encoding=";;t", func=typer("torch.")),
     MacroEncoding(encoding=";;d", func=typer(".dtypes")),
     MacroEncoding(encoding=";;s", func=typer(".shape")),
     MacroEncoding(encoding=";as", func=typer("ascending=False")),
@@ -213,6 +216,8 @@ ENCODINGS = [
     ),
     MacroEncoding(encoding=";co", func=typer("git checkout ")),
     MacroEncoding(encoding=";gb", func=typer("git branch ")),
+    MacroEncoding(encoding=";sr", func=typer("super().__init__()")),
+    MacroEncoding(encoding=";st", func=typer("pdb.set_trace()")),
     MacroEncoding(
         encoding=";pu",
         func=typer("pip install -U pip"),
@@ -302,7 +307,7 @@ ENCODINGS = [
     ),
 ]
 
-import sys
+
 if sys.platform != 'darwin':
     from clmac.macros import text2speech
     ENCODINGS.append(MacroEncoding(encoding=";ee", func=text2speech.text2speech))
