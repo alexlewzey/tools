@@ -18,7 +18,7 @@ jobs:
         isort .
         find . -name '*.py' -exec docformatter --wrap-summaries 88 --wrap-descriptions 88 --in-place {} \;
         find . -name '*.json' -exec python -m json.tool --indent 4 {} {} \;
-        find . \( -name "*.yml" -o -name "*.yaml" \) -exec yq --indent 0 --prettyPrint -i {} \;
+        find . \( -name "*.yml" -o -name "*.yaml" -o -name '.github' -prune \) -exec yq --indent 0 --prettyPrint -i {} \;
     - name: Check for changes
       id: step1
       run: |
