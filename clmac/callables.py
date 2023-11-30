@@ -130,14 +130,6 @@ ENCODINGS = [
     MacroEncoding(encoding=";ri", func=typer(".reset_index()")),
     MacroEncoding(encoding=";si", func=typer(".set_index()", 1)),
     MacroEncoding(encoding=";ii", func=typer("def __init__(self, ):", 2)),
-    MacroEncoding(
-        encoding=";ca",
-        func=typer("conda activate "),
-    ),
-    MacroEncoding(
-        encoding=";cd",
-        func=typer("conda deactivate"),
-    ),
     MacroEncoding(encoding=";;h", func=typer(".head(9)")),
     MacroEncoding(encoding=";;t", func=typer("torch.")),
     MacroEncoding(encoding=";;d", func=typer(".dtypes")),
@@ -212,7 +204,7 @@ ENCODINGS = [
         func=typer('git commit -m ""', 1),
     ),
     MacroEncoding(
-        encoding=";ca",
+        encoding=";ac",
         func=typer('git add -A && git commit -m ""', 1),
     ),
     MacroEncoding(encoding=";co", func=typer("git checkout ")),
