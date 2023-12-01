@@ -198,11 +198,11 @@ ENCODINGS = [
     ),
     MacroEncoding(
         encoding=";cv",
-        func=typer.partial_paste('create or replace temporary view  as', 3),
+        func=typer.partial_paste("create or replace temporary view  as", 3),
     ),
     MacroEncoding(
         encoding=";ct",
-        func=typer.partial_paste('create or replace table  as', 3),
+        func=typer.partial_paste("create or replace table  as", 3),
     ),
     MacroEncoding(
         encoding=";sk",

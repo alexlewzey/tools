@@ -114,11 +114,14 @@ class Typer(Controller):
         self.caret_to_line_end()
         self.press_key(Key.enter)
 
-    def partial_typing(self, text: str, n_left: Optional[int] = None, line_end: bool = False) -> Callable:
+    def partial_typing(
+        self, text: str, n_left: Optional[int] = None, line_end: bool = False
+    ) -> Callable:
         """Return a callable that will simulate typing text when subsequently called."""
 
         def call_typing() -> None:
-            if line_end: self.caret_to_line_end()
+            if line_end:
+                self.caret_to_line_end()
             self.type(text)
             if n_left:
                 self.press_key(Key.left, n_left)
