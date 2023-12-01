@@ -1,0 +1,39 @@
+name: Format code
+on:
+  push:
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install black isort docformatter autoflake
+    - name: Format code with formatters
+      run: |
+        set -x
+        black .
+        isort .
+        find . -name '*.py' -exec docformatter --wrap-summaries 88 --wrap-descriptions 88 --in-place {} \;
+        find . -name '*.json' -exec python -m json.tool --indent 4 {} {} \;
+        find . \( -name "*.yml" -o -name "*.yaml" -o -name '.github' -prune \) -exec yq --prettyPrint -i {} \;
+    - name: Check for changes
+      id: step1
+      run: |
+        if git diff --exit-code; then
+          echo "run_commit_changes=false" >> $GITHUB_OUTPUT
+          echo "No changes made by formatters. Skipping commit and push."
+        else
+          echo "run_commit_changes=true" >> $GITHUB_OUTPUT
+          echo "Changes made by formatters. Executing commit and push."
+        fi
+    - name: Commit changes
+      if: steps.step1.outputs.run_commit_changes == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Format code with black isort docformatter autoflake"
+        git push

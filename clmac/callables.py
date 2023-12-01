@@ -1,6 +1,7 @@
 """A collection of all my available macro."""
 
 
+import sys
 from collections import Counter
 from functools import partial
 from typing import Callable, Tuple
@@ -8,7 +9,7 @@ from typing import Callable, Tuple
 from pynput.keyboard import KeyCode
 
 from clmac import conftk
-from clmac.macros import formatters, img2text, text2speech
+from clmac.macros import formatters, img2text
 from clmac.typer import Typer
 
 from .config import boilerplate, custom_0
@@ -73,7 +74,6 @@ load_and_type_numkey_1 = partial(
 )
 
 ENCODINGS = [
-    ################################# personal information #################################
     MacroEncoding(encoding=";hm", func=load_and_type("hotmail")),
     MacroEncoding(encoding=";gm", func=load_and_type("gmail")),
     MacroEncoding(
@@ -84,7 +84,6 @@ ENCODINGS = [
     MacroEncoding(encoding=";mb", func=load_and_type("mobile")),
     MacroEncoding(encoding=";un", func=load_and_type("username")),
     MacroEncoding(encoding=";ad", func=load_and_type("address")),
-    #################################### email writters ####################################
     MacroEncoding(
         encoding=";tf",
         func=typer("Thanks for your email. "),
@@ -106,7 +105,6 @@ ENCODINGS = [
         encoding=";mt",
         func=typer("\n\nMany thanks\n\nAlex"),
     ),
-    #################################### typing scripts ####################################
     MacroEncoding(
         encoding=";cc",
         func=typer("count('*') "),
@@ -135,15 +133,9 @@ ENCODINGS = [
     ),
     MacroEncoding(encoding=";ri", func=typer(".reset_index()")),
     MacroEncoding(encoding=";si", func=typer(".set_index()", 1)),
-    MacroEncoding(
-        encoding=";ca",
-        func=typer("conda activate "),
-    ),
-    MacroEncoding(
-        encoding=";cd",
-        func=typer("conda deactivate"),
-    ),
+    MacroEncoding(encoding=";ii", func=typer("def __init__(self, ):", 2)),
     MacroEncoding(encoding=";;h", func=typer(".head(9)")),
+    MacroEncoding(encoding=";;t", func=typer("torch.")),
     MacroEncoding(encoding=";;d", func=typer(".dtypes")),
     MacroEncoding(encoding=";;s", func=typer(".shape")),
     MacroEncoding(encoding=";as", func=typer("ascending=False")),
@@ -231,8 +223,14 @@ ENCODINGS = [
         encoding=";gc",
         func=typer('git commit -m ""', 1),
     ),
+    MacroEncoding(
+        encoding=";ac",
+        func=typer('git add -A && git commit -m ""', 1),
+    ),
     MacroEncoding(encoding=";co", func=typer("git checkout ")),
     MacroEncoding(encoding=";gb", func=typer("git branch ")),
+    MacroEncoding(encoding=";sr", func=typer("super().__init__()")),
+    MacroEncoding(encoding=";st", func=typer("pdb.set_trace()")),
     MacroEncoding(
         encoding=";pu",
         func=typer("pip install -U pip"),
@@ -241,7 +239,6 @@ ENCODINGS = [
         encoding=";lh",
         func=typer("http://localhost:"),
     ),
-    #################################### numkey writers ####################################
     MacroEncoding(encoding=";;1", func=typer(custom_0.one)),
     MacroEncoding(encoding=";;2", func=typer(custom_0.two)),
     MacroEncoding(encoding=";;3", func=typer(custom_0.three)),
@@ -251,12 +248,9 @@ ENCODINGS = [
     MacroEncoding(encoding=";;7", func=typer(custom_0.seven)),
     MacroEncoding(encoding=";;8", func=typer(custom_0.eight)),
     MacroEncoding(encoding=";;9", func=typer(custom_0.nine)),
-    ################################# script logic runners #################################
     MacroEncoding(encoding=";i2", func=img2text.img2text),
     MacroEncoding(encoding=";ts", func=typer.type_timestamp),
     MacroEncoding(encoding=";de", func=typer.type_date),
-    MacroEncoding(encoding=";ee", func=text2speech.text2speech),
-    ################################## string formatters ###################################
     MacroEncoding(
         encoding=";up",
         func=formatters.unnest_parathesis,
@@ -322,6 +316,12 @@ ENCODINGS = [
         func=formatters.open_cb_url,
     ),
 ]
+
+
+if sys.platform != "darwin":
+    from clmac.macros import text2speech
+
+    ENCODINGS.append(MacroEncoding(encoding=";ee", func=text2speech.text2speech))
 
 
 class DuplicateEncodingError(ValueError):
