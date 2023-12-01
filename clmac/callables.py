@@ -108,12 +108,16 @@ ENCODINGS = [
     ),
     #################################### typing scripts ####################################
     MacroEncoding(
+        encoding=";cc",
+        func=typer("count('*') "),
+    ),
+    MacroEncoding(
         encoding=";ua",
         func=typer("user_agent"),
     ),
     MacroEncoding(
         encoding=";ll",
-        func=typer(".limit(5).toPandas()"),
+        func=typer(".limit(5).toPandas()", line_end=True),
     ),
     MacroEncoding(
         encoding=";tt",
@@ -123,7 +127,7 @@ ENCODINGS = [
         encoding=";dt",
         func=typer("dt.datetime.now().replace(microsecond=0)"),
     ),
-    MacroEncoding(encoding=";tp", func=typer(".toPandas()")),
+    MacroEncoding(encoding=";tp", func=typer(".toPandas()", line_end=True)),
     MacroEncoding(encoding=";nr", func=typer("n_request")),
     MacroEncoding(
         encoding=";dp",
@@ -172,7 +176,11 @@ ENCODINGS = [
     ),
     MacroEncoding(
         encoding=";sv",
-        func=typer("sort_values()", 1),
+        func=typer(".sort_values()", 1),
+    ),
+    MacroEncoding(
+        encoding=";qy",
+        func=typer('query = f"""\n\n"""\ndf = spark.sql(query)', 4),
     ),
     MacroEncoding(
         encoding=";vc",
@@ -195,6 +203,18 @@ ENCODINGS = [
     MacroEncoding(
         encoding=";ss",
         func=typer.partial_paste(boilerplate.sql_sum, 165),
+    ),
+    MacroEncoding(
+        encoding=";cv",
+        func=typer.partial_paste('create or replace temporary view  as', 3),
+    ),
+    MacroEncoding(
+        encoding=";ct",
+        func=typer.partial_paste('create or replace table  as', 3),
+    ),
+    MacroEncoding(
+        encoding=";sk",
+        func=typer.partial_paste('spark.sql("""""")', 4),
     ),
     MacroEncoding(
         encoding=";sx",
