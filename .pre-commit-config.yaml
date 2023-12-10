@@ -1,4 +1,4 @@
-exclude: ^(.devcontainer)/
+exclude: ^(\.devcontainer)/
 repos:
 - repo: https://github.com/psf/black
   rev: 23.11.0
