@@ -6,11 +6,11 @@ A command line interface that runs a collection of scripts that automate everyda
 
 ### install and run
 
-install: 
+install:
 
 $ bash install.sh
 
-run: 
+run:
 
 $ cmr
 

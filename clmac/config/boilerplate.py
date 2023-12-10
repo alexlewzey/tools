@@ -1,7 +1,7 @@
 """Name space for large string literals used as into to callable typing macro."""
 
 
-data_sci: str = f"""from __future__ import annotations
+data_sci: str = """from __future__ import annotations
 from typing import *
 import logging
 from collections import defaultdict
@@ -30,7 +30,7 @@ import pdb
 import warnings
 
 
-from fastcore.all import *  
+from fastcore.all import *
 import numpy as np
 import scipy
 from tqdm.auto import tqdm

@@ -33,13 +33,13 @@ class KeyHistory(list):
         super().__init__()
         self.size_max = max_length
 
-    def shift_que(self, item):
+    def shift_queue(self, item):
         self.append(item)
         self.pop(0)
 
     def add_key(self, key):
         if len(self) >= self.size_max:
-            self.shift_que(key)
+            self.shift_queue(key)
         else:
             self.append(key)
 

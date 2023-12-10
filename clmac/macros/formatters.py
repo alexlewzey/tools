@@ -59,6 +59,9 @@ def to_lower(s: str) -> str:
     return s.lower()
 
 
+# to_lower_dec = (to_lower)
+
+
 @clipboard_in_out_paste
 def to_upper(s: str) -> str:
     return s.upper()
@@ -70,8 +73,8 @@ def to_capitalize(s: str) -> str:
 
 
 @clipboard_in_out
-def split_join(name: str) -> str:
-    return " ".join(name.split())
+def split_join(s: str) -> str:
+    return " ".join(s.split())
 
 
 @clipboard_in_out
@@ -90,7 +93,7 @@ def spell_check(s: str) -> str:
 
 @clipboard_in_out
 def to_snake(text: str) -> str:
-    lines = [re.sub("[\s_]+", "_", line).lower() for line in text.splitlines()]
+    lines = [re.sub(r"[\s_]+", "_", line).lower() for line in text.splitlines()]
     return "\n".join(lines)
 
 
@@ -168,7 +171,7 @@ def format_variables(s: str) -> str:
     print(f'days_elapsed={days_elapsed}',
         f'weeks_elapsed={weeks_elapsed}')
     """
-    variables = re.sub("[^\w\s]", "", s).split()
+    variables = re.sub(r"[^\w\s]", "", s).split()
     variables = [f"{v}={{{v}:}}" for v in variables]
     output = f"print(f'{', '.join(variables)}')"
     if len(output) > 88:
@@ -187,10 +190,10 @@ def _pad_right_full(s: str, char: str, left_len: int = 1) -> str:
     input:
     hello world
     output:
-    # hello world ##########################################################################
+    # hello world ##########################################################
     """
     s = s[:LINE_CHAR_LIMIT]
-    s = f"{char * left_len} " + s.strip(f"#- ") + " "
+    s = f"{char * left_len} " + s.strip("#- ") + " "
     output = s.ljust(LINE_CHAR_LIMIT, f"{char}")
     return output
 
@@ -215,7 +218,7 @@ def format_hash_center(s: str) -> str:
     input:
     hello world
     output:
-    ##################################### hello world ######################################
+    ##################################### hello world ###############################...
     """
     s = s[:LINE_CHAR_LIMIT]
     s = " " + s.strip() + " "
@@ -246,7 +249,7 @@ def unnest_parathesis(s: str) -> str:
     ''.join('hello world')
     """
     s = s.strip()
-    inner = re.search("\(.+\)", s)
+    inner = re.search(r"\(.+\)", s)
     if inner:
         inner = inner.group(0)[1:-1]
     else:

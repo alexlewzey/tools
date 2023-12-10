@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "clmac"
+version = "0.1.0"
+description = ""
+authors = ["Alexander Lewzey <a.lewzey@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pynput = "^1.7.6"
+pyperclip = "^1.8.2"
+textblob = "^0.17.1"
+pytesseract = "^0.3.10"
+numpy = "^1.26.2"
+opencv-python = "^4.8.1.78"
+pillow = "^10.1.0"
+pyttsx3 = "^2.90"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.3"
+mypy = "^1.7.1"
+pre-commit = "^3.5.0"
+black = "^23.11.0"
+isort = "^5.12.0"
+flake8 = "^6.1.0"
+jupyter = "^1.0.0"
+autoflake = "^2.2.1"
+sqlfluff = "^2.3.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

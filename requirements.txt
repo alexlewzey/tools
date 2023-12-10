@@ -1,9 +1,0 @@
-pynput
-pyperclip
-textblob
-pytesseract
-numpy
-opencv-python
-pillow
-pyttsx3
-sqlfluff

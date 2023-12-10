@@ -20,7 +20,10 @@ def img2text():
     try:
         opencv_image = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
     except TypeError:
-        err_msg = "Only accepts images from the clipboard. Check your clipboard contains an image..."
+        err_msg = (
+            "Only accepts images from the clipboard. Check your clipboard "
+            "contains an image..."
+        )
         print(err_msg)
         input("\nPress enter key to continue...")
         raise TypeError(err_msg)

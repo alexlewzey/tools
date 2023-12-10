@@ -153,6 +153,7 @@ ENCODINGS = [
         func=typer("if __name__ == '__main__':\n    "),
     ),
     MacroEncoding(encoding=";;;", func=typer("print()", 1)),
+    MacroEncoding(encoding=";;l", func=typer("#%%")),
     MacroEncoding(encoding=";;c", func=typer(".columns")),
     MacroEncoding(
         encoding=";3d",
