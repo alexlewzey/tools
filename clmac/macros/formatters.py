@@ -190,7 +190,7 @@ def _pad_right_full(s: str, char: str, left_len: int = 1) -> str:
     input:
     hello world
     output:
-    # hello world ##########################################################
+    # hello world ###################################################################...
     """
     s = s[:LINE_CHAR_LIMIT]
     s = f"{char * left_len} " + s.strip("#- ") + " "
