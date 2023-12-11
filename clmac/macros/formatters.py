@@ -4,13 +4,13 @@ window) or via user interface is run from listener_standard script."""
 import functools
 import logging
 import re
+import textwrap
 import time
 import webbrowser
 from typing import List
 
 import pyperclip
 import sqlfluff
-from pynput.keyboard import Key
 from textblob import TextBlob
 
 from clmac.typer import Typer
@@ -59,9 +59,6 @@ def to_lower(s: str) -> str:
     return s.lower()
 
 
-# to_lower_dec = (to_lower)
-
-
 @clipboard_in_out_paste
 def to_upper(s: str) -> str:
     return s.upper()
@@ -77,10 +74,11 @@ def split_join(s: str) -> str:
     return " ".join(s.split())
 
 
-@clipboard_in_out
+@clipboard_in_out_paste
 def wrap_text(s: str, max_len: int = 88) -> str:
     """Wrap text to a maximum line length."""
-    s.fill(s, width=max_len).strip()
+    s = textwrap.fill(s.strip('"'), width=82)
+    s = '"' + ' "\n"'.join(s.split("\n")) + '"'
     return s
 
 
@@ -227,15 +225,6 @@ def format_hash_center(s: str) -> str:
 
 
 # specific use case string formatters ##################################################
-
-
-@clipboard_in_out
-def wrap_fstring(s: str) -> str:
-    wrapped = "f'{" + s + "}'"
-    pyperclip.copy(wrapped)
-    typer.paste()
-    typer.press_key(Key.left, num_presses=len(s) + 3)
-    return wrapped
 
 
 @clipboard_in_out

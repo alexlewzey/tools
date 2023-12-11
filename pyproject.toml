@@ -27,6 +27,7 @@ flake8 = "^6.1.0"
 jupyter = "^1.0.0"
 autoflake = "^2.2.1"
 sqlfluff = "^2.3.5"
+docformatter = "^1.7.5"
 
 [build-system]
 requires = ["poetry-core"]

@@ -1,3 +1,4 @@
+# %%
 import sys
 
 import cv2
@@ -9,29 +10,23 @@ from PIL import ImageGrab
 from clmac.core import EXE_TESSERACT
 
 
-def img2text():
-    """Convert image on clipboard to text and return to the clipboard command line args:
+def img2text() -> None:
+    """Convert image on clipboard to text and return to the clipboard command
+    line args:
 
     nl: remove all new line characters from the return string
     """
     pil_img = ImageGrab.grabclipboard()
-    if sys.platform == "win32":
-        pytesseract.pytesseract.tesseract_cmd = EXE_TESSERACT
-    try:
+    if pil_img is not None:
+        if sys.platform == "win32":
+            pytesseract.pytesseract.tesseract_cmd = EXE_TESSERACT
         opencv_image = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
-    except TypeError:
-        err_msg = (
-            "Only accepts images from the clipboard. Check your clipboard "
-            "contains an image..."
-        )
+        text = pytesseract.image_to_string(opencv_image).replace("`", "'")
+        text = " ".join(text.split())
+        pyperclip.copy(text)
+    else:
+        err_msg = "No image detected. Check your clipboard contains an image..."
         print(err_msg)
-        input("\nPress enter key to continue...")
-        raise TypeError(err_msg)
-
-    text = pytesseract.image_to_string(opencv_image).replace("`", "'")
-
-    assert isinstance(text, str)
-    pyperclip.copy(text)
 
 
 if __name__ == "__main__":
