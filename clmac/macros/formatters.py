@@ -7,7 +7,6 @@ import re
 import textwrap
 import time
 import webbrowser
-from typing import List
 
 import black
 import pyperclip
@@ -111,10 +110,9 @@ def remove_blanklines(s: str) -> str:
     hello
     world
     """
-    lines = [x.strip() for x in s.split("\n") if not x.isspace()]
-    lines = list(filter(None, lines))
-    lines = "\n".join(lines)
-    return lines
+    lines = [o.strip() for o in s.split("\n") if not o.isspace()]
+    lines = [o for o in lines if o not in (None, "")]
+    return "\n".join(lines)
 
 
 @clipboard_in_out
@@ -239,12 +237,13 @@ def unnest_parathesis(s: str) -> str:
     ''.join('hello world')
     """
     s = s.strip()
-    inner = re.search(r"\(.+\)", s)
-    if inner:
-        inner = inner.group(0)[1:-1]
+    match = re.search(r"\(.+\)", s)
+    if match:
+        # Extract the content within the parenthesis
+        content = match.group(0)[1:-1]
     else:
-        inner = s
-    return inner
+        content = s
+    return content
 
 
 @clipboard_in_out
@@ -264,16 +263,16 @@ def format_repr(s: str) -> str:
     test_valid_input(lines)
     properties = [x.split(".")[1].strip() for x in lines]
     names = [x.split("=")[0].strip() for x in properties]
-    output_text: str = (
+    attributes: str = (
         "(" + ", ".join([f"{name}={{self.{name}}}" for name in names]) + ")"
     )
-    output_text: str = (
-        f"def __repr__(self):\n\treturn f'{{self.__class__.__name__}}{output_text}'"
+    output: str = (
+        f"def __repr__(self):\n\treturn f'{{self.__class__.__name__}}{attributes}'"
     )
-    return output_text
+    return output
 
 
-def test_valid_input(lines: List[str]) -> None:
+def test_valid_input(lines: list[str]) -> None:
     if not any(["." in line for line in lines]):
         raise InvalidInputError("Are you using the correct input? eg self.name = name")
 
@@ -302,7 +301,7 @@ def imports_to_requirements(s: str) -> str:
     plotly
     selenium
     """
-    modules = set([re.split(r"[ .]", line)[1] for line in s.splitlines() if line])
+    modules = {re.split(r"[ .]", line)[1] for line in s.splitlines() if line}
     return "\n".join(modules)
 
 

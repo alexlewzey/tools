@@ -7,7 +7,7 @@ import sys
 import time
 from datetime import date, datetime
 from functools import partial
-from typing import Callable, List, Optional
+from typing import Callable
 
 import pyperclip
 from pynput.keyboard import Controller, Key, KeyCode
@@ -82,16 +82,16 @@ class Typer(Controller):
         time.sleep(0.2)
         return pyperclip.paste()
 
-    def paste_text(self, text: str, n_left: Optional[int] = None) -> None:
+    def paste_text(self, text: str, n_left: int | None = None) -> None:
         pyperclip.copy(text)
         self.paste()
         if n_left:
             self.press_key(Key.left, n_left)
 
-    def partial_paste(self, text: str, n_left: Optional[int] = None) -> Callable:
+    def partial_paste(self, text: str, n_left: int | None = None) -> Callable:
         return partial(self.paste_text, text, n_left)
 
-    def type_text(self, text: str, sleep_after: Optional[float] = None) -> None:
+    def type_text(self, text: str, sleep_after: float | None = None) -> None:
         """Types text character by character and will handle newline escape
         characters."""
         lines = text.splitlines()
@@ -115,7 +115,7 @@ class Typer(Controller):
         self.press_key(Key.enter)
 
     def partial_typing(
-        self, text: str, n_left: Optional[int] = None, line_end: bool = False
+        self, text: str, n_left: int | None = None, line_end: bool = False
     ) -> Callable:
         """Return a callable that will simulate typing text when subsequently called."""
 
@@ -128,7 +128,7 @@ class Typer(Controller):
 
         return call_typing
 
-    def __call__(self, text, n_left: Optional[int] = None, line_end: bool = False):
+    def __call__(self, text, n_left: int | None = None, line_end: bool = False):
         return self.partial_typing(text, n_left=n_left, line_end=line_end)
 
     @core.sleep_after(0.2)
@@ -210,12 +210,12 @@ class Typer(Controller):
             self.hotkey(Key.shift, Key.down)
         self.hotkey_three(Key.cmd, Key.shift, Key.right)
 
-    def select_browser_url(self) -> Optional[str]:
+    def select_browser_url(self) -> str:
         self.hotkey(self.cmd_ctrl, KeyCode(char="l"))
         time.sleep(0.5)
         return self.copy()
 
-    def get_urls(self, n_urls: Optional[int] = None) -> List[str]:
+    def get_urls(self, n_urls: int | None = None) -> list[str]:
         """"""
         urls = [self.select_browser_url()]
 

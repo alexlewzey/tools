@@ -4,7 +4,7 @@
 import sys
 from collections import Counter
 from functools import partial
-from typing import Callable, Tuple
+from typing import Callable
 
 from pynput.keyboard import KeyCode
 
@@ -24,18 +24,14 @@ class MacroEncoding:
         self.func = func
         self.encode_set = self.get_encoding_set()
 
-    def get_encoding_set(self) -> Tuple:
+    def get_encoding_set(self) -> tuple:
         """Get a pynputs representation of the keyboard encoding."""
         return tuple(KeyCode(char=char) for char in self.encoding)
 
-    def get_set_func_pair(self) -> Tuple[Tuple, Callable]:
+    def get_set_func_pair(self) -> tuple[tuple, Callable]:
         """Return a tuple containing the pynputs encoding set and the callable
         functionality."""
         return self.encode_set, self.func
-
-    def get_text_properties(self) -> Tuple[str, str, str]:
-        """Return a tuple of the macro string properties."""
-        return self.category, self.name, self.encoding
 
 
 def load_and_type(setting: str) -> Callable:

@@ -1,13 +1,13 @@
 """Tools for manipulating configurations."""
 from pathlib import Path
-from typing import Callable, Dict
+from typing import Callable
 
 import yaml
 
 from clmac import core
 
 
-def load_personal() -> Dict:
+def load_personal() -> dict:
     """Load personal settings file if exists else create file with null setting and
     return it."""
     return _load_yaml(core.PERSONAL_YAML, _set_default_personal)
@@ -36,7 +36,7 @@ def _load_yaml(path_yaml: Path, default_setter: Callable):
     return settings
 
 
-def _set_default_personal(path: Path) -> Dict:
+def _set_default_personal(path: Path) -> dict:
     """Return default config key value structure with null values and save as personal
     yaml file in config."""
     settings = {
@@ -53,7 +53,7 @@ def _set_default_personal(path: Path) -> Dict:
     return settings
 
 
-def _set_default_numkeys(path: Path) -> Dict:
+def _set_default_numkeys(path: Path) -> dict:
     """Return default config key value structure with null values and save as personal
     yaml file in config."""
     settings = {
