@@ -9,6 +9,7 @@ import time
 import webbrowser
 from typing import List
 
+import black
 import pyperclip
 import sqlfluff
 from textblob import TextBlob
@@ -309,6 +310,12 @@ def imports_to_requirements(s: str) -> str:
 def format_sql(s: str) -> str:
     """Format sql with sqlfluff."""
     s = sqlfluff.fix(s, dialect="databricks")
+    return s
+
+
+@clipboard_in_out_paste
+def format_black(s) -> str:
+    s = black.format_str(s, mode=black.FileMode())
     return s
 
 

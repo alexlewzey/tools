@@ -172,8 +172,18 @@ ENCODINGS = [
         func=typer(".sort_values()", 1),
     ),
     MacroEncoding(
-        encoding=";qy",
-        func=typer('query = f"""\n\n"""\ndf = spark.sql(query)', 4),
+        encoding=";sr",
+        func=typer("spark.read.format('delta').table('')", 2),
+    ),
+    MacroEncoding(
+        encoding=";sw",
+        func=typer(
+            (
+                ".write.format('delta').mode('append')"
+                ".partitionBy('domain', 'date').toTable('')"
+            ),
+            2,
+        ),
     ),
     MacroEncoding(
         encoding=";vc",
@@ -230,7 +240,6 @@ ENCODINGS = [
     ),
     MacroEncoding(encoding=";co", func=typer("git checkout ")),
     MacroEncoding(encoding=";gb", func=typer("git branch ")),
-    MacroEncoding(encoding=";sr", func=typer("super().__init__()")),
     MacroEncoding(encoding=";st", func=typer("pdb.set_trace()")),
     MacroEncoding(
         encoding=";pu",
@@ -311,6 +320,10 @@ ENCODINGS = [
     MacroEncoding(
         encoding=";wb",
         func=formatters.open_cb_url,
+    ),
+    MacroEncoding(
+        encoding=";bk",
+        func=formatters.format_black,
     ),
 ]
 
