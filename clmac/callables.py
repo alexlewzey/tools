@@ -8,11 +8,10 @@ from typing import Callable
 
 from pynput.keyboard import KeyCode
 
-from clmac.macros import formatters, img2text
-from clmac.typer import Typer
-
-from config import boilerplate
-from core import CUSTOM_JSON, PERSONAL_JSON
+from .config import boilerplate
+from .core import CUSTOM_JSON, PERSONAL_JSON
+from .keyboard import Typer
+from .macros import formatters, img2text
 
 
 class MacroEncoding:

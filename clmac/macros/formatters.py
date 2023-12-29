@@ -13,7 +13,7 @@ import pyperclip
 import sqlfluff
 from textblob import TextBlob
 
-from clmac.typer import Typer
+from ..keyboard import Typer
 
 logger = logging.getLogger(__name__)
 

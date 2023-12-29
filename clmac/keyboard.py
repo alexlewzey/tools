@@ -12,7 +12,7 @@ from typing import Callable
 import pyperclip
 from pynput.keyboard import Controller, Key, KeyCode
 
-import core
+from . import core
 
 logger = logging.getLogger(__name__)
 
