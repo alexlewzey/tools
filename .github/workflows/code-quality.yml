@@ -10,7 +10,7 @@ jobs:
     - name: Install poetry config
       run: pip install poetry && poetry install --no-interaction --no-ansi
     - name: Run pre-commit on all files
-      run: poetry run SKIP=pytest-check pre-commit run --all-files
+      run: export SKIP=pytest-check && poetry run pre-commit run --all-files
     - name: Check for changes
       id: step1
       run: |
