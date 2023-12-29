@@ -12,10 +12,13 @@ repos:
   rev: v4.5.0
   hooks:
   - id: check-json
+    exclude: \.ipynb$
   - id: check-yaml
   - id: pretty-format-json
-    exclude: \.ipynb$
   - id: trailing-whitespace
+  - id: check-merge-conflict
+  - id: end-of-file-fixer
+  - id: check-docstring-first
 - repo: https://github.com/PyCQA/flake8
   rev: 6.1.0
   hooks:
@@ -34,15 +37,22 @@ repos:
     language: system
     pass_filenames: false
 - repo: https://github.com/asottile/pyupgrade
-  rev: v2.29.0  # Specify the desired version
+  rev: v2.29.0
   hooks:
   - id: pyupgrade
     args: [--py310-plus]
+- repo: https://github.com/PyCQA/docformatter
+  rev: v1.7.5
+  hooks:
+  - id: docformatter
+    args: [--recursive, --in-place, --wrap-summaries, '88', --wrap-descriptions, '88']
 - repo: https://github.com/pre-commit/mirrors-mypy
   rev: v1.8.0
   hooks:
   - id: mypy
     args: [--check-untyped-defs, --non-interactive, --install-types]
     additional_dependencies: [types-setuptools]
-
-
+- repo: https://github.com/shellcheck-py/shellcheck-py
+  rev: v0.9.0.6
+  hooks:
+  - id: shellcheck
