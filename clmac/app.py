@@ -9,9 +9,9 @@ import time
 
 from pynput.keyboard import Key, KeyCode, Listener
 
-from . import core
-from . import typer as lh
-from .callables import ENCODINGS, test_for_duplicates
+import core
+import typer
+from callables import ENCODINGS, test_for_duplicates
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -21,7 +21,7 @@ logging.basicConfig(
 )
 
 MAX_KEY_HISTORY_LENGTH: int = 30
-typer = lh.Typer()
+typer = typer.Typer()
 
 
 class KeyHistory(list):

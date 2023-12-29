@@ -4,11 +4,6 @@
 
 from setuptools import find_packages, setup
 
-with open("README.md") as readme_file:
-    readme = readme_file.read()
-
-with open("requirements.txt") as f:
-    requirements = f.read().splitlines()
 
 setup(
     entry_points={
@@ -16,7 +11,6 @@ setup(
             "clmac=clmac.app:run",
         ],
     },
-    packages=find_packages(include=["clmac", "clmac.*"]),
-    url="https://github.com/alexlewzey/clmac",
-    install_requires=requirements,
+    packages=find_packages(),
+    url="https://github.com/alexlewzey/clmac"
 )

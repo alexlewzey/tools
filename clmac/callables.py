@@ -11,8 +11,8 @@ from pynput.keyboard import KeyCode
 from clmac.macros import formatters, img2text
 from clmac.typer import Typer
 
-from .config import boilerplate
-from .core import CUSTOM_JSON, PERSONAL_JSON
+from config import boilerplate
+from core import CUSTOM_JSON, PERSONAL_JSON
 
 
 class MacroEncoding:
