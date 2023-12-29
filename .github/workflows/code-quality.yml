@@ -8,7 +8,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Install pre-commit
-      run: pip install pre-commit
+      run: pip install pre-commit pytest
     - name: Run pre-commit on all files
       run: pre-commit run --all-files
     - name: Check for changes
