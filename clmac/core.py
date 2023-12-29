@@ -1,5 +1,6 @@
 """"""
 import functools
+import json
 import logging
 import time
 from pathlib import Path
@@ -14,36 +15,32 @@ logging.basicConfig(
 
 SRC: Path = Path(__file__).parent
 DIR_CONFIG = SRC / "config"
+PERSONAL_JSON = DIR_CONFIG / "personal.json"
+CUSTOM_JSON = DIR_CONFIG / "custom.json"
 
-PERSONAL_YAML = DIR_CONFIG / "personal.yaml"
-NUMKEYS_YAML_0 = DIR_CONFIG / "numkeys_0.yaml"
-NUMKEYS_YAML_1 = DIR_CONFIG / "numkeys_1.yaml"
-URLS_YAML = DIR_CONFIG / "urls.yaml"
-LAUNCH_TXT = DIR_CONFIG / "launch.txt"
+numbers = "one,two,three,four,five,six,seven,eight,nine".split(",")
+custom_template = dict(zip(numbers, [""] * len(numbers)))
+if not CUSTOM_JSON.exists():
+    with CUSTOM_JSON.open("w") as f:
+        f.write(json.dumps(custom_template, indent=4))
+
+personal_template = {
+    "gmail": "",
+    "hotmail": "",
+    "work_mail": "",
+    "mobile": "",
+    "name": "",
+    "username": "",
+    "address": "",
+}
+if not PERSONAL_JSON.exists():
+    with PERSONAL_JSON.open("w") as f:
+        f.write(json.dumps(personal_template, indent=4))
 
 
 EXE_TESSERACT: str = (
     Path.home() / "/AppData/Local/Tesseract-OCR/tesseract.exe"
 ).as_posix()
-
-
-dir_src = Path(__file__).parent
-dir_config = dir_src / "config"
-
-file_custom_0 = dir_config / "custom_0.py"
-file_custom_1 = dir_config / "custom_1.py"
-
-numbers = "one,two,three,four,five,six,seven,eight,nine".split(",")
-if not file_custom_0.exists():
-    print("custom_0.py not found, creating...")
-    with file_custom_0.open("w") as f:
-        for number in numbers:
-            f.write(f'{number} = ""\n')
-if not file_custom_1.exists():
-    print("custom_1.py not found, creating...")
-    with file_custom_1.open("w") as f:
-        for number in numbers:
-            f.write(f'{number} = ""\n')
 
 
 def log_input(positional_input_index: int = 0, kw_input_key: str | None = None):

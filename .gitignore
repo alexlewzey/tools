@@ -1,6 +1,4 @@
-custom*
-custom_0.py
-personal.yaml
+*.json
 
 .DS_Store
 run.sh
