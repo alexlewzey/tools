@@ -42,7 +42,7 @@ repos:
   rev: v1.8.0
   hooks:
   - id: mypy
-    args: [--check-untyped-defs]
-    additional_dependencies: [types-PyYAML]
+    args: [--check-untyped-defs, --non-interactive, --install-types]
+    additional_dependencies: [types-setuptools]
 
 

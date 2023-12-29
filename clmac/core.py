@@ -3,7 +3,7 @@ import functools
 import logging
 import time
 from pathlib import Path
-from typing import Any, Hashable
+from typing import Any
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -46,7 +46,7 @@ if not file_custom_1.exists():
             f.write(f'{number} = ""\n')
 
 
-def log_input(positional_input_index: int = 0, kw_input_key: Hashable | None = None):
+def log_input(positional_input_index: int = 0, kw_input_key: str | None = None):
     """Logs the input (first positional argument) and output of decorated function, you
     can specify a specific kw arg to be logged as input by specifying its corresponding
     param key."""
@@ -55,7 +55,6 @@ def log_input(positional_input_index: int = 0, kw_input_key: Hashable | None = N
         @functools.wraps(func)
         def inner_wrapper(*args, **kwargs):
             if kw_input_key:
-                # noinspection PyTypeChecker
                 input_arg = kwargs[kw_input_key]
             else:
                 input_arg = _get_positional_arg(args, kwargs, positional_input_index)
