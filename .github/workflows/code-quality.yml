@@ -8,7 +8,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Install poetry config
-      run: pip install poetry && \ poetry config virtualenvs.create false && \ poetry install --no-interaction --no-ansi
+      run: pip install poetry && poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
     - name: Run pre-commit on all files
       run: pre-commit run --all-files
     - name: Check for changes
