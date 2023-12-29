@@ -7,10 +7,10 @@ import logging
 import subprocess
 import time
 
+import core
+import keyboard
+from callables import ENCODINGS, test_for_duplicates
 from pynput.keyboard import Key, KeyCode, Listener
-
-from . import core, keyboard
-from .callables import ENCODINGS, test_for_duplicates
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(

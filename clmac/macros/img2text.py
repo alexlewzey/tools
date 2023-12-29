@@ -6,7 +6,7 @@ import pyperclip
 import pytesseract
 from PIL import ImageGrab
 
-from ..core import EXE_TESSERACT
+from clmac.core import EXE_TESSERACT
 
 
 def img2text() -> None:

@@ -10,6 +10,7 @@ setup(
             "clmac=clmac.app:run",
         ],
     },
-    packages=find_packages(),
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     url="https://github.com/alexlewzey/clmac",
 )
