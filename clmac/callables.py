@@ -34,7 +34,7 @@ class MacroEncoding:
 
 
 def load_json(path: Path) -> dict:
-    with path.open("w") as f:
+    with path.open() as f:
         settings = json.loads(f.read())
     return settings
 
@@ -52,13 +52,13 @@ typer = Typer()
 
 
 ENCODINGS = [
-    MacroEncoding(encoding=";hm", func=partial(type_personal, "hotmail")),
-    MacroEncoding(encoding=";gm", func=partial(type_personal, "gmail")),
-    MacroEncoding(encoding=";wm", func=partial(type_personal, "work_mail")),
-    MacroEncoding(encoding=";al", func=partial(type_personal, "name")),
-    MacroEncoding(encoding=";mb", func=partial(type_personal, "mobile")),
-    MacroEncoding(encoding=";un", func=partial(type_personal, "username")),
-    MacroEncoding(encoding=";ad", func=partial(type_personal, "address")),
+    MacroEncoding(encoding=";hm", func=partial(type_personal, key="hotmail")),
+    MacroEncoding(encoding=";gm", func=partial(type_personal, key="gmail")),
+    MacroEncoding(encoding=";wm", func=partial(type_personal, key="work_mail")),
+    MacroEncoding(encoding=";al", func=partial(type_personal, key="name")),
+    MacroEncoding(encoding=";mb", func=partial(type_personal, key="mobile")),
+    MacroEncoding(encoding=";un", func=partial(type_personal, key="username")),
+    MacroEncoding(encoding=";ad", func=partial(type_personal, key="address")),
     MacroEncoding(
         encoding=";tf",
         func=typer("Thanks for your email. "),
