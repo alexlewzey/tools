@@ -300,6 +300,10 @@ ENCODINGS = [
         encoding=";bk",
         func=formatters.format_black,
     ),
+    MacroEncoding(
+        encoding=";ru",
+        func=formatters.remove_urls,
+    ),
 ]
 
 

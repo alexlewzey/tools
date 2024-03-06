@@ -318,6 +318,11 @@ def format_black(s) -> str:
     return s
 
 
+@clipboard_in_out_paste
+def remove_urls(s) -> str:
+    return re.sub(r"(https?://\S+)", "", s)
+
+
 def open_cb_url() -> None:
     """Open the current clipboard url in the default browser."""
     url = pyperclip.paste()
