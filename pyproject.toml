@@ -32,3 +32,6 @@ docformatter = "^1.7.5"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+clmac = "clmac.app:run"
