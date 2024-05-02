@@ -8,4 +8,4 @@ and other tasks.
 ## install and run
 
 1. Navigate to project root directory in command line
-2. run $ pip install -e .
+2. $ make
