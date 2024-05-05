@@ -17,6 +17,7 @@ pillow = "^10.3.0"
 pyttsx3 = "^2.90"
 autoflake = "^2.3.1"
 sqlfluff = "^3.0.5"
+black = "^24.4.2"
 
 
 [tool.poetry.group.dev.dependencies]

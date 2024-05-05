@@ -16,4 +16,4 @@ and other tasks.
 ### Windows
 
 1. Navigate to project root directory in command line
-2. pip install -e . 
+2. pip install -e .

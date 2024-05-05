@@ -307,7 +307,7 @@ ENCODINGS = [
 ]
 
 
-if sys.platform != "darwin":
+if sys.platform == "win32":
     from clmac.macros import text2speech
 
     ENCODINGS.append(MacroEncoding(encoding=";ee", func=text2speech.text2speech))
