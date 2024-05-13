@@ -8,10 +8,9 @@ from typing import Callable
 
 from pynput.keyboard import KeyCode
 
-from clmac.config import boilerplate
 from clmac.core import CUSTOM_JSON, PERSONAL_JSON
 from clmac.keyboard import Typer
-from clmac.macros import formatters, img2text
+from clmac.macros import boilerplate, formatters, img2text
 
 
 class MacroEncoding:
@@ -224,15 +223,15 @@ ENCODINGS = [
         encoding=";lh",
         func=typer("http://localhost:"),
     ),
-    MacroEncoding(encoding=";;1", func=partial(type_custom, "one")),
-    MacroEncoding(encoding=";;2", func=partial(type_custom, "two")),
-    MacroEncoding(encoding=";;3", func=partial(type_custom, "three")),
-    MacroEncoding(encoding=";;4", func=partial(type_custom, "four")),
-    MacroEncoding(encoding=";;5", func=partial(type_custom, "five")),
-    MacroEncoding(encoding=";;6", func=partial(type_custom, "six")),
-    MacroEncoding(encoding=";;7", func=partial(type_custom, "seven")),
-    MacroEncoding(encoding=";;8", func=partial(type_custom, "eight")),
-    MacroEncoding(encoding=";;9", func=partial(type_custom, "nine")),
+    MacroEncoding(encoding=";;1", func=partial(type_custom, key="1")),
+    MacroEncoding(encoding=";;2", func=partial(type_custom, key="2")),
+    MacroEncoding(encoding=";;3", func=partial(type_custom, key="3")),
+    MacroEncoding(encoding=";;4", func=partial(type_custom, key="4")),
+    MacroEncoding(encoding=";;5", func=partial(type_custom, key="5")),
+    MacroEncoding(encoding=";;6", func=partial(type_custom, key="6")),
+    MacroEncoding(encoding=";;7", func=partial(type_custom, key="7")),
+    MacroEncoding(encoding=";;8", func=partial(type_custom, key="8")),
+    MacroEncoding(encoding=";;9", func=partial(type_custom, key="9")),
     MacroEncoding(encoding=";i2", func=img2text.img2text),
     MacroEncoding(encoding=";ts", func=typer.type_timestamp),
     MacroEncoding(encoding=";de", func=typer.type_date),
@@ -325,6 +324,3 @@ def test_for_duplicates() -> None:
         err_msg = f"you have added a duplicate encoding: \n{Counter(codes)}"
         input(err_msg + ", press any key to continue...")
         raise DuplicateEncodingError(err_msg)
-
-
-test_for_duplicates()

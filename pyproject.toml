@@ -36,3 +36,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 clmac = "clmac.app:run"
+cli = 'clmac.cli:main'

@@ -89,6 +89,8 @@ def on_release(key):
 def run():
     """Run the macro script."""
     test_for_duplicates()
+    core.create_custom_template()
+    core.create_personal_template()
     with Listener(on_press=on_press, on_release=on_release) as listener:
         listener.join()
 
