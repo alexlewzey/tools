@@ -7,6 +7,7 @@ import re
 import textwrap
 import time
 import webbrowser
+from datetime import date
 
 import black
 import pyperclip
@@ -327,6 +328,20 @@ def open_cb_url() -> None:
     """Open the current clipboard url in the default browser."""
     url = pyperclip.paste()
     webbrowser.open(url)
+
+
+def type_days_elapsed() -> None:
+    start_date = "2024-04-20"
+    days = (date.today() - date.fromisoformat(start_date)).days
+    typer.type_text(f"day {days}")
+
+
+def type_journel_header() -> None:
+    typer.type_date()
+    typer.type_text(" ")
+    type_days_elapsed()
+    typer.select_line_at_caret_and_copy()
+    format_hash()
 
 
 # select line first formatters #########################################################

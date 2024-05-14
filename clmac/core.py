@@ -3,6 +3,7 @@ import functools
 import json
 import logging
 import time
+import webbrowser
 from pathlib import Path
 from typing import Any
 
@@ -18,11 +19,19 @@ DIR_CONFIG = Path.home() / ".clmac"
 DIR_CONFIG.mkdir(exist_ok=True)
 PERSONAL_JSON = DIR_CONFIG / "personal.json"
 CUSTOM_JSON = DIR_CONFIG / "custom.json"
+URLS = DIR_CONFIG / "urls.txt"
+URLS.touch(exist_ok=True)
 NUMBERS = [str(i) for i in range(1, 10)]
 
 EXE_TESSERACT: str = (
     Path.home() / "/AppData/Local/Tesseract-OCR/tesseract.exe"
 ).as_posix()
+
+
+def open_urls() -> None:
+    with URLS.open() as f:
+        for url in f.read().splitlines():
+            webbrowser.open(url.strip())
 
 
 def create_custom_template() -> None:

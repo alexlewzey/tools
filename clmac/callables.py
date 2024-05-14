@@ -8,7 +8,7 @@ from typing import Callable
 
 from pynput.keyboard import KeyCode
 
-from clmac.core import CUSTOM_JSON, PERSONAL_JSON
+from clmac.core import CUSTOM_JSON, PERSONAL_JSON, open_urls
 from clmac.keyboard import Typer
 from clmac.macros import boilerplate, formatters, img2text
 
@@ -302,6 +302,14 @@ ENCODINGS = [
     MacroEncoding(
         encoding=";ru",
         func=formatters.remove_urls,
+    ),
+    MacroEncoding(
+        encoding=";ou",
+        func=open_urls,
+    ),
+    MacroEncoding(
+        encoding=";jl",
+        func=formatters.type_journel_header,
     ),
 ]
 
