@@ -1,9 +1,11 @@
 """"""
 import functools
+import json
 import logging
 import time
+import webbrowser
 from pathlib import Path
-from typing import Any, Hashable, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -13,40 +15,64 @@ logging.basicConfig(
 )
 
 SRC: Path = Path(__file__).parent
-DIR_CONFIG = SRC / "config"
-
-PERSONAL_YAML = DIR_CONFIG / "personal.yaml"
-NUMKEYS_YAML_0 = DIR_CONFIG / "numkeys_0.yaml"
-NUMKEYS_YAML_1 = DIR_CONFIG / "numkeys_1.yaml"
-URLS_YAML = DIR_CONFIG / "urls.yaml"
-LAUNCH_TXT = DIR_CONFIG / "launch.txt"
-
+DIR_CONFIG = Path.home() / ".clmac"
+DIR_CONFIG.mkdir(exist_ok=True)
+PERSONAL_JSON = DIR_CONFIG / "personal.json"
+CUSTOM_JSON = DIR_CONFIG / "custom.json"
+URLS = DIR_CONFIG / "urls.txt"
+URLS.touch(exist_ok=True)
+NUMBERS = [str(i) for i in range(1, 10)]
 
 EXE_TESSERACT: str = (
     Path.home() / "/AppData/Local/Tesseract-OCR/tesseract.exe"
 ).as_posix()
 
 
-dir_src = Path(__file__).parent
-dir_config = dir_src / "config"
-
-file_custom_0 = dir_config / "custom_0.py"
-file_custom_1 = dir_config / "custom_1.py"
-
-numbers = "one,two,three,four,five,six,seven,eight,nine".split(",")
-if not file_custom_0.exists():
-    print("custom_0.py not found, creating...")
-    with file_custom_0.open("w") as f:
-        for number in numbers:
-            f.write(f'{number} = ""\n')
-if not file_custom_1.exists():
-    print("custom_1.py not found, creating...")
-    with file_custom_1.open("w") as f:
-        for number in numbers:
-            f.write(f'{number} = ""\n')
+def open_urls() -> None:
+    with URLS.open() as f:
+        for url in f.read().splitlines():
+            webbrowser.open(url.strip())
 
 
-def log_input(positional_input_index: int = 0, kw_input_key: Optional[Hashable] = None):
+def create_custom_template() -> None:
+    custom_template = dict(zip(NUMBERS, [""] * len(NUMBERS)))
+    if not CUSTOM_JSON.exists():
+        with CUSTOM_JSON.open("w") as f:
+            f.write(json.dumps(custom_template, indent=4))
+
+
+def create_personal_template() -> None:
+    personal_template = {
+        "gmail": "",
+        "hotmail": "",
+        "work_mail": "",
+        "mobile": "",
+        "name": "",
+        "username": "",
+        "address": "",
+    }
+    if not PERSONAL_JSON.exists():
+        with PERSONAL_JSON.open("w") as f:
+            f.write(json.dumps(personal_template, indent=4))
+
+
+def update_custom_template(key: str, value: str) -> None:
+    with CUSTOM_JSON.open() as f:
+        content = json.loads(f.read())
+    if key in NUMBERS:
+        content[key] = value
+    else:
+        return
+    with CUSTOM_JSON.open("w") as f:
+        f.write(json.dumps(content, indent=4))
+
+
+def read_custom_template() -> str:
+    with CUSTOM_JSON.open() as f:
+        return f.read()
+
+
+def log_input(positional_input_index: int = 0, kw_input_key: str | None = None):
     """Logs the input (first positional argument) and output of decorated function, you
     can specify a specific kw arg to be logged as input by specifying its corresponding
     param key."""
@@ -55,7 +81,6 @@ def log_input(positional_input_index: int = 0, kw_input_key: Optional[Hashable] 
         @functools.wraps(func)
         def inner_wrapper(*args, **kwargs):
             if kw_input_key:
-                # noinspection PyTypeChecker
                 input_arg = kwargs[kw_input_key]
             else:
                 input_arg = _get_positional_arg(args, kwargs, positional_input_index)

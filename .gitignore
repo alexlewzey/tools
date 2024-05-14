@@ -1,9 +1,7 @@
-custom*
-custom_0.py
-personal.yaml
+*.json
+.ruff_cache
 
 .DS_Store
-run.sh
 clmac/data/*
 clmac/data
 *.pk
@@ -118,6 +116,3 @@ ENV/
 .vscode/
 
 # app data
-
-
-

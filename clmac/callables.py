@@ -1,18 +1,16 @@
 """A collection of all my available macro."""
-
-
+import json
 import sys
 from collections import Counter
 from functools import partial
-from typing import Callable, Tuple
+from pathlib import Path
+from typing import Callable
 
 from pynput.keyboard import KeyCode
 
-from clmac import conftk
-from clmac.macros import formatters, img2text
-from clmac.typer import Typer
-
-from .config import boilerplate, custom_0
+from clmac.core import CUSTOM_JSON, PERSONAL_JSON, open_urls
+from clmac.keyboard import Typer
+from clmac.macros import boilerplate, formatters, img2text
 
 
 class MacroEncoding:
@@ -24,66 +22,42 @@ class MacroEncoding:
         self.func = func
         self.encode_set = self.get_encoding_set()
 
-    def get_encoding_set(self) -> Tuple:
+    def get_encoding_set(self) -> tuple:
         """Get a pynputs representation of the keyboard encoding."""
         return tuple(KeyCode(char=char) for char in self.encoding)
 
-    def get_set_func_pair(self) -> Tuple[Tuple, Callable]:
+    def get_set_func_pair(self) -> tuple[tuple, Callable]:
         """Return a tuple containing the pynputs encoding set and the callable
         functionality."""
         return self.encode_set, self.func
 
-    def get_text_properties(self) -> Tuple[str, str, str]:
-        """Return a tuple of the macro string properties."""
-        return self.category, self.name, self.encoding
+
+def load_json(path: Path) -> dict:
+    with path.open() as f:
+        settings = json.loads(f.read())
+    return settings
 
 
-def load_and_type(setting: str) -> Callable:
-    """Load a setting from the config file and pass into a function (that will type out
-    the setting) that is returned."""
-
-    def type_detail():
-        settings = conftk.load_personal()
-        try:
-            typer.type_text(settings[setting].replace("\\n", "\n"))
-        except TypeError:
-            print(f"No {setting} found, set config with $ mcli config set -a")
-
-    return type_detail
+def type_config(config_path: Path, key: str) -> None:
+    settings = load_json(config_path)
+    typer.type_text(settings[key].replace("\\n", "\n"))
 
 
-def load_and_type_numkey(num: int, settings_loader: Callable) -> Callable:
-    def type_detail():
-        settings = settings_loader()
-        try:
-            text = settings[num].strip().replace("\\n", "\n")
-            typer.type_text(text)
-        except TypeError:
-            print(f"No {num} found")
-
-    return type_detail
+type_personal = partial(type_config, config_path=PERSONAL_JSON)
+type_custom = partial(type_config, config_path=CUSTOM_JSON)
 
 
 typer = Typer()
 
-load_and_type_numkey_0 = partial(
-    load_and_type_numkey, settings_loader=conftk.load_numkeys_0
-)
-load_and_type_numkey_1 = partial(
-    load_and_type_numkey, settings_loader=conftk.load_numkeys_1
-)
 
 ENCODINGS = [
-    MacroEncoding(encoding=";hm", func=load_and_type("hotmail")),
-    MacroEncoding(encoding=";gm", func=load_and_type("gmail")),
-    MacroEncoding(
-        encoding=";wm",
-        func=load_and_type("work_mail"),
-    ),
-    MacroEncoding(encoding=";al", func=load_and_type("name")),
-    MacroEncoding(encoding=";mb", func=load_and_type("mobile")),
-    MacroEncoding(encoding=";un", func=load_and_type("username")),
-    MacroEncoding(encoding=";ad", func=load_and_type("address")),
+    MacroEncoding(encoding=";hm", func=partial(type_personal, key="hotmail")),
+    MacroEncoding(encoding=";gm", func=partial(type_personal, key="gmail")),
+    MacroEncoding(encoding=";wm", func=partial(type_personal, key="work_mail")),
+    MacroEncoding(encoding=";al", func=partial(type_personal, key="name")),
+    MacroEncoding(encoding=";mb", func=partial(type_personal, key="mobile")),
+    MacroEncoding(encoding=";un", func=partial(type_personal, key="username")),
+    MacroEncoding(encoding=";ad", func=partial(type_personal, key="address")),
     MacroEncoding(
         encoding=";tf",
         func=typer("Thanks for your email. "),
@@ -265,25 +239,21 @@ ENCODINGS = [
         encoding=";lh",
         func=typer("http://localhost:"),
     ),
-    MacroEncoding(encoding=";;1", func=typer(custom_0.one)),
-    MacroEncoding(encoding=";;2", func=typer(custom_0.two)),
-    MacroEncoding(encoding=";;3", func=typer(custom_0.three)),
-    MacroEncoding(encoding=";;4", func=typer(custom_0.four)),
-    MacroEncoding(encoding=";;5", func=typer(custom_0.five)),
-    MacroEncoding(encoding=";;6", func=typer(custom_0.six)),
-    MacroEncoding(encoding=";;7", func=typer(custom_0.seven)),
-    MacroEncoding(encoding=";;8", func=typer(custom_0.eight)),
-    MacroEncoding(encoding=";;9", func=typer(custom_0.nine)),
+    MacroEncoding(encoding=";;1", func=partial(type_custom, key="1")),
+    MacroEncoding(encoding=";;2", func=partial(type_custom, key="2")),
+    MacroEncoding(encoding=";;3", func=partial(type_custom, key="3")),
+    MacroEncoding(encoding=";;4", func=partial(type_custom, key="4")),
+    MacroEncoding(encoding=";;5", func=partial(type_custom, key="5")),
+    MacroEncoding(encoding=";;6", func=partial(type_custom, key="6")),
+    MacroEncoding(encoding=";;7", func=partial(type_custom, key="7")),
+    MacroEncoding(encoding=";;8", func=partial(type_custom, key="8")),
+    MacroEncoding(encoding=";;9", func=partial(type_custom, key="9")),
     MacroEncoding(encoding=";i2", func=img2text.img2text),
     MacroEncoding(encoding=";ts", func=typer.type_timestamp),
     MacroEncoding(encoding=";de", func=typer.type_date),
     MacroEncoding(
         encoding=";up",
         func=formatters.unnest_parathesis,
-    ),
-    MacroEncoding(
-        encoding=";2f",
-        func=formatters.wrap_fstring,
     ),
     MacroEncoding(
         encoding=";sl",
@@ -345,10 +315,22 @@ ENCODINGS = [
         encoding=";bk",
         func=formatters.format_black,
     ),
+    MacroEncoding(
+        encoding=";ru",
+        func=formatters.remove_urls,
+    ),
+    MacroEncoding(
+        encoding=";ou",
+        func=open_urls,
+    ),
+    MacroEncoding(
+        encoding=";jl",
+        func=formatters.type_journel_header,
+    ),
 ]
 
 
-if sys.platform != "darwin":
+if sys.platform == "win32":
     from clmac.macros import text2speech
 
     ENCODINGS.append(MacroEncoding(encoding=";ee", func=text2speech.text2speech))

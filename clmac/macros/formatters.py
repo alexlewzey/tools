@@ -4,17 +4,17 @@ window) or via user interface is run from listener_standard script."""
 import functools
 import logging
 import re
+import textwrap
 import time
 import webbrowser
-from typing import List
+from datetime import date
 
 import black
 import pyperclip
 import sqlfluff
-from pynput.keyboard import Key
 from textblob import TextBlob
 
-from clmac.typer import Typer
+from clmac.keyboard import Typer
 
 logger = logging.getLogger(__name__)
 
@@ -60,9 +60,6 @@ def to_lower(s: str) -> str:
     return s.lower()
 
 
-# to_lower_dec = (to_lower)
-
-
 @clipboard_in_out_paste
 def to_upper(s: str) -> str:
     return s.upper()
@@ -78,10 +75,11 @@ def split_join(s: str) -> str:
     return " ".join(s.split())
 
 
-@clipboard_in_out
+@clipboard_in_out_paste
 def wrap_text(s: str, max_len: int = 88) -> str:
     """Wrap text to a maximum line length."""
-    s.fill(s, width=max_len).strip()
+    s = textwrap.fill(s.strip('"'), width=82)
+    s = '"' + ' "\n"'.join(s.split("\n")) + '"'
     return s
 
 
@@ -113,10 +111,9 @@ def remove_blanklines(s: str) -> str:
     hello
     world
     """
-    lines = [x.strip() for x in s.split("\n") if not x.isspace()]
-    lines = list(filter(None, lines))
-    lines = "\n".join(lines)
-    return lines
+    lines = [o.strip() for o in s.split("\n") if not o.isspace()]
+    lines = [o for o in lines if o not in (None, "")]
+    return "\n".join(lines)
 
 
 @clipboard_in_out
@@ -231,15 +228,6 @@ def format_hash_center(s: str) -> str:
 
 
 @clipboard_in_out
-def wrap_fstring(s: str) -> str:
-    wrapped = "f'{" + s + "}'"
-    pyperclip.copy(wrapped)
-    typer.paste()
-    typer.press_key(Key.left, num_presses=len(s) + 3)
-    return wrapped
-
-
-@clipboard_in_out
 def unnest_parathesis(s: str) -> str:
     """Extract the content of the paraenthesis from the current clipboard selection and
     type it out.
@@ -250,12 +238,13 @@ def unnest_parathesis(s: str) -> str:
     ''.join('hello world')
     """
     s = s.strip()
-    inner = re.search(r"\(.+\)", s)
-    if inner:
-        inner = inner.group(0)[1:-1]
+    match = re.search(r"\(.+\)", s)
+    if match:
+        # Extract the content within the parenthesis
+        content = match.group(0)[1:-1]
     else:
-        inner = s
-    return inner
+        content = s
+    return content
 
 
 @clipboard_in_out
@@ -275,16 +264,16 @@ def format_repr(s: str) -> str:
     test_valid_input(lines)
     properties = [x.split(".")[1].strip() for x in lines]
     names = [x.split("=")[0].strip() for x in properties]
-    output_text: str = (
+    attributes: str = (
         "(" + ", ".join([f"{name}={{self.{name}}}" for name in names]) + ")"
     )
-    output_text: str = (
-        f"def __repr__(self):\n\treturn f'{{self.__class__.__name__}}{output_text}'"
+    output: str = (
+        f"def __repr__(self):\n\treturn f'{{self.__class__.__name__}}{attributes}'"
     )
-    return output_text
+    return output
 
 
-def test_valid_input(lines: List[str]) -> None:
+def test_valid_input(lines: list[str]) -> None:
     if not any(["." in line for line in lines]):
         raise InvalidInputError("Are you using the correct input? eg self.name = name")
 
@@ -313,7 +302,7 @@ def imports_to_requirements(s: str) -> str:
     plotly
     selenium
     """
-    modules = set([re.split(r"[ .]", line)[1] for line in s.splitlines() if line])
+    modules = {re.split(r"[ .]", line)[1] for line in s.splitlines() if line}
     return "\n".join(modules)
 
 
@@ -330,10 +319,29 @@ def format_black(s) -> str:
     return s
 
 
+@clipboard_in_out_paste
+def remove_urls(s) -> str:
+    return re.sub(r"(https?://\S+)", "", s)
+
+
 def open_cb_url() -> None:
     """Open the current clipboard url in the default browser."""
     url = pyperclip.paste()
     webbrowser.open(url)
+
+
+def type_days_elapsed() -> None:
+    start_date = "2024-04-20"
+    days = (date.today() - date.fromisoformat(start_date)).days
+    typer.type_text(f"day {days}")
+
+
+def type_journel_header() -> None:
+    typer.type_date()
+    typer.type_text(" ")
+    type_days_elapsed()
+    typer.select_line_at_caret_and_copy()
+    format_hash()
 
 
 # select line first formatters #########################################################

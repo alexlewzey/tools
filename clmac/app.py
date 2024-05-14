@@ -6,12 +6,10 @@ note: do not call your module macro as that name is already taken in the path
 import logging
 import subprocess
 import time
-from typing import Tuple
 
 from pynput.keyboard import Key, KeyCode, Listener
 
-from . import core
-from . import typer as lh
+from . import core, keyboard
 from .callables import ENCODINGS, test_for_duplicates
 
 logger = logging.getLogger(__name__)
@@ -22,7 +20,7 @@ logging.basicConfig(
 )
 
 MAX_KEY_HISTORY_LENGTH: int = 30
-typer = lh.Typer()
+typer = keyboard.Typer()
 
 
 class KeyHistory(list):
@@ -49,7 +47,7 @@ class GlobalInputs:
     CTRL_SHIFT_R = (Key.ctrl_l, Key.shift, KeyCode(char="r"))
     CTRL_C = (Key.ctrl_l, KeyCode(char="\x03"))
 
-    currently_pressed = set()
+    currently_pressed: set[str] = set()
     key_history = KeyHistory(MAX_KEY_HISTORY_LENGTH)
     encoding_lookup = dict([macro.get_set_func_pair() for macro in ENCODINGS])
 
@@ -58,7 +56,7 @@ def listen_for_encoding() -> None:
     """Checks if the last three keys that were typed exist in the macro encoding
     indexes, if there are it indexes and calls the function corresponding to that three
     char encoding."""
-    last_three: Tuple = tuple(GlobalInputs.key_history[-3:])
+    last_three: tuple = tuple(GlobalInputs.key_history[-3:])
     if last_three == GlobalInputs.CTRL_SHIFT_Q:
         raise SystemExit
     elif last_three == GlobalInputs.CTRL_SHIFT_R:
@@ -91,6 +89,8 @@ def on_release(key):
 def run():
     """Run the macro script."""
     test_for_duplicates()
+    core.create_custom_template()
+    core.create_personal_template()
     with Listener(on_press=on_press, on_release=on_release) as listener:
         listener.join()
 
