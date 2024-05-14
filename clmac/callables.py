@@ -139,7 +139,9 @@ ENCODINGS = [
     MacroEncoding(encoding=";;d", func=typer(".dtypes")),
     MacroEncoding(encoding=";;s", func=typer(".shape")),
     MacroEncoding(encoding=";as", func=typer("ascending=False")),
-    MacroEncoding(encoding=";ag", func=typer('.agg(fn.sum(value_column).alias(value_column))')),
+    MacroEncoding(
+        encoding=";ag", func=typer(".agg(fn.sum(value_column).alias(value_column))")
+    ),
     MacroEncoding(
         encoding=";dc",
         func=typer("docker container "),
