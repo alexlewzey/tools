@@ -89,7 +89,7 @@ ENCODINGS = [
     ),
     MacroEncoding(
         encoding=";ll",
-        func=typer(".limit(5).toPandas()", line_end=True),
+        func=typer("label_column"),
     ),
     MacroEncoding(
         encoding=";tt",
@@ -114,6 +114,9 @@ ENCODINGS = [
     MacroEncoding(encoding=";;s", func=typer(".shape")),
     MacroEncoding(encoding=";as", func=typer("ascending=False")),
     MacroEncoding(
+        encoding=";ag", func=typer(".agg(fn.sum(value_column).alias(value_column))")
+    ),
+    MacroEncoding(
         encoding=";dc",
         func=typer("docker container "),
     ),
@@ -127,8 +130,9 @@ ENCODINGS = [
         func=typer("if __name__ == '__main__':\n    "),
     ),
     MacroEncoding(encoding=";;;", func=typer("print()", 1)),
-    MacroEncoding(encoding=";;l", func=typer("#%%")),
+    MacroEncoding(encoding=";;l", func=typer(".limit(5).toPandas()", line_end=True)),
     MacroEncoding(encoding=";;c", func=typer(".columns")),
+    MacroEncoding(encoding=";ob", func=typer(".orderBy(fn.desc(value_column))")),
     MacroEncoding(
         encoding=";3d",
         func=typer.partial_paste(boilerplate.px_3d_scatter),
@@ -146,6 +150,10 @@ ENCODINGS = [
         func=typer(".sort_values()", 1),
     ),
     MacroEncoding(
+        encoding=";om",
+        func=typer("1_000_000"),
+    ),
+    MacroEncoding(
         encoding=";sr",
         func=typer("spark.read.format('delta').table('')", 2),
     ),
@@ -154,7 +162,7 @@ ENCODINGS = [
         func=typer(
             (
                 ".write.format('delta').mode('append')"
-                ".partitionBy('domain', 'date').toTable('')"
+                ".partitionBy('domain', 'date').saveAsTable('')"
             ),
             2,
         ),
@@ -162,6 +170,14 @@ ENCODINGS = [
     MacroEncoding(
         encoding=";vc",
         func=typer(".value_counts(dropna=False)"),
+    ),
+    MacroEncoding(
+        encoding=";vv",
+        func=typer("value_column"),
+    ),
+    MacroEncoding(
+        encoding=";dd",
+        func=typer("dim_column"),
     ),
     MacroEncoding(
         encoding=";mu",
