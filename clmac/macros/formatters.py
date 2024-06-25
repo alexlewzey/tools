@@ -332,15 +332,20 @@ def open_cb_url() -> None:
 
 def type_days_elapsed() -> None:
     start_date = "2024-04-20"
-    days = (date.today() - date.fromisoformat(start_date)).days
-    typer.type_text(f"day {days}")
+    cut_start_date = "2024-05-20"
+    days_elapsed = (date.today() - date.fromisoformat(start_date)).days
+    cut_days_elapsed = (date.today() - date.fromisoformat(cut_start_date)).days
+    cut_weeks, cut_days = divmod(cut_days_elapsed, 7)
+    typer.type_text(f"day {days_elapsed}, cut week {cut_weeks} day {cut_days}")
 
 
 def type_journel_header() -> None:
     typer.type_date()
     typer.type_text(" ")
     type_days_elapsed()
+    time.sleep(0.1)
     typer.select_line_at_caret_and_copy()
+    time.sleep(0.1)
     format_hash()
 
 

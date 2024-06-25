@@ -226,7 +226,7 @@ ENCODINGS = [
     ),
     MacroEncoding(
         encoding=";ac",
-        func=typer('git add -A && git commit -m ""', 1),
+        func=typer('git add -A && git commit -m "" && git push', 9),
     ),
     MacroEncoding(encoding=";co", func=typer("git checkout ")),
     MacroEncoding(encoding=";gb", func=typer("git branch ")),
