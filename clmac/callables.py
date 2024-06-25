@@ -12,6 +12,12 @@ from clmac.core import CUSTOM_JSON, PERSONAL_JSON, open_urls
 from clmac.keyboard import Typer
 from clmac.macros import boilerplate, formatters, img2text
 
+git_log = (
+    "git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%"
+    "C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)"
+    "- %an%C(reset)%C(auto)%d%C(reset)' --all"
+)
+
 
 class MacroEncoding:
     """Represents a specific macro including its name, callable functionality and the
@@ -66,22 +72,10 @@ ENCODINGS = [
         encoding=";ah",
         func=typer.partial_paste(boilerplate.any_help),
     ),
-    MacroEncoding(
-        encoding=";pl",
-        func=typer.partial_paste(boilerplate.please_queries),
-    ),
-    MacroEncoding(
-        encoding=";pf",
-        func=typer("Please find attached the "),
-    ),
     MacroEncoding(encoding=";ba", func=typer("\nBest\nAlex")),
     MacroEncoding(
         encoding=";mt",
         func=typer("\n\nMany thanks\n\nAlex"),
-    ),
-    MacroEncoding(
-        encoding=";cc",
-        func=typer("count('*') "),
     ),
     MacroEncoding(
         encoding=";ua",
@@ -100,11 +94,6 @@ ENCODINGS = [
         func=typer("dt.datetime.now().replace(microsecond=0)"),
     ),
     MacroEncoding(encoding=";tp", func=typer(".toPandas()", line_end=True)),
-    MacroEncoding(encoding=";nr", func=typer("n_request")),
-    MacroEncoding(
-        encoding=";dp",
-        func=typer("display_plotly(fig)"),
-    ),
     MacroEncoding(encoding=";ri", func=typer(".reset_index()")),
     MacroEncoding(encoding=";si", func=typer(".set_index()", 1)),
     MacroEncoding(encoding=";ii", func=typer("def __init__(self, ):", 2)),
@@ -113,9 +102,6 @@ ENCODINGS = [
     MacroEncoding(encoding=";;d", func=typer(".dtypes")),
     MacroEncoding(encoding=";;s", func=typer(".shape")),
     MacroEncoding(encoding=";as", func=typer("ascending=False")),
-    MacroEncoding(
-        encoding=";ag", func=typer(".agg(fn.sum(value_column).alias(value_column))")
-    ),
     MacroEncoding(
         encoding=";dc",
         func=typer("docker container "),
@@ -194,10 +180,6 @@ ENCODINGS = [
         func=typer.partial_paste(boilerplate.sql_duplicates, 51),
     ),
     MacroEncoding(
-        encoding=";ss",
-        func=typer.partial_paste(boilerplate.sql_sum, 165),
-    ),
-    MacroEncoding(
         encoding=";cv",
         func=typer.partial_paste("create or replace temporary view  as", 3),
     ),
@@ -214,31 +196,23 @@ ENCODINGS = [
         func=typer(" suffixes=('', '_DROP')"),
     ),
     MacroEncoding(encoding=";da", func=typer("deactivate")),
-    MacroEncoding(
-        encoding=";gl",
-        func=typer("git log --graph --decorate --oneline"),
-    ),
+    MacroEncoding(encoding=";gd", func=typer("git diff ")),
+    MacroEncoding(encoding=";gl", func=typer(git_log)),
     MacroEncoding(encoding=";gs", func=typer("git status")),
     MacroEncoding(encoding=";ga", func=typer("git add -A")),
     MacroEncoding(
         encoding=";gc",
-        func=typer('git commit -m ""', 1),
+        func=typer('git add -A && git commit -m ""', 1),
     ),
     MacroEncoding(
         encoding=";ac",
-        func=typer('git add -A && git commit -m "" && git push', 9),
+        func=typer('git add -A && git commit -m "" && git push', 13),
     ),
     MacroEncoding(encoding=";co", func=typer("git checkout ")),
     MacroEncoding(encoding=";gb", func=typer("git branch ")),
-    MacroEncoding(encoding=";st", func=typer("pdb.set_trace()")),
-    MacroEncoding(
-        encoding=";pu",
-        func=typer("pip install -U pip"),
-    ),
-    MacroEncoding(
-        encoding=";lh",
-        func=typer("http://localhost:"),
-    ),
+    MacroEncoding(encoding=";gp", func=typer("git push ")),
+    MacroEncoding(encoding=";me", func=typer("git merge ")),
+    MacroEncoding(encoding=";pl", func=typer("git pull ")),
     MacroEncoding(encoding=";;1", func=partial(type_custom, key="1")),
     MacroEncoding(encoding=";;2", func=partial(type_custom, key="2")),
     MacroEncoding(encoding=";;3", func=partial(type_custom, key="3")),
