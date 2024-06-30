@@ -200,6 +200,7 @@ ENCODINGS = [
     MacroEncoding(encoding=";gl", func=typer(git_log)),
     MacroEncoding(encoding=";gs", func=typer("git status")),
     MacroEncoding(encoding=";ga", func=typer("git add -A")),
+    MacroEncoding(encoding=";ae", func=typer("source .venv/bin/activate")),
     MacroEncoding(
         encoding=";gc",
         func=typer('git add -A && git commit -m ""', 1),
@@ -245,6 +246,7 @@ ENCODINGS = [
     MacroEncoding(encoding=";2s", func=formatters.to_snake),
     MacroEncoding(encoding=";hh", func=formatters.format_hash),
     MacroEncoding(encoding=";dh", func=formatters.format_dash),
+    MacroEncoding(encoding=";jp", func=formatters.join_python_string),
     MacroEncoding(
         encoding=";2r",
         func=formatters.imports_to_requirements,

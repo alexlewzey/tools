@@ -274,7 +274,7 @@ def format_repr(s: str) -> str:
 
 
 def test_valid_input(lines: list[str]) -> None:
-    if not any(["." in line for line in lines]):
+    if not any("." in line for line in lines):
         raise InvalidInputError("Are you using the correct input? eg self.name = name")
 
 
@@ -314,14 +314,21 @@ def format_sql(s: str) -> str:
 
 
 @clipboard_in_out_paste
-def format_black(s) -> str:
+def format_black(s: str) -> str:
     s = black.format_str(s, mode=black.FileMode())
     return s
 
 
 @clipboard_in_out_paste
-def remove_urls(s) -> str:
+def remove_urls(s: str) -> str:
     return re.sub(r"(https?://\S+)", "", s)
+
+
+@clipboard_in_out_paste
+def join_python_string(s: str) -> str:
+    lines = (line.lstrip() for line in s.strip().splitlines())
+    formatted = "(" + '"\nf"'.join(lines) + ")"
+    return formatted
 
 
 def open_cb_url() -> None:
