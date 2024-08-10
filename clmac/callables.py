@@ -197,10 +197,14 @@ ENCODINGS = [
     MacroEncoding(encoding=";ga", func=typer("git add -A")),
     MacroEncoding(
         encoding=";gc",
-        func=typer('git add -A && git commit -m ""', 1),
+        func=typer('git commit -m ""', 1),
     ),
     MacroEncoding(
         encoding=";ac",
+        func=typer('git add -A && git commit -m ""', 1),
+    ),
+    MacroEncoding(
+        encoding=";ap",
         func=typer('git add -A && git commit -m "" && git push', 13),
     ),
     MacroEncoding(encoding=";co", func=typer("git checkout ")),
