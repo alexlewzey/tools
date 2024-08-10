@@ -4,8 +4,6 @@ that recognises sequential keystrokes that typically start with a semicolon.
 note: do not call your module macro as that name is already taken in the path
 """
 import logging
-import subprocess
-import time
 
 from pynput.keyboard import Key, KeyCode, Listener
 
@@ -59,17 +57,9 @@ def listen_for_encoding() -> None:
     last_three: tuple = tuple(GlobalInputs.key_history[-3:])
     if last_three == GlobalInputs.CTRL_SHIFT_Q:
         raise SystemExit
-    elif last_three == GlobalInputs.CTRL_SHIFT_R:
-        restart_app()
     elif last_three in GlobalInputs.encoding_lookup.keys():
         typer.press_key(key=Key.backspace, num_presses=len(last_three))
         GlobalInputs.encoding_lookup[last_three]()
-
-
-def restart_app() -> None:
-    subprocess.run("clmac kel run", shell=True)
-    time.sleep(0.2)
-    quit()
 
 
 @core.log_input()

@@ -10,9 +10,8 @@ from functools import partial
 from typing import Callable
 
 import pyperclip
-from pynput.keyboard import Controller, Key, KeyCode
-
 from clmac import core
+from pynput.keyboard import Controller, Key, KeyCode
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +27,7 @@ class Typer(Controller):
 
     def press_key(self, key, num_presses: int = 1) -> None:
         """Simulate pressing a key a specified number of times."""
-        for num_presses in range(num_presses):
+        for _ in range(num_presses):
             self.press(key)
             self.release(key)
 
@@ -141,7 +140,7 @@ class Typer(Controller):
         return pyperclip.paste()
 
     def select_text_before(self, length: int) -> None:
-        for i in range(length):
+        for _ in range(length):
             self.hotkey(Key.shift, Key.left)
 
     def select_line_at_caret(self) -> None:

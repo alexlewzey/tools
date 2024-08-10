@@ -39,7 +39,6 @@ clmac = "clmac.app:run"
 cli = 'clmac.cli:main'
 
 
-
 [tool.mypy]
 ignore_missing_imports = true
 check_untyped_defs = true
@@ -51,18 +50,18 @@ select = [
     "B", # pycodestyle: pycodestyle checks
     "C", # mccabe: complexity checks
     # "D",  # pydocstyle: docstring style checks
-    "E", # pycodestyle: pycodestyle errors
-    "F", # pyflakes: unused imports, variables, etc.
-    "I", # isort: import sorting
-    "N", # pep8-naming: naming conventions
-    "S", # bandit: security checks
-    "W", # pycodestyle: pycodestyle warnings
+    "E",  # pycodestyle: pycodestyle errors
+    "F",  # pyflakes: unused imports, variables, etc.
+    "I",  # isort: import sorting
+    "N",  # pep8-naming: naming conventions
+    "S",  # bandit: security checks
+    "W",  # pycodestyle: pycodestyle warnings
+    "UP", # pyupgrade: upgrade python version syntax
 ]
+
 ignore = [
     "S101", # Ignore use of assert detected
     "S108", # ignore use of tmp
     "S311", # Standard pseudo-random generators are not suitable for cryptographic purposes
 ]
 fix = true
-
-

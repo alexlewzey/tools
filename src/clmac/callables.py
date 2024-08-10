@@ -6,11 +6,10 @@ from functools import partial
 from pathlib import Path
 from typing import Callable
 
-from pynput.keyboard import KeyCode
-
 from clmac.core import CUSTOM_JSON, PERSONAL_JSON, open_urls
 from clmac.keyboard import Typer
 from clmac.macros import boilerplate, formatters, img2text
+from pynput.keyboard import KeyCode
 
 git_log = (
     "git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%"

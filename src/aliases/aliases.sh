@@ -1,3 +1,4 @@
+#!/bin/bash
 # unix
 alias sizes="find . -type f -exec du -h {} + | sort -r -h | head"
 alias ls="ls -alh"
