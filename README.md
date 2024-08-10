@@ -1,6 +1,6 @@
 # Tools
 
-A collection of general tools that improve my productivity.
+A collection of general tools that improve my productivity e.g. keyboard triggered macros, bash aliases, etc.
 
 ## Install
 
