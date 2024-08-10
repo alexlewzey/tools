@@ -1,8 +1,8 @@
-# tools
+# Tools
 
 A collection of general tools that improve my productivity.
 
-## install
+## Install
 
 ### Linux
 
