@@ -16,6 +16,7 @@
 				"tamasfe.even-better-toml", // Even Better TOML
 				"ms-vscode.makefile-tools", // Makefile Tools
 				"redhat.vscode-yaml", // YAML
+				"github.vscode-github-actions", // Github Actions
 				"oderwat.indent-rainbow", // indent-rainbow
 				"vscode-icons-team.vscode-icons" // vscode-icons
 			],

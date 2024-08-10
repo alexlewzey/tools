@@ -12,7 +12,7 @@ from datetime import date
 import black
 import pyperclip
 import sqlfluff
-from clmac.keyboard import Typer
+from key_macro.keyboard import Typer
 from textblob import TextBlob
 
 logger = logging.getLogger(__name__)

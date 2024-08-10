@@ -6,9 +6,9 @@ from functools import partial
 from pathlib import Path
 from typing import Callable
 
-from clmac.core import CUSTOM_JSON, PERSONAL_JSON, open_urls
-from clmac.keyboard import Typer
-from clmac.macros import boilerplate, formatters, img2text
+from key_macro.core import CUSTOM_JSON, PERSONAL_JSON, open_urls
+from key_macro.keyboard import Typer
+from key_macro.macros import  formatters, img2text
 from pynput.keyboard import KeyCode
 
 git_log = (
@@ -16,7 +16,9 @@ git_log = (
     "C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)"
     "- %an%C(reset)%C(auto)%d%C(reset)' --all"
 )
-
+please_info = "Please let me know if you require any more information."
+any_help = "Any help would be much appreciated."
+please_queries = "Please let me know if you have any queries."
 
 class MacroEncoding:
     """Represents a specific macro including its name, callable functionality and the
@@ -69,7 +71,7 @@ ENCODINGS = [
     ),
     MacroEncoding(
         encoding=";ah",
-        func=typer.partial_paste(boilerplate.any_help),
+        func=typer.partial_paste(any_help),
     ),
     MacroEncoding(encoding=";ba", func=typer("\nBest\nAlex")),
     MacroEncoding(
@@ -294,7 +296,7 @@ ENCODINGS = [
 
 
 if sys.platform == "win32":
-    from clmac.macros import text2speech
+    from key_macro.macros import text2speech
 
     ENCODINGS.append(MacroEncoding(encoding=";ee", func=text2speech.text2speech))
 

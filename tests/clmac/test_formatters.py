@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-import clmac.macros.formatters as f
+import key_macro.macros.formatters as f
 import pyperclip
 import pytest
 
@@ -23,7 +23,7 @@ def copy_func_paste_assert(input_, expected, func):
         (r"\N", "\\n"),
     ],
 )
-@patch("clmac.macros.formatters.typer")
+@patch("key_macro.macros.formatters.typer")
 def test_to_lower(typer_mock, input_, expected):
     copy_func_paste_assert(input_, expected, f.to_lower)
     typer_mock.paste.assert_called_once()
@@ -37,7 +37,7 @@ def test_to_lower(typer_mock, input_, expected):
         ("h\n  a \ta", "h a a"),
     ],
 )
-@patch("clmac.macros.formatters.typer")
+@patch("key_macro.macros.formatters.typer")
 def test_split_join(typer_mock, input_, expected):
     copy_func_paste_assert(input_, expected, f.split_join)
 
@@ -49,7 +49,7 @@ def test_split_join(typer_mock, input_, expected):
         ("Hello Mole 1234", "hello_mole_1234"),
     ],
 )
-@patch("clmac.macros.formatters.typer")
+@patch("key_macro.macros.formatters.typer")
 def test_to_snake(typer_mock, input_, expected):
     copy_func_paste_assert(input_, expected, f.to_snake)
 
@@ -72,7 +72,7 @@ b""",
         ),
     ],
 )
-@patch("clmac.macros.formatters.typer")
+@patch("key_macro.macros.formatters.typer")
 def test_remove_blanklines(typer_mock, input_, expected):
     copy_func_paste_assert(input_, expected, f.remove_blanklines)
 
@@ -81,7 +81,7 @@ def test_remove_blanklines(typer_mock, input_, expected):
     "input_, expected",
     [("hello there", "'hello', 'there',")],
 )
-@patch("clmac.macros.formatters.typer")
+@patch("key_macro.macros.formatters.typer")
 def test_to_list(typer_mock, input_, expected):
     copy_func_paste_assert(input_, expected, f.to_list)
 
@@ -90,7 +90,7 @@ def test_to_list(typer_mock, input_, expected):
     "input_, expected",
     [("moje is a goon", "moje is a goon\n--------------")],
 )
-@patch("clmac.macros.formatters.typer")
+@patch("key_macro.macros.formatters.typer")
 def test_underline(typer_mock, input_, expected):
     copy_func_paste_assert(input_, expected, f.underline)
 
@@ -104,6 +104,6 @@ def test_underline(typer_mock, input_, expected):
         ("'hello world'", "'hello world'"),
     ],
 )
-@patch("clmac.macros.formatters.typer")
+@patch("key_macro.macros.formatters.typer")
 def test_unnest_parathesis(typer_mock, input_, expected):
     copy_func_paste_assert(input_, expected, f.unnest_parathesis)

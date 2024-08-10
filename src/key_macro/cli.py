@@ -5,7 +5,7 @@ from . import core
 
 
 def main():
-    description = f"clmac custom settings:\n{core.read_custom_template()}"
+    description = f"key_macro custom settings:\n{core.read_custom_template()}"
     parser = argparse.ArgumentParser(
         description=description, formatter_class=RawTextHelpFormatter
     )

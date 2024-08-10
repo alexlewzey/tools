@@ -10,7 +10,7 @@ from functools import partial
 from typing import Callable
 
 import pyperclip
-from clmac import core
+from key_macro import core
 from pynput.keyboard import Controller, Key, KeyCode
 
 logger = logging.getLogger(__name__)
@@ -131,14 +131,16 @@ class Typer(Controller):
     def __call__(self, text, n_left: int | None = None, line_end: bool = False):
         return self.partial_typing(text, n_left=n_left, line_end=line_end)
 
-    @core.sleep_after(0.2)
-    @core.log_output()
     def selection_to_clipboard(self) -> str:
         with self.pressed(self.cmd_ctrl):
             self.press(KeyCode(char="c"))
             self.release(KeyCode(char="c"))
         time.sleep(0.1)  # allow item to be added to clipboard
-        return pyperclip.paste()
+        result = pyperclip.paste()
+        logger.info(f"selection_to_clipboard: output={result}"[:300])
+        time.sleep(0.2)
+        return result
+    
 
     def select_text_before(self, length: int) -> None:
         for _ in range(length):

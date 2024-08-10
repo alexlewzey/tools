@@ -62,8 +62,8 @@ def listen_for_encoding() -> None:
         GlobalInputs.encoding_lookup[last_three]()
 
 
-@core.log_input()
 def on_press(key):
+    logger.info(f"on_press: input={key}"[:300])
     GlobalInputs.key_history.add_key(key)
     GlobalInputs.currently_pressed.add(key)
     listen_for_encoding()

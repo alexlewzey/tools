@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import pyperclip
 import pytesseract
-from clmac.core import EXE_TESSERACT
+from key_macro.core import EXE_TESSERACT
 from PIL import ImageGrab
 
 
