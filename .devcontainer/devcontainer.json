@@ -29,14 +29,14 @@
 	},
 
 	"mounts": [
-		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
 	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "onCreateCommand": "poetry install",
-	"postStartCommand": "poetry install && poetry run pre-commit install --install-hooks",
+	"postStartCommand": "poetry install && poetry run pre-commit install --install-hooks"
 	// Configure tool-specific properties.
 	// "customizations": {},
 

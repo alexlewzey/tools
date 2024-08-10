@@ -119,14 +119,6 @@ ENCODINGS = [
     MacroEncoding(encoding=";;c", func=typer(".columns")),
     MacroEncoding(encoding=";ob", func=typer(".orderBy(fn.desc(value_column))")),
     MacroEncoding(
-        encoding=";3d",
-        func=typer.partial_paste(boilerplate.px_3d_scatter),
-    ),
-    MacroEncoding(
-        encoding=";mp",
-        func=typer.partial_paste(boilerplate.melt_plot, 58),
-    ),
-    MacroEncoding(
         encoding=";sv",
         func=typer(".sort_values()", 1),
     ),
@@ -169,10 +161,6 @@ ENCODINGS = [
     MacroEncoding(
         encoding=";fs",
         func=typer("select * \nfrom "),
-    ),
-    MacroEncoding(
-        encoding=";sd",
-        func=typer.partial_paste(boilerplate.sql_duplicates, 51),
     ),
     MacroEncoding(
         encoding=";cv",
