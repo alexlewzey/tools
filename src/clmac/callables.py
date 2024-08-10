@@ -127,10 +127,6 @@ ENCODINGS = [
         func=typer.partial_paste(boilerplate.melt_plot, 58),
     ),
     MacroEncoding(
-        encoding=";ds",
-        func=typer.partial_paste(boilerplate.data_sci),
-    ),
-    MacroEncoding(
         encoding=";sv",
         func=typer(".sort_values()", 1),
     ),

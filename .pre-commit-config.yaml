@@ -16,7 +16,6 @@ repos:
   - id: check-merge-conflict
   - id: end-of-file-fixer
   - id: check-docstring-first
-  - id: detect-aws-credentials
   - id: detect-private-key
   - id: check-added-large-files
     args: [--maxkb=20480]
@@ -55,10 +54,10 @@ repos:
     args: [--non-interactive, --install-types]
     exclude: src/examples
 # # docker
-# - repo: https://github.com/hadolint/hadolint
-#   rev: v2.12.0
-#   hooks:
-#   - id: hadolint
+- repo: https://github.com/hadolint/hadolint
+  rev: v2.12.0
+  hooks:
+  - id: hadolint
 # jupyter notebooks
 - repo: https://github.com/kynan/nbstripout
   rev: 0.6.1
