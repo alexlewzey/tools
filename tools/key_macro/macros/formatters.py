@@ -57,49 +57,41 @@ def clipboard_in_out_paste(func):
 # transforms that do not add or remove characters ######################################
 
 
-@clipboard_in_out_paste
-def to_lower(s: str) -> str:
+def _to_lower(s: str) -> str:
     return s.lower()
 
 
-@clipboard_in_out_paste
-def to_upper(s: str) -> str:
+def _to_upper(s: str) -> str:
     return s.upper()
 
 
-@clipboard_in_out_paste
-def to_capitalize(s: str) -> str:
+def _to_capitalize(s: str) -> str:
     return s.capitalize()
 
 
-@clipboard_in_out
-def split_join(s: str) -> str:
+def _split_join(s: str) -> str:
     return " ".join(s.split())
 
 
-@clipboard_in_out_paste
-def wrap_text(s: str, max_len: int = 88) -> str:
+def _wrap_text(s: str) -> str:
     """Wrap text to a maximum line length."""
     s = textwrap.fill(s.strip('"'), width=82)
     s = '"' + ' "\n"'.join(s.split("\n")) + '"'
     return s
 
 
-@clipboard_in_out_paste
-def spell_check(s: str) -> str:
+def _spell_check(s: str) -> str:
     sentence = TextBlob(s)
     corrected = sentence.correct()
     return str(corrected)
 
 
-@clipboard_in_out
-def to_snake(text: str) -> str:
+def _to_snake(text: str) -> str:
     lines = [re.sub(r"[\s_]+", "_", line).lower() for line in text.splitlines()]
     return "\n".join(lines)
 
 
-@clipboard_in_out
-def remove_blanklines(s: str) -> str:
+def _remove_blanklines(s: str) -> str:
     """Remove blank lines from a block of text and return it to the clipboard.
 
     input
@@ -118,8 +110,7 @@ def remove_blanklines(s: str) -> str:
     return "\n".join(lines)
 
 
-@clipboard_in_out
-def to_list(s: str) -> str:
+def _to_list(s: str) -> str:
     """Format a sequence separated by white space into a python list format.
 
     input
@@ -134,8 +125,7 @@ def to_list(s: str) -> str:
     return output
 
 
-@clipboard_in_out_paste
-def underline(s: str) -> str:
+def _underline(s: str) -> str:
     """Add a dash underline to the clipboard item and return to the clipboard.
 
     input
@@ -156,8 +146,7 @@ def create_underline(text: str) -> str:
     return len(clipboard_clean) * "-"
 
 
-@clipboard_in_out_paste
-def format_variables(s: str) -> str:
+def _format_variables(s: str) -> str:
     """Take the variables from the clipboard and format them as a string to be
     printed and return to clipboard.
 
@@ -198,20 +187,17 @@ def _pad_right_full(s: str, char: str, left_len: int = 1) -> str:
     return output
 
 
-@clipboard_in_out_paste
-def format_hash(s: str) -> str:
+def _format_hash(s: str) -> str:
     """See: pad_right_full()"""
     return _pad_right_full(s, "#")
 
 
-@clipboard_in_out_paste
-def format_dash(s: str) -> str:
+def _format_dash(s: str) -> str:
     """See: pad_right_full()"""
     return _pad_right_full(s, "-", left_len=2)
 
 
-@clipboard_in_out_paste
-def format_hash_center(s: str) -> str:
+def _format_hash_center(s: str) -> str:
     """Add a center justify fill of hash characters to the current clipboard item to
     a length of 88 character and return it to the clipboard.
 
@@ -229,8 +215,7 @@ def format_hash_center(s: str) -> str:
 # specific use case string formatters ##################################################
 
 
-@clipboard_in_out
-def unnest_parathesis(s: str) -> str:
+def _unnest_parathesis(s: str) -> str:
     """Extract the content of the paraenthesis from the current clipboard selection
     and type it out.
 
@@ -249,8 +234,7 @@ def unnest_parathesis(s: str) -> str:
     return content
 
 
-@clipboard_in_out
-def format_repr(s: str) -> str:
+def _format_repr(s: str) -> str:
     """Copy class properties to the clipboard, run this program, and it will format
     the properties as a human readable repr string that you can add to your class.
 
@@ -284,8 +268,7 @@ class InvalidInputError(TypeError):
     pass
 
 
-@clipboard_in_out_paste
-def imports_to_requirements(s: str) -> str:
+def _imports_to_requirements(s: str) -> str:
     """
 
     input
@@ -308,26 +291,22 @@ def imports_to_requirements(s: str) -> str:
     return "\n".join(modules)
 
 
-@clipboard_in_out_paste
-def format_sql(s: str) -> str:
+def _format_sql(s: str) -> str:
     """Format sql with sqlfluff."""
     s = sqlfluff.fix(s, dialect="databricks")
     return s
 
 
-@clipboard_in_out_paste
-def format_black(s: str) -> str:
+def _format_black(s: str) -> str:
     s = black.format_str(s, mode=black.FileMode())
     return s
 
 
-@clipboard_in_out_paste
-def remove_urls(s: str) -> str:
+def _remove_urls(s: str) -> str:
     return re.sub(r"(https?://\S+)", "", s)
 
 
-@clipboard_in_out_paste
-def join_python_string(s: str) -> str:
+def _join_python_string(s: str) -> str:
     lines = (line.lstrip() for line in s.strip().splitlines())
     formatted = "(" + '"\nf"'.join(lines) + ")"
     return formatted
@@ -381,3 +360,26 @@ def cut_right_equality() -> None:
     left, right = line.split("=", maxsplit=1)
     pyperclip.copy(right.strip())
     typer.type_text(left + "= ")
+
+
+to_lower = clipboard_in_out_paste(_to_lower)
+to_upper = clipboard_in_out_paste(_to_upper)
+to_capitalize = clipboard_in_out_paste(_to_capitalize)
+split_join = clipboard_in_out(_split_join)
+wrap_text = clipboard_in_out_paste(_wrap_text)
+spell_check = clipboard_in_out_paste(_spell_check)
+to_snake = clipboard_in_out(_to_snake)
+remove_blanklines = clipboard_in_out(_remove_blanklines)
+to_list = clipboard_in_out(_to_list)
+underline = clipboard_in_out_paste(_underline)
+format_variables = clipboard_in_out_paste(_format_variables)
+format_hash = clipboard_in_out_paste(_format_hash)
+format_dash = clipboard_in_out_paste(_format_dash)
+format_hash_center = clipboard_in_out_paste(_format_hash_center)
+unnest_parathesis = clipboard_in_out(_unnest_parathesis)
+format_repr = clipboard_in_out(_format_repr)
+imports_to_requirements = clipboard_in_out_paste(_imports_to_requirements)
+format_sql = clipboard_in_out_paste(_format_sql)
+format_black = clipboard_in_out_paste(_format_black)
+remove_urls = clipboard_in_out_paste(_remove_urls)
+join_python_string = clipboard_in_out_paste(_join_python_string)

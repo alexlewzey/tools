@@ -1,16 +1,6 @@
-from unittest.mock import patch
-
-import pyperclip
 import pytest
 
-import tools.key_macro.macros.formatters as f
-
-
-def copy_func_paste_assert(input_, expected, func):
-    pyperclip.copy(input_)
-    func()
-    output = pyperclip.paste()
-    assert output == expected
+from tools.key_macro.macros import formatters
 
 
 @pytest.mark.parametrize(
@@ -24,10 +14,8 @@ def copy_func_paste_assert(input_, expected, func):
         (r"\N", "\\n"),
     ],
 )
-@patch("key_macro.macros.formatters.typer")
-def test_to_lower(typer_mock, input_, expected):
-    copy_func_paste_assert(input_, expected, f.to_lower)
-    typer_mock.paste.assert_called_once()
+def test_to_lower(input_, expected):
+    assert formatters._to_lower(input_) == expected
 
 
 @pytest.mark.parametrize(
@@ -38,9 +26,8 @@ def test_to_lower(typer_mock, input_, expected):
         ("h\n  a \ta", "h a a"),
     ],
 )
-@patch("key_macro.macros.formatters.typer")
-def test_split_join(typer_mock, input_, expected):
-    copy_func_paste_assert(input_, expected, f.split_join)
+def test_split_join(input_, expected):
+    assert formatters._split_join(input_) == expected
 
 
 @pytest.mark.parametrize(
@@ -50,9 +37,8 @@ def test_split_join(typer_mock, input_, expected):
         ("Hello Mole 1234", "hello_mole_1234"),
     ],
 )
-@patch("key_macro.macros.formatters.typer")
-def test_to_snake(typer_mock, input_, expected):
-    copy_func_paste_assert(input_, expected, f.to_snake)
+def test_to_snake(input_, expected):
+    assert formatters._to_snake(input_) == expected
 
 
 @pytest.mark.parametrize(
@@ -73,27 +59,24 @@ b""",
         ),
     ],
 )
-@patch("key_macro.macros.formatters.typer")
-def test_remove_blanklines(typer_mock, input_, expected):
-    copy_func_paste_assert(input_, expected, f.remove_blanklines)
+def test_remove_blanklines(input_, expected):
+    assert formatters._remove_blanklines(input_) == expected
 
 
 @pytest.mark.parametrize(
     "input_, expected",
     [("hello there", "'hello', 'there',")],
 )
-@patch("key_macro.macros.formatters.typer")
-def test_to_list(typer_mock, input_, expected):
-    copy_func_paste_assert(input_, expected, f.to_list)
+def test_to_list(input_, expected):
+    assert formatters._to_list(input_) == expected
 
 
 @pytest.mark.parametrize(
     "input_, expected",
     [("moje is a goon", "moje is a goon\n--------------")],
 )
-@patch("key_macro.macros.formatters.typer")
-def test_underline(typer_mock, input_, expected):
-    copy_func_paste_assert(input_, expected, f.underline)
+def test_underline(input_, expected):
+    assert formatters._underline(input_) == expected
 
 
 @pytest.mark.parametrize(
@@ -105,6 +88,5 @@ def test_underline(typer_mock, input_, expected):
         ("'hello world'", "'hello world'"),
     ],
 )
-@patch("key_macro.macros.formatters.typer")
-def test_unnest_parathesis(typer_mock, input_, expected):
-    copy_func_paste_assert(input_, expected, f.unnest_parathesis)
+def test_unnest_parathesis(input_, expected):
+    assert formatters._unnest_parathesis(input_) == expected
