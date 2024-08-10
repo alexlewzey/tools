@@ -58,8 +58,8 @@ class Typer(Controller):
             time.sleep(rest)
 
     def alt_tab(self, sleep_after: float = 0.2) -> None:
-        """Hotkey alt + tab, includes a sleep after so typing does not occur while the
-        windows are cycling."""
+        """Hotkey alt + tab, includes a sleep after so typing does not occur while
+        the windows are cycling."""
         if sys.platform == "win32":
             logger.info("alt_tab: windows")
             self.hotkey(Key.alt_l, Key.tab)
@@ -116,7 +116,8 @@ class Typer(Controller):
     def partial_typing(
         self, text: str, n_left: int | None = None, line_end: bool = False
     ) -> Callable:
-        """Return a callable that will simulate typing text when subsequently called."""
+        """Return a callable that will simulate typing text when subsequently
+        called."""
 
         def call_typing() -> None:
             if line_end:
@@ -152,8 +153,8 @@ class Typer(Controller):
             self.hotkey_three(Key.cmd, Key.shift, Key.left)
 
     def select_word_at_caret_and_copy(self) -> str:
-        """Selects the word at the cursor, if cursor is within word it will go to end of
-        word and then select it."""
+        """Selects the word at the cursor, if cursor is within word it will go to end
+        of word and then select it."""
         self.hotkey_three(Key.alt, Key.shift, Key.left)
         return self.selection_to_clipboard()
 
@@ -201,8 +202,8 @@ class Typer(Controller):
             self.hotkey(Key.cmd, Key.left)
 
     def select_previous_lines(self, n_lines: int) -> None:
-        """Select a specified number of lines preceding and including the current line
-        of the cursor."""
+        """Select a specified number of lines preceding and including the current
+        line of the cursor."""
         self.press_key(Key.up, num_presses=n_lines)
         self.caret_to_line_start()
         for _ in range(n_lines):

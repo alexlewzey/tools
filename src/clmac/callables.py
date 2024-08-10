@@ -320,8 +320,8 @@ class DuplicateEncodingError(ValueError):
 
 
 def test_for_duplicates() -> None:
-    """On program start check for duplicate encodings across the macro that would result
-    in two macro being called at once."""
+    """On program start check for duplicate encodings across the macro that would
+    result in two macro being called at once."""
     codes = [macro.encoding for macro in ENCODINGS]
     if len(codes) != len(set(codes)):
         err_msg = f"you have added a duplicate encoding: \n{Counter(codes)}"

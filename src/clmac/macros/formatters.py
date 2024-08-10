@@ -22,8 +22,9 @@ LINE_CHAR_LIMIT = 88
 
 
 def clipboard_in_out(func):
-    """Decorator that grabs text from the clipboard passes it to the decorated function
-    then copies the text returned by the decorated function to the clipboard."""
+    """Decorator that grabs text from the clipboard passes it to the decorated
+    function then copies the text returned by the decorated function to the
+    clipboard."""
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -37,8 +38,9 @@ def clipboard_in_out(func):
 
 
 def clipboard_in_out_paste(func):
-    """Decorator that grabs text from the clipboard passes it to the decorated function
-    then copies the text returned by the decorated function to the clipboard."""
+    """Decorator that grabs text from the clipboard passes it to the decorated
+    function then copies the text returned by the decorated function to the
+    clipboard."""
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -155,8 +157,8 @@ def create_underline(text: str) -> str:
 
 @clipboard_in_out_paste
 def format_variables(s: str) -> str:
-    """Take the variables from the clipboard and format them as a string to be printed
-    and return to clipboard.
+    """Take the variables from the clipboard and format them as a string to be
+    printed and return to clipboard.
 
     input
     ------
@@ -209,8 +211,8 @@ def format_dash(s: str) -> str:
 
 @clipboard_in_out_paste
 def format_hash_center(s: str) -> str:
-    """Add a center justify fill of hash characters to the current clipboard item to a
-    length of 88 character and return it to the clipboard.
+    """Add a center justify fill of hash characters to the current clipboard item to
+    a length of 88 character and return it to the clipboard.
 
     input:
     hello world
@@ -228,8 +230,8 @@ def format_hash_center(s: str) -> str:
 
 @clipboard_in_out
 def unnest_parathesis(s: str) -> str:
-    """Extract the content of the paraenthesis from the current clipboard selection and
-    type it out.
+    """Extract the content of the paraenthesis from the current clipboard selection
+    and type it out.
 
     input:
     print(''.join('hello world'))
@@ -248,8 +250,8 @@ def unnest_parathesis(s: str) -> str:
 
 @clipboard_in_out
 def format_repr(s: str) -> str:
-    """Copy class properties to the clipboard, run this program, and it will format the
-    properties as a human readable repr string that you can add to your class.
+    """Copy class properties to the clipboard, run this program, and it will format
+    the properties as a human readable repr string that you can add to your class.
 
     input from clipboard:
         self.id = id_

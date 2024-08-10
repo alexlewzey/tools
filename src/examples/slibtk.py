@@ -1,34 +1,12 @@
-"""Standard library tool-kit this module contains commonly used functions to
-process and manipulate standard library objects."""
-import csv
-import functools
-import inspect
-import itertools
-import json
+"""Standard library tool-kit this module contains commonly used functions to process
+and manipulate standard library objects."""
 import logging
-import math
-import os
-import pickle
-import random
-import re
-import smtplib
-import statistics
-import sys
 import time
-import traceback
-from collections import OrderedDict, defaultdict, namedtuple
-from collections.abc import (Callable, Generator, Hashable, Iterable, Iterator,
-                             Sequence)
-from concurrent.futures import ProcessPoolExecutor, as_completed
-from concurrent.futures.thread import ThreadPoolExecutor
-from datetime import datetime, timedelta
-from email.message import EmailMessage
+from collections.abc import Iterator, Sequence
+from datetime import datetime
 from pathlib import Path
-from threading import Thread
-from typing import Any
 
 logger = logging.getLogger(__name__)
-
 
 
 def to_chunks(seq: Sequence, size: int) -> Iterator[list]:
@@ -62,9 +40,6 @@ def hr_secs_elapsed(start: float) -> str:
     hours:mins:seconds."""
     return hr_seconds(time.time() - start)
 
-def get_memory_hr(obj: Any) -> str:
-    """Get object size in human readable format."""
-    return hr_bytes(sys.getsizeof(obj))
 
 def max_fname(path: Path | str | None) -> Path:
     """Return the path with the largest numeric index in its name."""
@@ -96,13 +71,10 @@ def rtype(x):
     elif isinstance(x, tuple):
         return tuple(rtype(o) for o in x)
     elif isinstance(x, dict):
-        return {k: rtype(v) for k,v in x.items()}
+        return {k: rtype(v) for k, v in x.items()}
     else:
-        type_str = str(type(x)).split("\'")[1]
-        if isinstance(x, (Tensor, np.ndarray)):
-            return f'{type_str}={x.shape}'
-        else: 
-            return type_str
+        type_str = str(type(x)).split("'")[1]
+        return type_str
 
 
 def get_most_recently_modified_file(path: Path | str, glob: str) -> Path:
@@ -113,4 +85,3 @@ def get_most_recently_modified_file(path: Path | str, glob: str) -> Path:
             most_recent_time = p.stat().st_mtime
             most_recent_modified_file = p
     return most_recent_modified_file
-    
