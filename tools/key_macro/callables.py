@@ -1,12 +1,17 @@
 """A collection of all my available macro."""
 import json
+import os
 import sys
 from collections import Counter
 from functools import partial
 from pathlib import Path
 from typing import Callable
+from unittest.mock import MagicMock
 
-from pynput.keyboard import KeyCode
+if os.environ.get("RUNNING_PYTEST"):
+    KeyCode = MagicMock()
+else:
+    from pynput.keyboard import KeyCode  # type: ignore
 
 from tools.key_macro.core import CUSTOM_JSON, PERSONAL_JSON, open_urls
 from tools.key_macro.keyboard import Typer
