@@ -64,3 +64,5 @@ ignore = [
     "S311", # Standard pseudo-random generators are not suitable for cryptographic purposes
 ]
 fix = true
+
+
