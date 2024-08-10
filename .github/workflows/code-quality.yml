@@ -19,15 +19,5 @@ jobs:
     - name: Run pre-commit and check for changes
       id: check_changes
       run: |
-        export SKIP=pytest-check
-        poetry run pre-commit run --all-files
+        SKIP=pytest poetry run pre-commit run --all-files
         git diff --exit-code || echo "changes"
-
-    - name: Commit and push changes
-      if: steps.check_changes.outputs.result == 'changes'
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add .
-        git commit -m "CI code quality"
-        git push
