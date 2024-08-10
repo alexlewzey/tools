@@ -1,11 +1,8 @@
 """"""
-import functools
 import json
 import logging
-import time
 import webbrowser
 from pathlib import Path
-from typing import Any
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -70,4 +67,3 @@ def update_custom_template(key: str, value: str) -> None:
 def read_custom_template() -> str:
     with CUSTOM_JSON.open() as f:
         return f.read()
-

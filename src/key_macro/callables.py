@@ -8,7 +8,7 @@ from typing import Callable
 
 from key_macro.core import CUSTOM_JSON, PERSONAL_JSON, open_urls
 from key_macro.keyboard import Typer
-from key_macro.macros import  formatters, img2text
+from key_macro.macros import formatters, img2text
 from pynput.keyboard import KeyCode
 
 git_log = (
@@ -19,6 +19,7 @@ git_log = (
 please_info = "Please let me know if you require any more information."
 any_help = "Any help would be much appreciated."
 please_queries = "Please let me know if you have any queries."
+
 
 class MacroEncoding:
     """Represents a specific macro including its name, callable functionality and the

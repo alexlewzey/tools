@@ -10,7 +10,6 @@ from functools import partial
 from typing import Callable
 
 import pyperclip
-from key_macro import core
 from pynput.keyboard import Controller, Key, KeyCode
 
 logger = logging.getLogger(__name__)
@@ -140,7 +139,6 @@ class Typer(Controller):
         logger.info(f"selection_to_clipboard: output={result}"[:300])
         time.sleep(0.2)
         return result
-    
 
     def select_text_before(self, length: int) -> None:
         for _ in range(length):
