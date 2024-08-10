@@ -1,13 +1,12 @@
-*.json
+# custom
+tmp/
+tmp.*
 .ruff_cache
-
 .DS_Store
-clmac/data/*
-clmac/data
 *.pk
 *.pkl
 *.pickle
-.idea
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -115,4 +114,4 @@ ENV/
 # IDE settings
 .vscode/
 
-# app data
+.idea
