@@ -3,21 +3,28 @@
 includes a keyboard listener, key history and currently pressed keys
 """
 import logging
+import os
 import sys
 import time
 from datetime import date, datetime
 from functools import partial
 from typing import Callable
+from unittest.mock import MagicMock
 
 import pyperclip
-from pynput.keyboard import Controller, Key, KeyCode
+
+if os.environ.get("RUNNING_PYTEST"):
+    Controller = Key = KeyCode = MagicMock()
+else:
+    from pynput.keyboard import Controller, Key, KeyCode  # type: ignore
+
 
 logger = logging.getLogger(__name__)
 
 MAX_DEQUE_SIZE = 20
 
 
-class Typer(Controller):
+class Typer(Controller):  # type: ignore
     """Container for all functionality relating to pressing keys on the keyboard."""
 
     def __init__(self):
