@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["Alexander Lewzey <a.lewzey@gmail.com>"]
 readme = "README.md"
-packages = [{ include = "tools"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -37,8 +36,8 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-km = "key_macro.app:run"
-cli = 'key_macro.cli:main'
+km = "tools.key_macro.app:run"
+cli = 'tools.key_macro.cli:main'
 
 
 [tool.mypy]

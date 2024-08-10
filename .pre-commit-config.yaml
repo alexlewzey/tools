@@ -71,3 +71,8 @@ repos:
     entry: find . -maxdepth 1 -name '*.toml' -exec taplo format --option indent_string="    " {} \;
     language: system
     pass_filenames: false
+  - id: unit-test
+    name: unit-test
+    entry: pytest tests
+    language: system
+    pass_filenames: false
