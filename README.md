@@ -19,9 +19,9 @@ A collection of general tools that improve my productivity.
 
 ### key_macro
 
-Applicaiton that triggers macros (arbitary python functionality) using a keyboard listener that listens for 3 character sequences
-beginning with a semi-colon. The app allows you to use python to automate tasks such as string formatting, image to text
-and other tasks.
+Applicaiton that triggers macros (arbitary python functionality) using a keyboard listener that listens for 3 character
+sequences beginning with a semi-colon. The app allows you to use python to automate task; string formatting, image to
+text, etc.
 
 ### aliases
 
