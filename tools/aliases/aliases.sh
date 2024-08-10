@@ -25,6 +25,7 @@ alias checkout="git checkout"
 alias stash="git stash"
 alias merge="git merge"
 alias log="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all"
+alias rm-branch="git branch | grep -v \"main\" | xargs git branch -d"
 # docker
 alias d="docker"
 alias dc="docker container"
