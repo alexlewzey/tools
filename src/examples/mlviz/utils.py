@@ -27,7 +27,8 @@ def px_scatter3d_regression(
     **kwargs,
 ) -> None:
     """
-    plot a 3 dimensional scatter plot where z is the target variable and super impose a regression surface corresponding
+    plot a 3 dimensional scatter plot where z is the target variable and super impose a
+    regression surface corresponding
     to model where model has a sklearn style api (fit, predict)
     Args:
         df: DataFrame where x and y are features and z is a continuoius label.
@@ -57,10 +58,9 @@ def px_scatter3d_regression(
         z=z,
         color_discrete_sequence=color_discrete_sequence,
         title=title,
-        *args,
         **kwargs,
     )
-    fig.update_traces(marker=dict(size=marker_size))
+    fig.update_traces(marker={"size": marker_size})
     fig.add_trace(surface)
     plot(fig, filename=path.as_posix())
 
@@ -69,11 +69,13 @@ def make_predicted_surface(
     x: pd.Series, y: pd.Series, predictor: Callable, resolution: int = 200
 ) -> go.Surface:
     """
-    for a given set of values x and y, and a trained model, estimate the grid surface for all permutations
+    for a given set of values x and y, and a trained model, estimate the grid surface
+    for all permutations
     Args:
         x: first independent variable
         y: Second independent variable
-        predictor: Function that is applied to the nx2 array of grid coordinates and returns an nx1 array of predictions
+        predictor: Function that is applied to the nx2 array of grid coordinates and
+            returns an nx1 array of predictions
         resolution: number of points on each axis
     Returns:
         surface: plotly surface trace object
@@ -103,12 +105,13 @@ def make_predicted_surface(
 def make_3d_grid(
     df: pd.DataFrame, x: str, y: str, z: str, resolution: int = 50
 ) -> pd.DataFrame:
-    """Make a DataFrame of dimensional coordinates that uniformly cover a 3 dimensional
-    space."""
+    """Make a DataFrame of dimensional coordinates that uniformly cover a 3
+    dimensional space."""
     # getting axis ranges
     axis_mins = df[[x, y, z]].min().tolist()
     axis_maxs = df[[x, y, z]].max().tolist()
-    # filling axis ranges and combining permutations of all combinations into a DataFrame
+    # filling axis ranges and combining permutations of all combinations into a
+    # DataFrame
     xax = np.linspace(axis_mins[0], axis_maxs[0], resolution)
     yax = np.linspace(axis_mins[1], axis_maxs[1], resolution)
     zax = np.linspace(axis_mins[2], axis_maxs[2], resolution)
@@ -170,11 +173,14 @@ def standardise(
 ) -> pd.DataFrame:
     """Return a df where every columns is standardised, or pass the specific list of
     features to include or exclude."""
-    processor = lambda x: pd.DataFrame(
-        preprocessing.StandardScaler().fit_transform(x),
-        index=x.index,
-        columns=x.columns,
-    )
+
+    def processor(x):
+        return pd.DataFrame(
+            preprocessing.StandardScaler().fit_transform(x),
+            index=x.index,
+            columns=x.columns,
+        )
+
     if features or not_features:
         return apply2features(
             df=df, processor=processor, features=features, not_features=not_features
@@ -195,7 +201,8 @@ def pca(
         n_components:
         show_var:
     Returns:
-        pcs: Principal components as numpy arrays with pca (fitted pca model object) as an attribute
+        pcs: Principal components as numpy arrays with pca (fitted pca model object) as
+            an attribute
     """
     pca = decomposition.PCA(n_components, random_state=random_state)
     pcs = pca.fit_transform(x)

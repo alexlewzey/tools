@@ -1,8 +1,9 @@
-"""Visualising regression surfaces of different models in 3d to help understand what a
-different models make decisions.
+"""Visualising regression surfaces of different models in 3d to help understand what
+a different models make decisions.
 
-We have lower dimensional brains that do a good job of perseving 3d but terrible anything beyond that by visuzalising
-surfaces in lower dimension it helps given you an intuative understanding what what it is doing in higher dimensions
+We have lower dimensional brains that do a good job of perseving 3d but terrible
+anything beyond that by visuzalising surfaces in lower dimension it helps given you an
+intuative understanding what what it is doing in higher dimensions
 which we cannot visualise.
 
 
@@ -36,7 +37,7 @@ ROOT = Path(__file__).parent
 OUTPUT = ROOT / "output"
 OUTPUT.mkdir(exist_ok=True)
 
-# loading and preprocessing data #######################################################################################
+# loading and preprocessing data #######################################################
 boston = load_boston()
 x = pd.DataFrame(boston["data"], columns=boston["feature_names"])
 y = boston["target"]
@@ -59,7 +60,7 @@ reduced = pd.DataFrame(reduced, columns=[f"dim{i}" for i in range(2)])
 reduced["lbl"] = y
 reduced["type"] = "umap"
 
-# VISUALISING REGRESSION SURFACE FOR DIFFERENT MODELS ##################################################################
+# VISUALISING REGRESSION SURFACE FOR DIFFERENT MODELS ##################################
 
 # iterating over several models plotting them as 3d regression surfaces
 n_trees = 300
@@ -99,7 +100,7 @@ for idx, (nm, model) in enumerate(models.items()):
         marker_size=5,
     )
 
-# HYPERPARAMETER TUNING RANDOM FOREST ##################################################################################
+# HYPERPARAMETER TUNING RANDOM FOREST ##################################################
 
 
 utils.px_scatter3d_regression(
@@ -145,7 +146,7 @@ fig = px.scatter_3d(
     "pred",
     animation_frame="ntree",
 )
-fig.update_traces(marker=dict(size=marker_size))
+fig.update_traces(marker={"size": marker_size})
 fig.plot()
 
 # other stuff
@@ -156,6 +157,6 @@ surface = utils.make_predicted_surface(
 
 color_discrete_sequence = colorlst
 fig = px.scatter_3d(pcs, x=x, y=y, z=z, color_discrete_sequence=color_discrete_sequence)
-fig.update_traces(marker=dict(size=marker_size))
+fig.update_traces(marker={"size": marker_size})
 fig.add_trace(surface)
 fig.plot()
