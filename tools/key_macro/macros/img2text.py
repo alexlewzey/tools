@@ -4,8 +4,9 @@ import cv2
 import numpy as np
 import pyperclip
 import pytesseract
-from key_macro.core import EXE_TESSERACT
 from PIL import ImageGrab
+
+from tools.key_macro.core import EXE_TESSERACT
 
 
 def img2text() -> None:

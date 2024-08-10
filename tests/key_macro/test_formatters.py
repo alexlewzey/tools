@@ -1,8 +1,9 @@
 from unittest.mock import patch
 
-import key_macro.macros.formatters as f
 import pyperclip
 import pytest
+
+import tools.key_macro.macros.formatters as f
 
 
 def copy_func_paste_assert(input_, expected, func):

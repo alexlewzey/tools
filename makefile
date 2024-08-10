@@ -1,6 +1,6 @@
 install:
 	@pip install -e .
-	@python src/aliases/install.py
+	@python tools/aliases/install.py
 	@poetry install
 	@poetry run pre-commit install --install-hooks
 

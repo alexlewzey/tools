@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "key_macro"
+name = "tools"
 version = "0.1.0"
 description = ""
 authors = ["Alexander Lewzey <a.lewzey@gmail.com>"]
@@ -43,7 +43,6 @@ cli = 'key_macro.cli:main'
 [tool.mypy]
 ignore_missing_imports = true
 check_untyped_defs = true
-exclude = 'src/examples'
 
 
 [tool.ruff]

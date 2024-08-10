@@ -6,10 +6,11 @@ from functools import partial
 from pathlib import Path
 from typing import Callable
 
-from key_macro.core import CUSTOM_JSON, PERSONAL_JSON, open_urls
-from key_macro.keyboard import Typer
-from key_macro.macros import formatters, img2text
 from pynput.keyboard import KeyCode
+
+from tools.key_macro.core import CUSTOM_JSON, PERSONAL_JSON, open_urls
+from tools.key_macro.keyboard import Typer
+from tools.key_macro.macros import formatters, img2text
 
 git_log = (
     "git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%"
@@ -297,7 +298,7 @@ ENCODINGS = [
 
 
 if sys.platform == "win32":
-    from key_macro.macros import text2speech
+    from tools.key_macro.macros import text2speech
 
     ENCODINGS.append(MacroEncoding(encoding=";ee", func=text2speech.text2speech))
 

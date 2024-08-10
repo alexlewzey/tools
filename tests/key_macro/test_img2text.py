@@ -1,8 +1,9 @@
 from unittest.mock import patch
 
 import pyperclip
-from key_macro.macros import img2text
 from PIL import Image
+
+from tools.key_macro.macros import img2text
 
 
 @patch("key_macro.macros.img2text.ImageGrab")
