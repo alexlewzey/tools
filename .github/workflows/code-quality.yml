@@ -1,11 +1,11 @@
-name: Format code
+name: Code Quality
 
 on:
   push:
   workflow_dispatch:
 
 jobs:
-  format:
+  code-quality:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -19,5 +19,4 @@ jobs:
     - name: Run pre-commit and check for changes
       id: check_changes
       run: |
-        SKIP=pytest poetry run pre-commit run --all-files
-        git diff --exit-code || echo "changes"
+        SKIP=test poetry run pre-commit run --all-files
