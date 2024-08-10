@@ -1,0 +1,6 @@
+umap-learn
+lightgbm
+xgboost
+pandas
+scikit-learn
+tqdm
