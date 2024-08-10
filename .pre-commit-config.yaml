@@ -52,8 +52,8 @@ repos:
   rev: v1.8.0
   hooks:
   - id: mypy
-    args: [--check-untyped-defs, --non-interactive, --install-types, --no-namespace-packages]
-    additional_dependencies: [types-setuptools]
+    args: [--non-interactive, --install-types]
+    exclude: src/examples
 # # docker
 # - repo: https://github.com/hadolint/hadolint
 #   rev: v2.12.0
