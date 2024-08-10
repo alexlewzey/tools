@@ -1,5 +1,5 @@
 # hadolint global ignore=DL4001,SC1091,DL3008,DL3016,DL3047
-FROM mcr.microsoft.com/vscode/devcontainers/python:3.12-bullseye
+FROM mcr.microsoft.com/vscode/devcontainers/python:3.10-bullseye
 
 WORKDIR /workspaces/setup
 

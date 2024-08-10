@@ -36,7 +36,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-key_macro = "key_macro.app:run"
+km = "key_macro.app:run"
 cli = 'key_macro.cli:main'
 
 

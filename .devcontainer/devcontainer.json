@@ -30,17 +30,18 @@
 	},
 
 	"mounts": [
-		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+		"${localWorkspaceFolder}/.venv,target=/home/vscode/.ssh,type=bind,consistency=cached"
 	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "onCreateCommand": "poetry install",
-	"postStartCommand": "poetry install && poetry run pre-commit install --install-hooks"
+	"postStartCommand": "poetry install && poetry run pre-commit install --install-hooks",
 	// Configure tool-specific properties.
 	// "customizations": {},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	"remoteUser": "root"
 }
