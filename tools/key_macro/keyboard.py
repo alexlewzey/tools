@@ -3,21 +3,14 @@
 includes a keyboard listener, key history and currently pressed keys
 """
 import logging
-import os
 import sys
 import time
 from datetime import date, datetime
 from functools import partial
 from typing import Callable
-from unittest.mock import MagicMock
 
 import pyperclip
-
-if os.environ.get("RUNNING_PYTEST"):
-    Controller = Key = KeyCode = MagicMock()
-else:
-    from pynput.keyboard import Controller, Key, KeyCode  # type: ignore
-
+from pynput.keyboard import Controller, Key, KeyCode
 
 logger = logging.getLogger(__name__)
 

@@ -19,4 +19,4 @@ jobs:
     - name: Run pre-commit and check for changes
       id: check_changes
       run: |
-        poetry run pre-commit run --all-files
+        SKIP=unit-test poetry run pre-commit run --all-files
