@@ -720,9 +720,7 @@ def pca_explained_var(pca: decomposition.PCA, fmt: bool = True) -> pd.DataFrame:
     }
     df = pd.DataFrame(ratios)
     if fmt:
-        df = pd.concat(
-            [df.iloc[:, 0], df.iloc[:, 1:].applymap("{:.1%}".format)], axis=1
-        )
+        df = pd.concat([df.iloc[:, 0], df.iloc[:, 1:].map("{:.1%}".format)], axis=1)
     return df
 
 

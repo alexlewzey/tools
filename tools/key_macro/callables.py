@@ -131,6 +131,10 @@ ENCODINGS = [
         func=typer("1_000_000"),
     ),
     MacroEncoding(
+        encoding=";dn",
+        func=typer("do not write answers in the side tab"),
+    ),
+    MacroEncoding(
         encoding=";sr",
         func=typer("spark.read.format('delta').table('')", 2),
     ),

@@ -319,12 +319,19 @@ def open_cb_url() -> None:
 
 
 def type_days_elapsed() -> None:
-    start_date = "2024-04-20"
-    cut_start_date = "2024-05-20"
-    days_elapsed = (date.today() - date.fromisoformat(start_date)).days
-    cut_days_elapsed = (date.today() - date.fromisoformat(cut_start_date)).days
-    cut_weeks, cut_days = divmod(cut_days_elapsed, 7)
-    typer.type_text(f"day {days_elapsed}, cut week {cut_weeks} day {cut_days}")
+    start_date_streak = "2024-04-20"
+    days_elapsed_streak = (date.today() - date.fromisoformat(start_date_streak)).days
+    years_streak = days_elapsed_streak / 365
+
+    start_date_caffeine = "2024-08-29"
+    days_elapsed_caffeine = (
+        date.today() - date.fromisoformat(start_date_caffeine)
+    ).days
+    years_caffeine = days_elapsed_caffeine / 365
+    typer.type_text(
+        f"streak: {days_elapsed_streak} - {years_streak:.2f}, "
+        f"caffeine: {days_elapsed_caffeine} - {years_caffeine}"
+    )
 
 
 def type_journel_header() -> None:
