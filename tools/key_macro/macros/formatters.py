@@ -323,14 +323,14 @@ def type_days_elapsed() -> None:
     days_elapsed_streak = (date.today() - date.fromisoformat(start_date_streak)).days
     years_streak = days_elapsed_streak / 365
 
-    start_date_caffeine = "2024-08-29"
+    start_date_caffeine = "2024-10-21"
     days_elapsed_caffeine = (
         date.today() - date.fromisoformat(start_date_caffeine)
     ).days
     years_caffeine = days_elapsed_caffeine / 365
     typer.type_text(
         f"streak: {days_elapsed_streak} - {years_streak:.2f}, "
-        f"caffeine: {days_elapsed_caffeine} - {years_caffeine}"
+        f"caffeine: {days_elapsed_caffeine} - {years_caffeine:.2f}"
     )
 
 
@@ -338,9 +338,9 @@ def type_journel_header() -> None:
     typer.type_date()
     typer.type_text(" ")
     type_days_elapsed()
-    time.sleep(0.1)
+    time.sleep(0.2)
     typer.select_line_at_caret_and_copy()
-    time.sleep(0.1)
+    time.sleep(0.2)
     format_hash()
 
 
