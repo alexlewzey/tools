@@ -298,6 +298,7 @@ ENCODINGS = [
         encoding=";jl",
         func=formatters.type_journel_header,
     ),
+    MacroEncoding(encoding=";sy", func=typer("Show your reasoning step by step.")),
 ]
 
 
