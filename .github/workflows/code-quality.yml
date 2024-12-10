@@ -14,6 +14,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install uv
+        uv venv
         uv pip install -e .
 
     - name: Run pre-commit and check for changes
