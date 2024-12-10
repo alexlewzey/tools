@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 """Wrap the clipboard with a function specified as a cmd line arg (if fun from run
 window) or via user interface is run from listener_standard script."""
+
 import functools
 import logging
 import re

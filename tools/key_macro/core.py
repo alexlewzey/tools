@@ -1,4 +1,5 @@
 """"""
+
 import json
 import logging
 import webbrowser
@@ -32,7 +33,7 @@ def open_urls() -> None:
 
 
 def create_custom_template() -> None:
-    custom_template = dict(zip(NUMBERS, [""] * len(NUMBERS)))
+    custom_template = dict(zip(NUMBERS, [""] * len(NUMBERS), strict=False))
     if not CUSTOM_JSON.exists():
         with CUSTOM_JSON.open("w") as f:
             f.write(json.dumps(custom_template, indent=4))

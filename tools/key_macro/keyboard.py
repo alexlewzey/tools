@@ -2,12 +2,13 @@
 
 includes a keyboard listener, key history and currently pressed keys
 """
+
 import logging
 import sys
 import time
+from collections.abc import Callable
 from datetime import date, datetime
 from functools import partial
-from typing import Callable
 
 import pyperclip
 from pynput.keyboard import Controller, Key, KeyCode

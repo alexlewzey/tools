@@ -1,10 +1,11 @@
 """A collection of all my available macro."""
+
 import json
 import sys
 from collections import Counter
+from collections.abc import Callable
 from functools import partial
 from pathlib import Path
-from typing import Callable
 
 from pynput.keyboard import KeyCode
 

@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/python:3.10-bullseye
 WORKDIR /workspaces/setup
 
 # Install python dependencies
-RUN pip install poetry==1.8.3
+RUN pip install uv
 
 
 # Install hadolint (docker linter)

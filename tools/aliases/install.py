@@ -1,4 +1,5 @@
 """Add command to source alias.sh file to the .(bash|zsh)rc file."""
+
 from pathlib import Path
 
 bashrc_path = Path.home() / ".bashrc"

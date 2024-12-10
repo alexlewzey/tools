@@ -3,6 +3,7 @@ listener that recognises sequential keystrokes that typically start with a semic
 
 note: do not call your module macro as that name is already taken in the path
 """
+
 import logging
 
 from pynput.keyboard import Key, KeyCode, Listener

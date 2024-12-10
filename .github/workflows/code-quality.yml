@@ -11,12 +11,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install poetry and dependencies
+    - name: Install dependencies
       run: |
-        pip install poetry
-        poetry install --no-interaction --no-ansi
+        pip install uv
 
     - name: Run pre-commit and check for changes
       id: check_changes
       run: |
-        SKIP=unit-test poetry run pre-commit run --all-files
+        SKIP=unit-test uv run pre-commit run --all-files
