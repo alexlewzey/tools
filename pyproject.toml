@@ -34,7 +34,7 @@ test = [
 
 [project.scripts]
 km = "tools.key_macro.app:run"
-cli = 'tools.key_macro.cli:main'
+cli = "tools.key_macro.cli:main"
 
 
 [tool.mypy]
@@ -63,3 +63,7 @@ ignore = [
     "S311", # Standard pseudo-random generators are not suitable for cryptographic purposes
 ]
 fix = true
+
+
+[tool.setuptools]
+packages = ["tools"]
