@@ -10,7 +10,7 @@ dependencies = [
     "torchvision>=0.20.1",
 ]
 
-[dependency-groups]
+[project.optional-dependencies]
 key-macro = [
     "autoflake>=2.3.1",
     "black>=24.10.0",
@@ -30,6 +30,9 @@ test = [
     "mypy>=1.13.0",
     "pre-commit>=4.0.1",
     "pytest>=8.3.4",
+]
+dev = [
+    "pandas>=2.2.3",
 ]
 
 [project.scripts]
