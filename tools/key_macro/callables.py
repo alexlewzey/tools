@@ -13,14 +13,36 @@ from tools.key_macro.core import CUSTOM_JSON, PERSONAL_JSON, open_urls
 from tools.key_macro.keyboard import Typer
 from tools.key_macro.macros import formatters, img2text
 
-git_log = (
+git_log: str = (
     "git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%"
     "C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)"
     "- %an%C(reset)%C(auto)%d%C(reset)' --all"
 )
-please_info = "Please let me know if you require any more information."
-any_help = "Any help would be much appreciated."
-please_queries = "Please let me know if you have any queries."
+please_info: str = "Please let me know if you require any more information."
+any_help: str = "Any help would be much appreciated."
+please_queries: str = "Please let me know if you have any queries."
+python_imports: str = """import numpy as np
+import pandas as pd
+from pathlib import Path
+import functools
+import os
+import io
+import re
+import hashlib
+import random
+from typing import *
+import string
+from datetime import date, datetime, timedelta
+import collections
+import math
+import itertools
+import pickle
+import shutil
+import json
+import logging
+import subprocess
+import sys
+"""
 
 
 class MacroEncoding:
@@ -205,6 +227,7 @@ ENCODINGS = [
         encoding=";ap",
         func=typer('git add -A && git commit -m "" && git push', 13),
     ),
+    MacroEncoding(encoding=";pi", func=typer(python_imports)),
     MacroEncoding(encoding=";co", func=typer("git checkout ")),
     MacroEncoding(encoding=";gb", func=typer("git branch ")),
     MacroEncoding(encoding=";gp", func=typer("git push ")),
