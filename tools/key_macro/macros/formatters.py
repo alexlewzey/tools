@@ -30,7 +30,7 @@ def clipboard_in_out(func):
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        clip: str = pyperclip.paste().strip()
+        clip: str = pyperclip.paste()
         time.sleep(0.1)
         clip = func(clip)
         pyperclip.copy(clip)
@@ -46,7 +46,7 @@ def clipboard_in_out_paste(func):
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        clip: str = pyperclip.paste().strip()
+        clip: str = pyperclip.paste()
         time.sleep(0.1)
         clip = func(clip)
         pyperclip.copy(clip)
@@ -76,6 +76,7 @@ def _split_join(s: str) -> str:
 
 def _wrap_text(s: str) -> str:
     """Wrap text to a maximum line length."""
+    print(s)
     max_line_length: int = 88
     mo = re.search(r"^\s+", s)
     if mo is None:
