@@ -5,12 +5,12 @@ window) or via user interface is run from listener_standard script."""
 import functools
 import logging
 import re
-import textwrap
 import time
 import webbrowser
 from datetime import date
 
 import black
+import pandas as pd
 import pyperclip
 import sqlfluff
 from textblob import TextBlob
@@ -76,9 +76,25 @@ def _split_join(s: str) -> str:
 
 def _wrap_text(s: str) -> str:
     """Wrap text to a maximum line length."""
-    s = textwrap.fill(s.strip('"'), width=82)
-    s = '"' + ' "\n"'.join(s.split("\n")) + '"'
-    return s
+    max_line_length: int = 88
+    mo = re.search(r"^\s+", s)
+    if mo is None:
+        raise Exception("re match object is None")
+    indent_len = len(mo.group())
+    target_line_len = max_line_length - indent_len - 3
+    data = [(word + " ") for word in s.strip('" f').split()]
+    df = pd.DataFrame(data, columns=["word"])
+    df.iloc[-1, 0] = df.iloc[-1, 0][:-1]
+    df["len"] = df["word"].str.len() + 1
+    lines = []
+    while not df.empty:
+        df["cum_len"] = df["len"].cumsum()
+        line = "".join(df[df.cum_len <= target_line_len].word.tolist())
+        line = (indent_len * " ") + f'f"{line}"'
+        lines.append(line)
+        df = df[df.cum_len > target_line_len]
+    output = "\n".join(lines)
+    return output
 
 
 def _spell_check(s: str) -> str:
