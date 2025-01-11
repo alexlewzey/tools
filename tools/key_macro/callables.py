@@ -9,7 +9,7 @@ from pathlib import Path
 
 from pynput.keyboard import KeyCode
 
-from tools.key_macro.core import CUSTOM_JSON, PERSONAL_JSON, open_urls
+from tools.key_macro.core import CUSTOM_JSON, PERSONAL_JSON
 from tools.key_macro.keyboard import Typer
 from tools.key_macro.macros import formatters, img2text
 
@@ -21,9 +21,7 @@ git_log: str = (
 please_info: str = "Please let me know if you require any more information."
 any_help: str = "Any help would be much appreciated."
 please_queries: str = "Please let me know if you have any queries."
-python_imports: str = """import numpy as np
-import pandas as pd
-from pathlib import Path
+python_imports: str = """from pathlib import Path
 import functools
 import os
 import io
@@ -42,7 +40,17 @@ import json
 import logging
 import subprocess
 import sys
+
+import numpy as np
+import pandas as pd
+import plotly.express as px
+import matplotlib.pyplot as plt
 """
+bq_to_python: str = """query = “””
+
+”””
+df = client.query(query).to_dataframe()
+df"""
 
 
 class MacroEncoding:
@@ -83,6 +91,7 @@ typer = Typer()
 
 
 ENCODINGS = [
+    # PERSONAL #########################################################################
     MacroEncoding(encoding=";hm", func=partial(type_personal, key="hotmail")),
     MacroEncoding(encoding=";gm", func=partial(type_personal, key="gmail")),
     MacroEncoding(encoding=";wm", func=partial(type_personal, key="work_mail")),
@@ -90,149 +99,7 @@ ENCODINGS = [
     MacroEncoding(encoding=";mb", func=partial(type_personal, key="mobile")),
     MacroEncoding(encoding=";un", func=partial(type_personal, key="username")),
     MacroEncoding(encoding=";ad", func=partial(type_personal, key="address")),
-    MacroEncoding(
-        encoding=";tf",
-        func=typer("Thanks for your email. "),
-    ),
-    MacroEncoding(
-        encoding=";ah",
-        func=typer.partial_paste(any_help),
-    ),
-    MacroEncoding(encoding=";ba", func=typer("\nBest\nAlex")),
-    MacroEncoding(
-        encoding=";mt",
-        func=typer("\n\nMany thanks\n\nAlex"),
-    ),
-    MacroEncoding(
-        encoding=";ua",
-        func=typer("user_agent"),
-    ),
-    MacroEncoding(
-        encoding=";ll",
-        func=typer("label_column"),
-    ),
-    MacroEncoding(
-        encoding=";tt",
-        func=typer("timestamp"),
-    ),
-    MacroEncoding(
-        encoding=";dt",
-        func=typer("dt.datetime.now().replace(microsecond=0)"),
-    ),
-    MacroEncoding(encoding=";tp", func=typer(".toPandas()", line_end=True)),
-    MacroEncoding(encoding=";ri", func=typer(".reset_index()")),
-    MacroEncoding(encoding=";si", func=typer(".set_index()", 1)),
-    MacroEncoding(encoding=";ii", func=typer("def __init__(self, ):", 2)),
-    MacroEncoding(encoding=";;h", func=typer(".head(9)")),
-    MacroEncoding(encoding=";;t", func=typer("torch.")),
-    MacroEncoding(encoding=";;d", func=typer(".dtypes")),
-    MacroEncoding(encoding=";;s", func=typer(".shape")),
-    MacroEncoding(encoding=";as", func=typer("ascending=False")),
-    MacroEncoding(
-        encoding=";dc",
-        func=typer("docker container "),
-    ),
-    MacroEncoding(encoding=";di", func=typer("docker image ")),
-    MacroEncoding(
-        encoding=";td",
-        func=typer(" -> pd.DataFrame:"),
-    ),
-    MacroEncoding(
-        encoding=";nm",
-        func=typer("if __name__ == '__main__':\n    "),
-    ),
-    MacroEncoding(encoding=";;;", func=typer("print()", 1)),
-    MacroEncoding(encoding=";;l", func=typer(".limit(5).toPandas()", line_end=True)),
-    MacroEncoding(encoding=";;c", func=typer(".columns")),
-    MacroEncoding(encoding=";ob", func=typer(".orderBy(fn.desc(value_column))")),
-    MacroEncoding(
-        encoding=";sv",
-        func=typer(".sort_values()", 1),
-    ),
-    MacroEncoding(
-        encoding=";om",
-        func=typer("1_000_000"),
-    ),
-    MacroEncoding(
-        encoding=";dn",
-        func=typer("do not write answers in the side tab"),
-    ),
-    MacroEncoding(
-        encoding=";sr",
-        func=typer("spark.read.format('delta').table('')", 2),
-    ),
-    MacroEncoding(
-        encoding=";sw",
-        func=typer(
-            (
-                ".write.format('delta').mode('append')"
-                ".partitionBy('domain', 'date').saveAsTable('')"
-            ),
-            2,
-        ),
-    ),
-    MacroEncoding(
-        encoding=";vc",
-        func=typer(".value_counts(dropna=False)"),
-    ),
-    MacroEncoding(
-        encoding=";vv",
-        func=typer("value_column"),
-    ),
-    MacroEncoding(
-        encoding=";dd",
-        func=typer("dim_column"),
-    ),
-    MacroEncoding(
-        encoding=";mu",
-        func=typer(".info(memory_usage='deep')"),
-    ),
-    MacroEncoding(encoding=";tn", func=typer(" -> None:")),
-    MacroEncoding(encoding=";sf", func=typer("select * from ")),
-    MacroEncoding(
-        encoding=";fs",
-        func=typer("select * \nfrom "),
-    ),
-    MacroEncoding(
-        encoding=";cv",
-        func=typer.partial_paste("create or replace temporary view  as", 3),
-    ),
-    MacroEncoding(
-        encoding=";ct",
-        func=typer.partial_paste("create or replace table  as", 3),
-    ),
-    MacroEncoding(
-        encoding=";sk",
-        func=typer.partial_paste('spark.sql("""""")', 4),
-    ),
-    MacroEncoding(
-        encoding=";sx",
-        func=typer(" suffixes=('', '_DROP')"),
-    ),
-    MacroEncoding(encoding=";da", func=typer("deactivate")),
-    MacroEncoding(encoding=";gd", func=typer("git diff ")),
-    MacroEncoding(encoding=";gl", func=typer(git_log)),
-    MacroEncoding(encoding=";gs", func=typer("git status")),
-    MacroEncoding(encoding=";ga", func=typer("git add -A")),
-    MacroEncoding(encoding=";ae", func=typer("source .venv/bin/activate")),
-    MacroEncoding(
-        encoding=";gc",
-        func=typer('git commit -m ""', 1),
-    ),
-    MacroEncoding(
-        encoding=";ac",
-        func=typer('git add -A && git commit -m ""', 1),
-    ),
-    MacroEncoding(
-        encoding=";ap",
-        func=typer('git add -A && git commit -m "" && git push', 13),
-    ),
-    MacroEncoding(encoding=";pi", func=typer(python_imports)),
-    MacroEncoding(encoding=";co", func=typer("git checkout ")),
-    MacroEncoding(encoding=";gb", func=typer("git branch ")),
-    MacroEncoding(encoding=";gp", func=typer("git push ")),
-    MacroEncoding(encoding=";me", func=typer("git merge ")),
-    MacroEncoding(encoding=";pl", func=typer("git pull ")),
+    # CUSTOM ###########################################################################
     MacroEncoding(encoding=";;1", func=partial(type_custom, key="1")),
     MacroEncoding(encoding=";;2", func=partial(type_custom, key="2")),
     MacroEncoding(encoding=";;3", func=partial(type_custom, key="3")),
@@ -242,87 +109,103 @@ ENCODINGS = [
     MacroEncoding(encoding=";;7", func=partial(type_custom, key="7")),
     MacroEncoding(encoding=";;8", func=partial(type_custom, key="8")),
     MacroEncoding(encoding=";;9", func=partial(type_custom, key="9")),
-    MacroEncoding(encoding=";i2", func=img2text.img2text),
-    MacroEncoding(encoding=";ts", func=typer.type_timestamp),
-    MacroEncoding(encoding=";de", func=typer.type_date),
+    # EMAILS ###########################################################################
+    MacroEncoding(encoding=";tf", func=typer("Thanks for your email. ")),
+    MacroEncoding(encoding=";ah", func=typer.partial_paste(any_help)),
+    MacroEncoding(encoding=";ba", func=typer("\nBest\nAlex")),
+    MacroEncoding(encoding=";mt", func=typer("\n\nMany thanks\n\nAlex")),
+    # PYTHON ###########################################################################
+    MacroEncoding(encoding=";ll", func=typer("label_column")),
+    MacroEncoding(encoding=";vv", func=typer("value_column")),
+    MacroEncoding(encoding=";dd", func=typer("dim_column")),
+    MacroEncoding(encoding=";tt", func=typer("timestamp")),
     MacroEncoding(
-        encoding=";up",
-        func=formatters.unnest_parathesis,
+        encoding=";nw", func=typer("dt.datetime.now().replace(microsecond=0)")
     ),
-    MacroEncoding(
-        encoding=";sl",
-        func=typer.select_line_at_caret_and_copy,
-    ),
-    MacroEncoding(
-        encoding=";re",
-        func=formatters.cut_right_equality,
-    ),
-    MacroEncoding(
-        encoding=";se",
-        func=formatters.set_equal_to_self,
-    ),
+    MacroEncoding(encoding=";;;", func=typer("print()", 1)),
+    MacroEncoding(encoding=";;c", func=typer(".columns")),
+    MacroEncoding(encoding=";;t", func=typer("torch.")),
+    MacroEncoding(encoding=";;d", func=typer(".dtypes")),
+    MacroEncoding(encoding=";;s", func=typer(".shape")),
+    MacroEncoding(encoding=";ri", func=typer(".reset_index()")),
+    MacroEncoding(encoding=";si", func=typer(".set_index()", 1)),
+    MacroEncoding(encoding=";ii", func=typer("def __init__(self, ):", 2)),
+    MacroEncoding(encoding=";;h", func=typer(".head(9)")),
+    MacroEncoding(encoding=";as", func=typer("ascending=False")),
+    MacroEncoding(encoding=";td", func=typer(" -> pd.DataFrame:")),
+    MacroEncoding(encoding=";nm", func=typer("if __name__ == '__main__':\n    ")),
+    MacroEncoding(encoding=";sv", func=typer(".sort_values()", 1)),
+    MacroEncoding(encoding=";om", func=typer("1000000")),
+    MacroEncoding(encoding=";vc", func=typer(".value_counts(dropna=False)")),
+    MacroEncoding(encoding=";mu", func=typer(".info(memory_usage='deep')")),
+    MacroEncoding(encoding=";tn", func=typer(" -> None:")),
+    MacroEncoding(encoding=";sx", func=typer(" suffixes=('', '_DROP')")),
+    MacroEncoding(encoding=";pi", func=typer(python_imports)),
     MacroEncoding(encoding=";rr", func=formatters.format_repr),
+    MacroEncoding(encoding=";jp", func=formatters.join_python_string),
+    MacroEncoding(encoding=";lt", func=formatters.to_list),
+    MacroEncoding(encoding=";fv", func=formatters.format_variables),
+    MacroEncoding(encoding=";bk", func=formatters.format_black),
+    MacroEncoding(encoding=";ae", func=typer("source .venv/bin/activate")),
+    MacroEncoding(encoding=";2r", func=formatters.imports_to_requirements),
+    # DOCKER ###########################################################################
+    MacroEncoding(encoding=";dc", func=typer("docker container ")),
+    MacroEncoding(encoding=";di", func=typer("docker image ")),
+    # SQL/BIGQUERY #####################################################################
+    MacroEncoding(encoding=";sf", func=typer("select * from ")),
+    MacroEncoding(encoding=";fs", func=typer("select * \nfrom ", 1)),
+    MacroEncoding(encoding=";ct", func=typer("create or replace table  as", 3)),
+    MacroEncoding(encoding=";sq", func=formatters.format_sql),
+    MacroEncoding(encoding=";c8", func=typer("count(*) n,")),
+    MacroEncoding(encoding=";dt", func=formatters.sql_count_distinct),
+    MacroEncoding(
+        encoding=";pb",
+        func=typer("row_number() over(partition by  order by ) as category_row", 27),
+    ),
+    MacroEncoding(encoding=";ob", func=typer("order by ")),
+    MacroEncoding(encoding=";gb", func=typer("group by ")),
+    MacroEncoding(encoding=";cd", func=typer("group by ")),
+    MacroEncoding(encoding=";we", func=typer("where ")),
+    MacroEncoding(encoding=";bq", func=typer(bq_to_python, 1)),
+    MacroEncoding(encoding=";st", func=typer("select ")),
+    # GIT ##############################################################################
+    MacroEncoding(encoding=";da", func=typer("deactivate")),
+    MacroEncoding(encoding=";gd", func=typer("git diff ")),
+    MacroEncoding(encoding=";gl", func=typer(git_log)),
+    MacroEncoding(encoding=";gs", func=typer("git status")),
+    MacroEncoding(encoding=";ga", func=typer("git add -A")),
+    MacroEncoding(encoding=";gc", func=typer('git commit -m ""', 1)),
+    MacroEncoding(encoding=";ac", func=typer('git add -A && git commit -m ""', 1)),
+    MacroEncoding(
+        encoding=";ap",
+        func=typer('git add -A && git commit -m "" && git push', 13),
+    ),
+    MacroEncoding(encoding=";co", func=typer("git checkout ")),
+    MacroEncoding(encoding=";bh", func=typer("git branch ")),
+    MacroEncoding(encoding=";gp", func=typer("git push ")),
+    MacroEncoding(encoding=";me", func=typer("git merge ")),
+    MacroEncoding(encoding=";pl", func=typer("git pull ")),
+    # FORMATTERS #######################################################################
+    MacroEncoding(encoding=";sl", func=typer.select_line_at_caret_and_copy),
+    MacroEncoding(encoding=";re", func=formatters.cut_right_equality),
+    MacroEncoding(encoding=";se", func=formatters.set_equal_to_self),
     MacroEncoding(encoding=";2s", func=formatters.to_snake),
     MacroEncoding(encoding=";hh", func=formatters.format_hash),
     MacroEncoding(encoding=";dh", func=formatters.format_dash),
-    MacroEncoding(encoding=";jp", func=formatters.join_python_string),
-    MacroEncoding(
-        encoding=";2r",
-        func=formatters.imports_to_requirements,
-    ),
-    MacroEncoding(
-        encoding=";hc",
-        func=formatters.format_hash_center,
-    ),
-    MacroEncoding(
-        encoding=";rb",
-        func=formatters.remove_blanklines,
-    ),
+    MacroEncoding(encoding=";hc", func=formatters.format_hash_center),
+    MacroEncoding(encoding=";rb", func=formatters.remove_blanklines),
     MacroEncoding(encoding=";wt", func=formatters.wrap_text),
-    MacroEncoding(encoding=";lt", func=formatters.to_list),
-    MacroEncoding(
-        encoding=";ul",
-        func=formatters.underline,
-    ),
     MacroEncoding(encoding=";2u", func=formatters.to_upper),
     MacroEncoding(encoding=";2l", func=formatters.to_lower),
-    MacroEncoding(
-        encoding=";sc",
-        func=formatters.spell_check,
-    ),
-    MacroEncoding(
-        encoding=";fv",
-        func=formatters.format_variables,
-    ),
-    MacroEncoding(
-        encoding=";sj",
-        func=formatters.split_join,
-    ),
-    MacroEncoding(
-        encoding=";sq",
-        func=formatters.format_sql,
-    ),
-    MacroEncoding(
-        encoding=";wb",
-        func=formatters.open_cb_url,
-    ),
-    MacroEncoding(
-        encoding=";bk",
-        func=formatters.format_black,
-    ),
-    MacroEncoding(
-        encoding=";ru",
-        func=formatters.remove_urls,
-    ),
-    MacroEncoding(
-        encoding=";ou",
-        func=open_urls,
-    ),
-    MacroEncoding(
-        encoding=";jl",
-        func=formatters.type_journel_header,
-    ),
-    MacroEncoding(encoding=";sy", func=typer("Show your reasoning step by step.")),
+    MacroEncoding(encoding=";ul", func=formatters.underline),
+    MacroEncoding(encoding=";sj", func=formatters.split_join),
+    MacroEncoding(encoding=";up", func=formatters.unnest_parentheses),
+    # TOOLS ############################################################################
+    MacroEncoding(encoding=";i2", func=img2text.img2text),
+    MacroEncoding(encoding=";de", func=typer.type_date),
+    MacroEncoding(encoding=";sc", func=formatters.spell_check),
+    MacroEncoding(encoding=";wb", func=formatters.open_cb_url),
+    MacroEncoding(encoding=";jl", func=formatters.type_journal_header),
 ]
 
 

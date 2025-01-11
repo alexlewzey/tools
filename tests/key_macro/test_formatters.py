@@ -89,4 +89,4 @@ def test_underline(input_, expected):
     ],
 )
 def test_unnest_parathesis(input_, expected):
-    assert formatters._unnest_parathesis(input_) == expected
+    assert formatters._unnest_parentheses(input_) == expected

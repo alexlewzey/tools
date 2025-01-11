@@ -35,6 +35,7 @@ class Typer(Controller):  # type: ignore
         """Perform a simple hotkey where two keys are pressed simultaneously."""
         with self.pressed(key_hold):
             self.press(key_press)
+            time.sleep(0.1)
             self.release(key_press)
         time.sleep(rest)
 
@@ -83,6 +84,7 @@ class Typer(Controller):  # type: ignore
 
     def paste_text(self, text: str, n_left: int | None = None) -> None:
         pyperclip.copy(text)
+        time.sleep(0.2)
         self.paste()
         if n_left:
             self.press_key(Key.left, n_left)
@@ -122,7 +124,10 @@ class Typer(Controller):  # type: ignore
         def call_typing() -> None:
             if line_end:
                 self.caret_to_line_end()
-            self.type(text)
+            pyperclip.copy(text)
+            time.sleep(0.2)
+            self.paste()
+            # self.type(text)
             if n_left:
                 self.press_key(Key.left, n_left)
 

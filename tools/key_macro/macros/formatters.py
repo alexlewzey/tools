@@ -76,7 +76,6 @@ def _split_join(s: str) -> str:
 
 def _wrap_text(s: str) -> str:
     """Wrap text to a maximum line length."""
-    print(s)
     max_line_length: int = 88
     mo = re.search(r"^\s+", s)
     if mo is None:
@@ -233,7 +232,7 @@ def _format_hash_center(s: str) -> str:
 # specific use case string formatters ##################################################
 
 
-def _unnest_parathesis(s: str) -> str:
+def _unnest_parentheses(s: str) -> str:
     """Extract the content of the paraenthesis from the current clipboard selection
     and type it out.
 
@@ -310,8 +309,26 @@ def _imports_to_requirements(s: str) -> str:
 
 
 def _format_sql(s: str) -> str:
-    """Format sql with sqlfluff."""
-    s = sqlfluff.fix(s, dialect="databricks")
+    """Format sql with sqlfluff.
+
+    input
+    -----
+    select first_name, last_name, email, created_date from `project.dataset.users` where created_date >= '2024-01-01' limit 100
+
+    output
+    ------
+    SELECT
+        first_name,
+        last_name,
+        email,
+        created_date
+    FROM `project.dataset.users`
+    WHERE created_date >= '2024-01-01'
+    LIMIT 100
+    """  # noqa: E501
+    words = s.split()
+    s = words[0].upper() + " " + " ".join(words[1:])
+    s = sqlfluff.fix(s, dialect="bigquery")
     return s
 
 
@@ -332,7 +349,10 @@ def _join_python_string(s: str) -> str:
 
 def open_cb_url() -> None:
     """Open the current clipboard url in the default browser."""
+    print("opening url")
     url = pyperclip.paste()
+    if url.startswith("www."):
+        url = f"https://{url}"
     webbrowser.open(url)
 
 
@@ -352,7 +372,7 @@ def type_days_elapsed() -> None:
     )
 
 
-def type_journel_header() -> None:
+def type_journal_header() -> None:
     typer.type_date()
     typer.type_text(" ")
     type_days_elapsed()
@@ -360,6 +380,13 @@ def type_journel_header() -> None:
     typer.select_line_at_caret_and_copy()
     time.sleep(0.2)
     format_hash()
+
+
+def sql_count_distinct() -> None:
+    word = typer.select_word_at_caret_and_copy()
+    pyperclip.copy(f"count(distinct {word}) n_{word},")
+    time.sleep(0.2)
+    typer.paste()
 
 
 # select line first formatters #########################################################
@@ -401,7 +428,7 @@ format_variables = clipboard_in_out_paste(_format_variables)
 format_hash = clipboard_in_out_paste(_format_hash)
 format_dash = clipboard_in_out_paste(_format_dash)
 format_hash_center = clipboard_in_out_paste(_format_hash_center)
-unnest_parathesis = clipboard_in_out(_unnest_parathesis)
+unnest_parentheses = clipboard_in_out(_unnest_parentheses)
 format_repr = clipboard_in_out(_format_repr)
 imports_to_requirements = clipboard_in_out_paste(_imports_to_requirements)
 format_sql = clipboard_in_out_paste(_format_sql)
