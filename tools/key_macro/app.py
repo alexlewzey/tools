@@ -1,5 +1,5 @@
-"""All my main macro and commonly used python scripts are run using a keyboard
-listener that recognises sequential keystrokes that typically start with a semicolon.
+"""All my main macro and commonly used python scripts are run using a keyboard listener
+that recognises sequential keystrokes that typically start with a semicolon.
 
 note: do not call your module macro as that name is already taken in the path
 """
@@ -53,8 +53,8 @@ class GlobalInputs:
 
 def listen_for_encoding() -> None:
     """Checks if the last three keys that were typed exist in the macro encoding
-    indexes, if there are it indexes and calls the function corresponding to that
-    three char encoding."""
+    indexes, if there are it indexes and calls the function corresponding to that three
+    char encoding."""
     last_three: tuple = tuple(GlobalInputs.key_history[-3:])
     if last_three == GlobalInputs.CTRL_SHIFT_Q:
         raise SystemExit

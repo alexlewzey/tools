@@ -1,5 +1,5 @@
-"""Standard library tool-kit this module contains commonly used functions to process
-and manipulate standard library objects."""
+"""Standard library tool-kit this module contains commonly used functions to process and
+manipulate standard library objects."""
 
 import logging
 import time

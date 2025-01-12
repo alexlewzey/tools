@@ -105,8 +105,8 @@ def make_predicted_surface(
 def make_3d_grid(
     df: pd.DataFrame, x: str, y: str, z: str, resolution: int = 50
 ) -> pd.DataFrame:
-    """Make a DataFrame of dimensional coordinates that uniformly cover a 3
-    dimensional space."""
+    """Make a DataFrame of dimensional coordinates that uniformly cover a 3 dimensional
+    space."""
     # getting axis ranges
     axis_mins = df[[x, y, z]].min().tolist()
     axis_maxs = df[[x, y, z]].max().tolist()

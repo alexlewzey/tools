@@ -35,12 +35,14 @@ repos:
   - id: shfmt
     args: [-w]
 # python
-# - repo: https://github.com/PyCQA/docformatter
-#   rev: v1.7.5
-#   hooks:
-#   - id: docformatter
-#     language: python
-#     args: [--recursive, --in-place, --wrap-summaries, '85', --wrap-descriptions, '85']
+- repo: local
+  hooks:
+  - id: docformatter
+    name: docformatter
+    entry: uv run docformatter
+    language: python
+    types: [python]
+    args: [--recursive, --in-place, --wrap-summaries, '88', --wrap-descriptions, '88']
 - repo: https://github.com/astral-sh/ruff-pre-commit
   rev: v0.8.2
   hooks:

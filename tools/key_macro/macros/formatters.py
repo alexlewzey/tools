@@ -24,9 +24,8 @@ LINE_CHAR_LIMIT = 88
 
 
 def clipboard_in_out(func):
-    """Decorator that grabs text from the clipboard passes it to the decorated
-    function then copies the text returned by the decorated function to the
-    clipboard."""
+    """Decorator that grabs text from the clipboard passes it to the decorated function
+    then copies the text returned by the decorated function to the clipboard."""
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -40,9 +39,8 @@ def clipboard_in_out(func):
 
 
 def clipboard_in_out_paste(func):
-    """Decorator that grabs text from the clipboard passes it to the decorated
-    function then copies the text returned by the decorated function to the
-    clipboard."""
+    """Decorator that grabs text from the clipboard passes it to the decorated function
+    then copies the text returned by the decorated function to the clipboard."""
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -74,8 +72,18 @@ def _split_join(s: str) -> str:
     return " ".join(s.split())
 
 
-def _wrap_text(s: str) -> str:
-    """Wrap text to a maximum line length."""
+def _wrap_string_literal(s: str) -> str:
+    """Wrap python string literal maximum line length.
+
+    input
+    -----
+                f"File {file.as_posix()} uploaded to bucket {self.bucket.name} with name {blob_name}"
+
+    output
+    ------
+                f"File {file.as_posix()} uploaded to bucket {self.bucket.name} "
+                f"with name {blob_name}"
+    """  # noqa: E501
     max_line_length: int = 88
     mo = re.search(r"^\s+", s)
     if mo is None:
@@ -164,8 +172,8 @@ def create_underline(text: str) -> str:
 
 
 def _format_variables(s: str) -> str:
-    """Take the variables from the clipboard and format them as a string to be
-    printed and return to clipboard.
+    """Take the variables from the clipboard and format them as a string to be printed
+    and return to clipboard.
 
     input
     ------
@@ -215,8 +223,8 @@ def _format_dash(s: str) -> str:
 
 
 def _format_hash_center(s: str) -> str:
-    """Add a center justify fill of hash characters to the current clipboard item to
-    a length of 88 character and return it to the clipboard.
+    """Add a center justify fill of hash characters to the current clipboard item to a
+    length of 88 character and return it to the clipboard.
 
     input:
     hello world
@@ -233,8 +241,8 @@ def _format_hash_center(s: str) -> str:
 
 
 def _unnest_parentheses(s: str) -> str:
-    """Extract the content of the paraenthesis from the current clipboard selection
-    and type it out.
+    """Extract the content of the paraenthesis from the current clipboard selection and
+    type it out.
 
     input:
     print(''.join('hello world'))
@@ -252,8 +260,8 @@ def _unnest_parentheses(s: str) -> str:
 
 
 def _format_repr(s: str) -> str:
-    """Copy class properties to the clipboard, run this program, and it will format
-    the properties as a human readable repr string that you can add to your class.
+    """Copy class properties to the clipboard, run this program, and it will format the
+    properties as a human readable repr string that you can add to your class.
 
     input from clipboard:
         self.id = id_
@@ -418,7 +426,7 @@ to_lower = clipboard_in_out_paste(_to_lower)
 to_upper = clipboard_in_out_paste(_to_upper)
 to_capitalize = clipboard_in_out_paste(_to_capitalize)
 split_join = clipboard_in_out(_split_join)
-wrap_text = clipboard_in_out_paste(_wrap_text)
+wrap_string_literal = clipboard_in_out_paste(_wrap_string_literal)
 spell_check = clipboard_in_out_paste(_spell_check)
 to_snake = clipboard_in_out(_to_snake)
 remove_blanklines = clipboard_in_out(_remove_blanklines)

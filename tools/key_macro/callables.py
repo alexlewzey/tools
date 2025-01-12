@@ -140,14 +140,15 @@ ENCODINGS = [
     MacroEncoding(encoding=";mu", func=typer(".info(memory_usage='deep')")),
     MacroEncoding(encoding=";tn", func=typer(" -> None:")),
     MacroEncoding(encoding=";sx", func=typer(" suffixes=('', '_DROP')")),
+    MacroEncoding(encoding=";ae", func=typer("source .venv/bin/activate")),
     MacroEncoding(encoding=";pi", func=typer(python_imports)),
     MacroEncoding(encoding=";rr", func=formatters.format_repr),
     MacroEncoding(encoding=";jp", func=formatters.join_python_string),
     MacroEncoding(encoding=";lt", func=formatters.to_list),
     MacroEncoding(encoding=";fv", func=formatters.format_variables),
     MacroEncoding(encoding=";bk", func=formatters.format_black),
-    MacroEncoding(encoding=";ae", func=typer("source .venv/bin/activate")),
     MacroEncoding(encoding=";2r", func=formatters.imports_to_requirements),
+    MacroEncoding(encoding=";ws", func=formatters.wrap_string_literal),
     # DOCKER ###########################################################################
     MacroEncoding(encoding=";dc", func=typer("docker container ")),
     MacroEncoding(encoding=";di", func=typer("docker image ")),
@@ -194,7 +195,6 @@ ENCODINGS = [
     MacroEncoding(encoding=";dh", func=formatters.format_dash),
     MacroEncoding(encoding=";hc", func=formatters.format_hash_center),
     MacroEncoding(encoding=";rb", func=formatters.remove_blanklines),
-    MacroEncoding(encoding=";wt", func=formatters.wrap_text),
     MacroEncoding(encoding=";2u", func=formatters.to_upper),
     MacroEncoding(encoding=";2l", func=formatters.to_lower),
     MacroEncoding(encoding=";ul", func=formatters.underline),
@@ -220,8 +220,8 @@ class DuplicateEncodingError(ValueError):
 
 
 def test_for_duplicates() -> None:
-    """On program start check for duplicate encodings across the macro that would
-    result in two macro being called at once."""
+    """On program start check for duplicate encodings across the macro that would result
+    in two macro being called at once."""
     codes = [macro.encoding for macro in ENCODINGS]
     if len(codes) != len(set(codes)):
         err_msg = f"you have added a duplicate encoding: \n{Counter(codes)}"

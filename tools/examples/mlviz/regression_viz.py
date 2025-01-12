@@ -1,5 +1,5 @@
-"""Visualising regression surfaces of different models in 3d to help understand what
-a different models make decisions.
+"""Visualising regression surfaces of different models in 3d to help understand what a
+different models make decisions.
 
 We have lower dimensional brains that do a good job of perseving 3d but terrible
 anything beyond that by visuzalising surfaces in lower dimension it helps given you an

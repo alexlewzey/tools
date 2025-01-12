@@ -1,5 +1,5 @@
-"""Data processing tool-kit A module containing functions for analysis and
-manipulation of data-sets, mainly using pandas. Includes:
+"""Data processing tool-kit A module containing functions for analysis and manipulation
+of data-sets, mainly using pandas. Includes:
 
 - decorators
 - audit
@@ -296,8 +296,8 @@ def lag_datetime(ser: pd.Series) -> pd.Series:
 def make_lag(
     df: pd.DataFrame, values, on, date: str, lag_func: str = "year_period"
 ) -> pd.DataFrame:
-    """Add one year lagged version of passed value columns to a DataFrame and return
-    it in order to create a lag you shift the current date column one year forward.
+    """Add one year lagged version of passed value columns to a DataFrame and return it
+    in order to create a lag you shift the current date column one year forward.
 
     Note: you do not need to include `date` in `on`, but including it should cause bug
     """
@@ -473,8 +473,7 @@ def plot_feature_importance(
     title: str = "feature_importance",
     top: int = 40,
 ) -> tuple[pd.DataFrame, go.Figure]:
-    """Plot the feature importance of the model variables as a bar chart with
-    plotly."""
+    """Plot the feature importance of the model variables as a bar chart with plotly."""
     importance = feature_importance(model, x).sort_values("importance")
     fig = px.bar(
         importance.tail(top), x="importance", y="features", orientation="h", title=title
@@ -674,8 +673,8 @@ def repeating_rng(rng, n_repeat):
 
 
 def split_df(df: pd.DataFrame, flag_col: str) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Split data frame on sequence of booleons returning the subset that matches
-    true first."""
+    """Split data frame on sequence of booleons returning the subset that matches true
+    first."""
     return (
         df[df[flag_col]].reset_index(drop=True),
         df[~df[flag_col]].reset_index(drop=True),
