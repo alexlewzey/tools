@@ -4792,11 +4792,6 @@ test = [
     { name = "pytest" },
 ]
 
-[package.dev-dependencies]
-test = [
-    { name = "docformatter" },
-]
-
 [package.metadata]
 requires-dist = [
     { name = "autoflake", marker = "extra == 'key-macro'", specifier = ">=2.3.1" },
@@ -4822,9 +4817,6 @@ requires-dist = [
     { name = "torchaudio", specifier = ">=2.5.1" },
     { name = "torchvision", specifier = ">=0.20.1" },
 ]
-
-[package.metadata.requires-dev]
-test = [{ name = "docformatter", specifier = ">=1.7.5" }]
 
 [[package]]
 name = "torch"

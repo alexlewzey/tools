@@ -68,12 +68,3 @@ ignore = [
     "S311", # Standard pseudo-random generators are not suitable for cryptographic purposes
 ]
 fix = true
-
-
-[tool.setuptools]
-packages = ["tools"]
-
-[dependency-groups]
-test = [
-    "docformatter>=1.7.5",
-]
