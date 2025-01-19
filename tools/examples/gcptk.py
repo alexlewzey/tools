@@ -1,37 +1,3 @@
-"""Google Cloud Platform Tool-Kit.
-
-NOTE: set NUMERIC columns to floats64 in large queries pd.read_gbq will read NUMERIC
-columns as strings (take up loads of memory)
-
-Sql query to DataFrame
-----------------------
-import pandas as pd
-from google.cloud import bigquery
-
-bq_client = bigquery.Client()
-query = 'SELECT * FROM dataset.table'
-df = pd.read_gbq(query, use_bqstorage_api=True, progress_bar_type='tqdm')
-
-
-push DataFrame to bigquery
---------------------------
-bq_client = bigquery.Client()
-pred.to_gbq(destination_table='dataset.table_name',
-            project_id=os.environ['GCLOUD_PROJECT'],
-            if_exists='replace',
-            progress_bar=True,
-            location='europe-west2')
-
-when pushing large DataFrames to bigquery (1GB+) use gcptk.df2gcs2bq()
-
-
-Read/write DataFrame directly from/to GCS bucket
-------------------------------------------------
-client = storage.Client()
-df = pd.read_csv('gs://bucket/path/to/file.csv')
-df.to_csv('gs://bucket/path/to/file.csv')
-"""
-
 import logging
 import re
 
@@ -102,30 +68,3 @@ def df2gcs2bq(
         if re.search(r".*chunk\d*\.parquet", blob.path):
             logger.info(f"removing: {blob.path}")
             blob.delete()
-
-
-def to_gbq(
-    df: pd.DataFrame,
-    destination_table: str,
-    if_exists: str = "replace",
-    project_id: str | None = None,
-    **kwargs,
-) -> None:
-    """Wrapper for pushing DataFrames to bigquery, note duplicate col names are not
-    accepted replace or append."""
-    client = bigquery.Client()
-    project_id = project_id if project_id else client.project
-    df.to_gbq(
-        destination_table=destination_table,
-        project_id=project_id,
-        if_exists=if_exists,
-        location="europe-west2",
-        **kwargs,
-    )
-
-
-def read_gbq(query: str, use_bqstorage_api=True, **kwargs) -> pd.DataFrame:
-    """Convenience wrapper around pd.read_gbq."""
-    return pd.read_gbq(
-        query, use_bqstorage_api=use_bqstorage_api, progress_bar_type="tqdm", **kwargs
-    )

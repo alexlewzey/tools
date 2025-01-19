@@ -40,11 +40,16 @@ import json
 import logging
 import subprocess
 import sys
+import base64
 
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import matplotlib.pyplot as plt
+
+
+np.set_printoptions(precision=3, suppress=True)
+torch.set_printoptions(precision=3, sci_mode=False)
 """
 bq_to_python: str = """query = “””
 

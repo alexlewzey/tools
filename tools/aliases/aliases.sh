@@ -2,7 +2,7 @@
 # unix
 alias sizes="find . -type f -exec du -h {} + | sort -r -h | head"
 alias ls="ls -alh"
-alias c="code"
+alias c="cursor"
 alias p="poetry"
 alias pt="pytest"
 alias pcr="pre-commit run --all-files"
