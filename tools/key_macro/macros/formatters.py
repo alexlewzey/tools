@@ -369,7 +369,7 @@ def type_days_elapsed() -> None:
     days_elapsed_streak = (date.today() - date.fromisoformat(start_date_streak)).days
     years_streak = days_elapsed_streak / 365
 
-    start_date_caffeine = "2024-10-21"
+    start_date_caffeine = "2025-03-28"
     days_elapsed_caffeine = (
         date.today() - date.fromisoformat(start_date_caffeine)
     ).days
