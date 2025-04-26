@@ -25,6 +25,7 @@ python_imports: str = """from pathlib import Path
 import functools
 import os
 import io
+import gc
 import re
 import hashlib
 import random
@@ -41,21 +42,22 @@ import logging
 import subprocess
 import sys
 import base64
+import warnings
 
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import matplotlib.pyplot as plt
+from tqdm.auto import tqdm
 
+warnings.filterwarnings('ignore')
 
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_colwidth', None)
+pd.set_option('display.float_format', '{:.3f}'.format)
 np.set_printoptions(precision=3, suppress=True)
 torch.set_printoptions(precision=3, sci_mode=False)
 """
-bq_to_python: str = """query = “””
-
-”””
-df = client.query(query).to_dataframe()
-df"""
 
 
 class MacroEncoding:
@@ -120,32 +122,34 @@ ENCODINGS = [
     MacroEncoding(encoding=";ba", func=typer("\nBest\nAlex")),
     MacroEncoding(encoding=";mt", func=typer("\n\nMany thanks\n\nAlex")),
     # PYTHON ###########################################################################
-    MacroEncoding(encoding=";ll", func=typer("label_column")),
-    MacroEncoding(encoding=";vv", func=typer("value_column")),
-    MacroEncoding(encoding=";dd", func=typer("dim_column")),
-    MacroEncoding(encoding=";tt", func=typer("timestamp")),
+    # MacroEncoding(encoding=";ll", func=typer("label_column")),
+    # MacroEncoding(encoding=";vv", func=typer("value_column")),
+    # MacroEncoding(encoding=";dd", func=typer("dim_column")),
+    MacroEncoding(encoding=";zs", func=typer("~/.zshrc")),
+    MacroEncoding(encoding=";nn", func=typer(".notnull().mean()")),
+    MacroEncoding(encoding=";;;", func=typer("print()", 1)),
+    MacroEncoding(encoding=";cc", func=typer(".columns")),
+    MacroEncoding(encoding=";tt", func=typer("torch.")),
+    MacroEncoding(encoding=";ns", func=typer("nvidia-smi dmon")),
+    # MacroEncoding(encoding=";dd", func=typer(".dtypes")),
+    MacroEncoding(encoding=";ss", func=typer(".shape")),
+    MacroEncoding(encoding=";ii", func=typer("def __init__(self, ):", 2)),
+    MacroEncoding(encoding=";ri", func=typer(".reset_index()")),
+    MacroEncoding(encoding=";si", func=typer(".set_index()", 1)),
+    MacroEncoding(encoding=";hd", func=typer(".head(9)")),
+    MacroEncoding(encoding=";as", func=typer("descending=True")),
+    MacroEncoding(encoding=";td", func=typer(" -> pl.DataFrame:")),
+    MacroEncoding(encoding=";nm", func=typer("if __name__ == '__main__':\n    ")),
+    MacroEncoding(encoding=";sv", func=typer(".sort()", 1)),
+    MacroEncoding(encoding=";om", func=typer("1000000")),
+    MacroEncoding(encoding=";mo", func=typer("1_000_000")),
+    MacroEncoding(encoding=";vc", func=typer(".value_counts(sort=True)")),
+    MacroEncoding(encoding=";mu", func=typer(".info(memory_usage='deep')")),
+    MacroEncoding(encoding=";tn", func=typer(" -> None:")),
+    MacroEncoding(encoding=";ae", func=typer("source .venv/bin/activate")),
     MacroEncoding(
         encoding=";nw", func=typer("dt.datetime.now().replace(microsecond=0)")
     ),
-    MacroEncoding(encoding=";;;", func=typer("print()", 1)),
-    MacroEncoding(encoding=";;c", func=typer(".columns")),
-    MacroEncoding(encoding=";;t", func=typer("torch.")),
-    MacroEncoding(encoding=";;d", func=typer(".dtypes")),
-    MacroEncoding(encoding=";;s", func=typer(".shape")),
-    MacroEncoding(encoding=";ri", func=typer(".reset_index()")),
-    MacroEncoding(encoding=";si", func=typer(".set_index()", 1)),
-    MacroEncoding(encoding=";ii", func=typer("def __init__(self, ):", 2)),
-    MacroEncoding(encoding=";;h", func=typer(".head(9)")),
-    MacroEncoding(encoding=";as", func=typer("ascending=False")),
-    MacroEncoding(encoding=";td", func=typer(" -> pd.DataFrame:")),
-    MacroEncoding(encoding=";nm", func=typer("if __name__ == '__main__':\n    ")),
-    MacroEncoding(encoding=";sv", func=typer(".sort_values()", 1)),
-    MacroEncoding(encoding=";om", func=typer("1000000")),
-    MacroEncoding(encoding=";vc", func=typer(".value_counts(dropna=False)")),
-    MacroEncoding(encoding=";mu", func=typer(".info(memory_usage='deep')")),
-    MacroEncoding(encoding=";tn", func=typer(" -> None:")),
-    MacroEncoding(encoding=";sx", func=typer(" suffixes=('', '_DROP')")),
-    MacroEncoding(encoding=";ae", func=typer("source .venv/bin/activate")),
     MacroEncoding(encoding=";pi", func=typer(python_imports)),
     MacroEncoding(encoding=";rr", func=formatters.format_repr),
     MacroEncoding(encoding=";jp", func=formatters.join_python_string),
@@ -155,25 +159,33 @@ ENCODINGS = [
     MacroEncoding(encoding=";2r", func=formatters.imports_to_requirements),
     MacroEncoding(encoding=";ws", func=formatters.wrap_string_literal),
     # DOCKER ###########################################################################
-    MacroEncoding(encoding=";dc", func=typer("docker container ")),
-    MacroEncoding(encoding=";di", func=typer("docker image ")),
+    MacroEncoding(encoding=";cr", func=typer("docker container ")),
+    MacroEncoding(encoding=";ie", func=typer("docker image ")),
+    MacroEncoding(encoding=";cm", func=typer("cat makefile")),
     # SQL/BIGQUERY #####################################################################
-    MacroEncoding(encoding=";sf", func=typer("select * from ")),
-    MacroEncoding(encoding=";fs", func=typer("select * \nfrom ", 1)),
     MacroEncoding(encoding=";ct", func=typer("create or replace table  as", 3)),
-    MacroEncoding(encoding=";sq", func=formatters.format_sql),
-    MacroEncoding(encoding=";c8", func=typer("count(*) n,")),
-    MacroEncoding(encoding=";dt", func=formatters.sql_count_distinct),
-    MacroEncoding(
-        encoding=";pb",
-        func=typer("row_number() over(partition by  order by ) as category_row", 27),
-    ),
+    MacroEncoding(encoding=";c8", func=typer("count(*)/1000000 n,")),
+    # MacroEncoding(encoding=";cp", func=typer("count(*) / sum(count(*)) over() pct,")),
     MacroEncoding(encoding=";ob", func=typer("order by ")),
+    MacroEncoding(encoding=";bo", func=typer("order by  desc", 5)),
     MacroEncoding(encoding=";gb", func=typer("group by ")),
-    MacroEncoding(encoding=";cd", func=typer("group by ")),
+    MacroEncoding(encoding=";cd", func=typer("current_date()")),
     MacroEncoding(encoding=";we", func=typer("where ")),
-    MacroEncoding(encoding=";bq", func=typer(bq_to_python, 1)),
     MacroEncoding(encoding=";st", func=typer("select ")),
+    MacroEncoding(encoding=";dd", func=typer("distinct ")),
+    MacroEncoding(encoding=";rn", func=typer("row_number() ")),
+    MacroEncoding(encoding=";pb", func=typer("partition by ")),
+    MacroEncoding(encoding=";ua", func=typer("union all ")),
+    MacroEncoding(encoding=";ll", func=typer("limit 1000")),
+    MacroEncoding(encoding=";dt", func=formatters.sql_count_distinct),
+    MacroEncoding(encoding=";cp", func=formatters.sql_counts_dist),
+    MacroEncoding(encoding=";ci", func=formatters.sql_count_if_not_null),
+    MacroEncoding(encoding=";sf", func=formatters.select_from_table),
+    MacroEncoding(encoding=";gt", func=formatters.get_table_name),
+    MacroEncoding(encoding=";sq", func=formatters.format_sql),
+    MacroEncoding(encoding=";bq", func=formatters.bq_to_python),
+    MacroEncoding(encoding=";fs", func=typer("select * \nfrom ", paste=False)),
+    MacroEncoding(encoding=";rc", func=typer("regexp_contains()", 1, paste=False)),
     # GIT ##############################################################################
     MacroEncoding(encoding=";da", func=typer("deactivate")),
     MacroEncoding(encoding=";gd", func=typer("git diff ")),
@@ -196,9 +208,10 @@ ENCODINGS = [
     MacroEncoding(encoding=";re", func=formatters.cut_right_equality),
     MacroEncoding(encoding=";se", func=formatters.set_equal_to_self),
     MacroEncoding(encoding=";2s", func=formatters.to_snake),
-    MacroEncoding(encoding=";hh", func=formatters.format_hash),
-    MacroEncoding(encoding=";dh", func=formatters.format_dash),
+    MacroEncoding(encoding=";hl", func=formatters.format_hash),
     MacroEncoding(encoding=";hc", func=formatters.format_hash_center),
+    MacroEncoding(encoding=";dl", func=formatters.format_dash),
+    MacroEncoding(encoding=";dc", func=formatters.format_dash_center),
     MacroEncoding(encoding=";rb", func=formatters.remove_blanklines),
     MacroEncoding(encoding=";2u", func=formatters.to_upper),
     MacroEncoding(encoding=";2l", func=formatters.to_lower),
@@ -211,8 +224,9 @@ ENCODINGS = [
     MacroEncoding(encoding=";sc", func=formatters.spell_check),
     MacroEncoding(encoding=";wb", func=formatters.open_cb_url),
     MacroEncoding(encoding=";jl", func=formatters.type_journal_header),
+    # OTHER ############################################################################
+    MacroEncoding(encoding=";;t", func=typer("timestamp")),
 ]
-
 
 if sys.platform == "win32":
     from tools.key_macro.macros import text2speech

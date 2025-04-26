@@ -13,6 +13,7 @@ import black
 import pandas as pd
 import pyperclip
 import sqlfluff
+from pynput.keyboard import Key
 from textblob import TextBlob
 
 from tools.key_macro.keyboard import Typer
@@ -232,8 +233,23 @@ def _format_hash_center(s: str) -> str:
     ##################################### hello world ###############################...
     """
     s = s[:LINE_CHAR_LIMIT]
-    s = " " + s.strip() + " "
+    s = " " + s.strip(" #") + " "
     output = f"{s:#^88}"
+    return output
+
+
+def _format_dash_center(s: str) -> str:
+    """Add a center justify fill of hash characters to the current clipboard item to a
+    length of 88 character and return it to the clipboard.
+
+    input:
+    hello world
+    output:
+    ------------------------------------- hello world ----------------------------------
+    """
+    s = s[:LINE_CHAR_LIMIT]
+    s = " " + s.strip(" -") + " "
+    output = f"{s:-^88}"
     return output
 
 
@@ -361,7 +377,8 @@ def open_cb_url() -> None:
     url = pyperclip.paste()
     if url.startswith("www."):
         url = f"https://{url}"
-    webbrowser.open(url)
+    chrome_path = r"open -a /Applications/Google\ Chrome.app %s"
+    webbrowser.get(chrome_path).open(url)
 
 
 def type_days_elapsed() -> None:
@@ -392,9 +409,70 @@ def type_journal_header() -> None:
 
 def sql_count_distinct() -> None:
     word = typer.select_word_at_caret_and_copy()
-    pyperclip.copy(f"count(distinct {word}) n_{word},")
+    pyperclip.copy(f"count(distinct {word})/1000000 n_{word},")
     time.sleep(0.2)
     typer.paste()
+
+
+def sql_counts_dist() -> None:
+    word = typer.select_word_at_caret_and_copy()
+    query = f"""
+select
+{word},
+count(*)/1000000 n,
+count(*) / sum(count(*)) over() pct,
+sum(count(*)) over (order by count(*) desc) / sum(count(*)) over() cum_pct
+from
+group by {word}
+order by n desc
+;
+    """.strip()
+    pyperclip.copy(query)
+    time.sleep(0.2)
+    typer.paste()
+    typer.press_key(Key.up, num_presses=3)
+    typer.caret_to_line_end()
+
+
+def sql_count_if_not_null() -> None:
+    word = typer.select_word_at_caret_and_copy()
+    pyperclip.copy(f"countif({word} is not null) / count(*) not_null_{word},")
+    time.sleep(0.2)
+    typer.paste()
+
+
+def select_from_table() -> None:
+    table = pyperclip.paste()
+    time.sleep(0.2)
+    output = f"select \nfrom {table}"
+    pyperclip.copy(output)
+    time.sleep(0.2)
+    typer.paste()
+    typer.press_key(Key.up)
+
+
+# def from_newline_select(s: str) -> str:
+#     table = s.strip()
+#     template: str = f"SELECT \nFROM {table}"
+#     typer.press_key(Key.up)
+#     return template
+
+
+def _get_table_name(s: str):
+    match = re.search(r"`.+\..+\..+`", s).group()
+    if match is None:
+        return
+    return match
+
+
+def _bq_to_python(s: str) -> str:
+    query = s.strip()
+    template: str = f"""query = \"\"\"
+{query}
+\"\"\"
+df = pl.from_pandas(pandas_gbq.read_gbq(query))
+df"""
+    return template
 
 
 # select line first formatters #########################################################
@@ -429,13 +507,14 @@ split_join = clipboard_in_out(_split_join)
 wrap_string_literal = clipboard_in_out_paste(_wrap_string_literal)
 spell_check = clipboard_in_out_paste(_spell_check)
 to_snake = clipboard_in_out(_to_snake)
-remove_blanklines = clipboard_in_out(_remove_blanklines)
-to_list = clipboard_in_out(_to_list)
+remove_blanklines = clipboard_in_out_paste(_remove_blanklines)
+to_list = clipboard_in_out_paste(_to_list)
 underline = clipboard_in_out_paste(_underline)
 format_variables = clipboard_in_out_paste(_format_variables)
 format_hash = clipboard_in_out_paste(_format_hash)
-format_dash = clipboard_in_out_paste(_format_dash)
 format_hash_center = clipboard_in_out_paste(_format_hash_center)
+format_dash = clipboard_in_out_paste(_format_dash)
+format_dash_center = clipboard_in_out_paste(_format_dash_center)
 unnest_parentheses = clipboard_in_out(_unnest_parentheses)
 format_repr = clipboard_in_out(_format_repr)
 imports_to_requirements = clipboard_in_out_paste(_imports_to_requirements)
@@ -443,3 +522,5 @@ format_sql = clipboard_in_out_paste(_format_sql)
 format_black = clipboard_in_out_paste(_format_black)
 remove_urls = clipboard_in_out_paste(_remove_urls)
 join_python_string = clipboard_in_out_paste(_join_python_string)
+get_table_name = clipboard_in_out(_get_table_name)
+bq_to_python = clipboard_in_out_paste(_bq_to_python)

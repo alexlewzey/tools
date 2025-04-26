@@ -116,30 +116,44 @@ class Typer(Controller):  # type: ignore
         self.press_key(Key.enter)
 
     def partial_typing(
-        self, text: str, n_left: int | None = None, line_end: bool = False
+        self,
+        text: str,
+        n_left: int | None = None,
+        line_end: bool = False,
+        paste: bool = True,
     ) -> Callable:
         """Return a callable that will simulate typing text when subsequently called."""
 
         def call_typing() -> None:
             if line_end:
                 self.caret_to_line_end()
-            pyperclip.copy(text)
-            time.sleep(0.2)
-            self.paste()
-            # self.type(text)
+            if paste:
+                current_clip = pyperclip.paste()
+                pyperclip.copy(text)
+                time.sleep(0.2)
+                self.paste()
+                pyperclip.copy(current_clip)
+            else:
+                self.type(text)
             if n_left:
                 self.press_key(Key.left, n_left)
 
         return call_typing
 
-    def __call__(self, text, n_left: int | None = None, line_end: bool = False):
-        return self.partial_typing(text, n_left=n_left, line_end=line_end)
+    def __call__(
+        self,
+        text,
+        n_left: int | None = None,
+        line_end: bool = False,
+        paste: bool = True,
+    ):
+        return self.partial_typing(text, n_left=n_left, line_end=line_end, paste=paste)
 
     def selection_to_clipboard(self) -> str:
         with self.pressed(self.cmd_ctrl):
             self.press(KeyCode(char="c"))
             self.release(KeyCode(char="c"))
-        time.sleep(0.1)  # allow item to be added to clipboard
+        time.sleep(0.2)  # allow item to be added to clipboard
         result = pyperclip.paste()
         logger.info(f"selection_to_clipboard: output={result}"[:300])
         time.sleep(0.2)
