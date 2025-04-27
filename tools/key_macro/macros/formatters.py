@@ -414,6 +414,13 @@ def sql_count_distinct() -> None:
     typer.paste()
 
 
+def sql_sum() -> None:
+    word = typer.select_word_at_caret_and_copy()
+    pyperclip.copy(f"sum({word})/1000000 sum_{word},")
+    time.sleep(0.2)
+    typer.paste()
+
+
 def sql_counts_dist() -> None:
     word = typer.select_word_at_caret_and_copy()
     query = f"""

@@ -178,6 +178,7 @@ ENCODINGS = [
     MacroEncoding(encoding=";ua", func=typer("union all ")),
     MacroEncoding(encoding=";ll", func=typer("limit 1000")),
     MacroEncoding(encoding=";dt", func=formatters.sql_count_distinct),
+    MacroEncoding(encoding=";sm", func=formatters.sql_sum),
     MacroEncoding(encoding=";cp", func=formatters.sql_counts_dist),
     MacroEncoding(encoding=";ci", func=formatters.sql_count_if_not_null),
     MacroEncoding(encoding=";sf", func=formatters.select_from_table),
