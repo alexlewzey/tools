@@ -189,7 +189,7 @@ ENCODINGS = [
     MacroEncoding(encoding=";rc", func=typer("regexp_contains()", 1, paste=False)),
     # GIT ##############################################################################
     MacroEncoding(encoding=";da", func=typer("deactivate")),
-    MacroEncoding(encoding=";gd", func=typer("git diff ")),
+    MacroEncoding(encoding=";df", func=typer("git diff ")),
     MacroEncoding(encoding=";gl", func=typer(git_log)),
     MacroEncoding(encoding=";gs", func=typer("git status")),
     MacroEncoding(encoding=";ga", func=typer("git add -A")),
@@ -227,6 +227,9 @@ ENCODINGS = [
     MacroEncoding(encoding=";jl", func=formatters.type_journal_header),
     # OTHER ############################################################################
     MacroEncoding(encoding=";;t", func=typer("timestamp")),
+    MacroEncoding(
+        encoding=";gd", func=typer("https://drive.google.com/drive/my-drive")
+    ),
 ]
 
 if sys.platform == "win32":

@@ -382,18 +382,24 @@ def open_cb_url() -> None:
 
 
 def type_days_elapsed() -> None:
-    start_date_streak = "2024-04-20"
+    start_date_streak = "2025-05-30"
     days_elapsed_streak = (date.today() - date.fromisoformat(start_date_streak)).days
     years_streak = days_elapsed_streak / 365
 
-    start_date_caffeine = "2025-03-28"
+    start_date_caffeine = "2025-06-01"
     days_elapsed_caffeine = (
         date.today() - date.fromisoformat(start_date_caffeine)
     ).days
     years_caffeine = days_elapsed_caffeine / 365
+
+    start_date_youtube = "2025-08-26"
+    days_elapsed_youtube = (date.today() - date.fromisoformat(start_date_youtube)).days
+    years_youtube = days_elapsed_youtube / 365
+
     typer.type_text(
         f"streak: {days_elapsed_streak} - {years_streak:.2f}, "
-        f"caffeine: {days_elapsed_caffeine} - {years_caffeine:.2f}"
+        f"caffeine: {days_elapsed_caffeine} - {years_caffeine:.2f}, "
+        f"youtube: {days_elapsed_youtube} - {years_youtube:.2f}"
     )
 
 
