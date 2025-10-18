@@ -415,6 +415,13 @@ def type_journal_header() -> None:
 
 def sql_count_distinct() -> None:
     word = typer.select_word_at_caret_and_copy()
+    pyperclip.copy(f"count(distinct {word}) n_{word},")
+    time.sleep(0.2)
+    typer.paste()
+
+
+def sql_count_distinct_millions() -> None:
+    word = typer.select_word_at_caret_and_copy()
     pyperclip.copy(f"count(distinct {word})/1000000 n_{word},")
     time.sleep(0.2)
     typer.paste()
@@ -483,7 +490,7 @@ def _bq_to_python(s: str) -> str:
     template: str = f"""query = \"\"\"
 {query}
 \"\"\"
-df = pl.from_pandas(pandas_gbq.read_gbq(query))
+df = bqtk.read_gbq(query)
 df"""
     return template
 
