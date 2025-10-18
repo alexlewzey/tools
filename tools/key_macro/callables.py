@@ -4,12 +4,10 @@ import json
 import sys
 from collections import Counter
 from collections.abc import Callable
-from functools import partial
-from pathlib import Path
 
 from pynput.keyboard import KeyCode
 
-from tools.key_macro.core import CUSTOM_JSON, PERSONAL_JSON
+from tools.key_macro.core import ROOT
 from tools.key_macro.keyboard import Typer
 from tools.key_macro.macros import formatters, img2text
 
@@ -79,59 +77,22 @@ class MacroEncoding:
         return self.encode_set, self.func
 
 
-def load_json(path: Path) -> dict:
-    with path.open() as f:
-        settings = json.loads(f.read())
-    return settings
-
-
-def type_config(config_path: Path, key: str) -> None:
-    settings = load_json(config_path)
-    typer.type_text(settings[key].replace("\\n", "\n"))
-
-
-type_personal = partial(type_config, config_path=PERSONAL_JSON)
-type_custom = partial(type_config, config_path=CUSTOM_JSON)
-
-
 typer = Typer()
 
 
 ENCODINGS = [
-    # PERSONAL #########################################################################
-    MacroEncoding(encoding=";hm", func=partial(type_personal, key="hotmail")),
-    MacroEncoding(encoding=";gm", func=partial(type_personal, key="gmail")),
-    MacroEncoding(encoding=";wm", func=partial(type_personal, key="work_mail")),
-    MacroEncoding(encoding=";al", func=partial(type_personal, key="name")),
-    MacroEncoding(encoding=";mb", func=partial(type_personal, key="mobile")),
-    MacroEncoding(encoding=";un", func=partial(type_personal, key="username")),
-    MacroEncoding(encoding=";ad", func=partial(type_personal, key="address")),
-    # CUSTOM ###########################################################################
-    MacroEncoding(encoding=";;1", func=partial(type_custom, key="1")),
-    MacroEncoding(encoding=";;2", func=partial(type_custom, key="2")),
-    MacroEncoding(encoding=";;3", func=partial(type_custom, key="3")),
-    MacroEncoding(encoding=";;4", func=partial(type_custom, key="4")),
-    MacroEncoding(encoding=";;5", func=partial(type_custom, key="5")),
-    MacroEncoding(encoding=";;6", func=partial(type_custom, key="6")),
-    MacroEncoding(encoding=";;7", func=partial(type_custom, key="7")),
-    MacroEncoding(encoding=";;8", func=partial(type_custom, key="8")),
-    MacroEncoding(encoding=";;9", func=partial(type_custom, key="9")),
     # EMAILS ###########################################################################
     MacroEncoding(encoding=";tf", func=typer("Thanks for your email. ")),
     MacroEncoding(encoding=";ah", func=typer.partial_paste(any_help)),
     MacroEncoding(encoding=";ba", func=typer("\nBest\nAlex")),
     MacroEncoding(encoding=";mt", func=typer("\n\nMany thanks\n\nAlex")),
     # PYTHON ###########################################################################
-    # MacroEncoding(encoding=";ll", func=typer("label_column")),
-    # MacroEncoding(encoding=";vv", func=typer("value_column")),
-    # MacroEncoding(encoding=";dd", func=typer("dim_column")),
     MacroEncoding(encoding=";zs", func=typer("~/.zshrc")),
     MacroEncoding(encoding=";nn", func=typer(".notnull().mean()")),
     MacroEncoding(encoding=";;;", func=typer("print()", 1)),
     MacroEncoding(encoding=";cc", func=typer(".columns")),
     MacroEncoding(encoding=";tt", func=typer("torch.")),
     MacroEncoding(encoding=";ns", func=typer("nvidia-smi dmon")),
-    # MacroEncoding(encoding=";dd", func=typer(".dtypes")),
     MacroEncoding(encoding=";ss", func=typer(".shape")),
     MacroEncoding(encoding=";ii", func=typer("def __init__(self, ):", 2)),
     MacroEncoding(encoding=";ri", func=typer(".reset_index()")),
@@ -231,6 +192,12 @@ ENCODINGS = [
         encoding=";gd", func=typer("https://drive.google.com/drive/my-drive")
     ),
 ]
+
+with (ROOT / "callables.json").open() as f:
+    custom_callalbes = json.load(f)
+for encoding, value in custom_callalbes.items():
+    assert len(encoding) == 3, len(encoding)
+    ENCODINGS.append(MacroEncoding(encoding=encoding, func=typer(value)))
 
 if sys.platform == "win32":
     from tools.key_macro.macros import text2speech
