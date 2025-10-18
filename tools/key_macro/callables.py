@@ -196,8 +196,8 @@ ENCODINGS = [
 ]
 
 with (ROOT / "callables.json").open() as f:
-    custom_callalbes = json.load(f)
-for encoding, value in custom_callalbes.items():
+    custom_callables = json.load(f)
+for encoding, value in custom_callables.items():
     assert len(encoding) == 3, len(encoding)
     ENCODINGS.append(MacroEncoding(encoding=encoding, func=typer(value)))
 
