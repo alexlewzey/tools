@@ -3,7 +3,7 @@ callables.json
 
 # custom
 tmp/
-tmp.*
+tmp*
 .ruff_cache
 .DS_Store
 *.pk

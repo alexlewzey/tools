@@ -1,6 +1,6 @@
 import pytest
 
-from tools.key_macro.macros import formatters
+from src.key_macro.macros import formatters
 
 
 @pytest.mark.parametrize(

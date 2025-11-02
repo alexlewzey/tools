@@ -1,4 +1,4 @@
-from tools.key_macro.callables import ENCODINGS
+from src.key_macro.callables import ENCODINGS
 
 
 def test_no_duplicate_encodings() -> None:

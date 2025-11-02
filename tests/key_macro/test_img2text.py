@@ -1,6 +1,6 @@
 from PIL import Image
 
-from tools.key_macro.macros.img2text import _img2text
+from src.key_macro.macros.img2text import _img2text
 
 
 def test_img2text():

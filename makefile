@@ -12,7 +12,7 @@ test:
 
 run:
 	uv sync --all-extras
-	uv run python -m tools.key_macro.app
+	uv run python -m src.key_macro.app
 
 
 clean:

@@ -16,7 +16,7 @@ import sqlfluff
 from pynput.keyboard import Key
 from textblob import TextBlob
 
-from tools.key_macro.keyboard import Typer
+from src.key_macro.keyboard import Typer
 
 logger = logging.getLogger(__name__)
 

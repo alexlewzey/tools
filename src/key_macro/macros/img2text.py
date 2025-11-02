@@ -6,7 +6,7 @@ import pyperclip
 import pytesseract
 from PIL import Image, ImageGrab
 
-from tools.key_macro.core import EXE_TESSERACT
+from src.key_macro.core import EXE_TESSERACT
 
 
 def _img2text(img: Image.Image) -> str:

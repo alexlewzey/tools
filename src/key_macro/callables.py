@@ -7,9 +7,9 @@ from collections.abc import Callable
 
 from pynput.keyboard import KeyCode
 
-from tools.key_macro.core import ROOT
-from tools.key_macro.keyboard import Typer
-from tools.key_macro.macros import formatters, img2text
+from src.key_macro.core import ROOT
+from src.key_macro.keyboard import Typer
+from src.key_macro.macros import formatters, img2text
 
 git_log: str = (
     "git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%"
@@ -124,7 +124,9 @@ ENCODINGS = [
     MacroEncoding(encoding=";ie", func=typer("docker image ")),
     MacroEncoding(encoding=";cm", func=typer("cat makefile")),
     # SQL/BIGQUERY #####################################################################
-    MacroEncoding(encoding=";qy", func=typer("qualify row_number() over (partition by ) = 1", 5)),
+    MacroEncoding(
+        encoding=";qy", func=typer("qualify row_number() over (partition by ) = 1", 5)
+    ),
     MacroEncoding(encoding=";ct", func=typer("create or replace table  as", 3)),
     MacroEncoding(encoding=";c8", func=typer("count(*)/1000000 n,")),
     MacroEncoding(encoding=";88", func=typer("count(*) n,")),
@@ -142,7 +144,13 @@ ENCODINGS = [
     MacroEncoding(encoding=";ll", func=typer("limit 1000")),
     MacroEncoding(encoding=";dd", func=formatters.sql_count_distinct),
     MacroEncoding(encoding=";dt", func=formatters.sql_count_distinct_millions),
-    MacroEncoding(encoding=";cp", func=typer('count(*) / sum(count(*)) over() pct,\nsum(count(*)) over(order by count(*) desc) / sum(count(*)) over() cum_pct,')),
+    MacroEncoding(
+        encoding=";cp",
+        func=typer(
+            "count(*) / sum(count(*)) over() pct,\nsum(count(*)) over(order by count(*)"
+            " desc) / sum(count(*)) over() cum_pct,"
+        ),
+    ),
     MacroEncoding(encoding=";ci", func=formatters.sql_count_if_not_null),
     MacroEncoding(encoding=";sf", func=formatters.select_from_table),
     MacroEncoding(encoding=";gt", func=formatters.get_table_name),
@@ -202,7 +210,7 @@ for encoding, value in custom_callables.items():
     ENCODINGS.append(MacroEncoding(encoding=encoding, func=typer(value)))
 
 if sys.platform == "win32":
-    from tools.key_macro.macros import text2speech
+    from src.key_macro.macros import text2speech
 
     ENCODINGS.append(MacroEncoding(encoding=";ee", func=text2speech.text2speech))
 
