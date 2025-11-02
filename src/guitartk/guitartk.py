@@ -1,3 +1,5 @@
+"""Uv run --only-group guitartk python -m src.guitartk.guitartk."""
+
 import numpy as np
 from rich.console import Console
 
