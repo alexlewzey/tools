@@ -456,7 +456,7 @@ order by n desc
 
 def sql_count_if_not_null() -> None:
     word = typer.select_word_at_caret_and_copy()
-    pyperclip.copy(f"countif({word} is not null) / count(*) not_null_{word},")
+    pyperclip.copy(f"countif({word} is null) / count(*) pct_null_{word},")
     time.sleep(0.2)
     typer.paste()
 
@@ -490,8 +490,8 @@ def _bq_to_python(s: str) -> str:
     template: str = f"""query = \"\"\"
 {query}
 \"\"\"
-df = bqtk.read_gbq(query)
-df"""
+df = gcptk.read_gbq(query, project=project_id)
+df.limit(5)"""
     return template
 
 

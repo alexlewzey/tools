@@ -111,7 +111,8 @@ ENCODINGS = [
     MacroEncoding(
         encoding=";nw", func=typer("dt.datetime.now().replace(microsecond=0)")
     ),
-    # MacroEncoding(encoding=";pi", func=typer(python_imports)),
+    MacroEncoding(encoding=";pc", func=typer('pre-commit install')),
+    MacroEncoding(encoding=";pu", func=typer('pre-commit uninstall')),
     MacroEncoding(encoding=";rr", func=formatters.format_repr),
     MacroEncoding(encoding=";jp", func=formatters.join_python_string),
     MacroEncoding(encoding=";lt", func=formatters.to_list),
@@ -121,7 +122,7 @@ ENCODINGS = [
     MacroEncoding(encoding=";ws", func=formatters.wrap_string_literal),
     # DOCKER ###########################################################################
     MacroEncoding(encoding=";cr", func=typer("docker container ")),
-    MacroEncoding(encoding=";ie", func=typer("docker image ")),
+    MacroEncoding(encoding=";di", func=typer("docker image ")),
     MacroEncoding(encoding=";cm", func=typer("cat makefile")),
     # SQL/BIGQUERY #####################################################################
     MacroEncoding(
@@ -130,6 +131,7 @@ ENCODINGS = [
     MacroEncoding(encoding=";ct", func=typer("create or replace table  as", 3)),
     MacroEncoding(encoding=";c8", func=typer("count(*)/1000000 n,")),
     MacroEncoding(encoding=";88", func=typer("count(*) n,")),
+    MacroEncoding(encoding=";lj", func=typer("left join ")),
     # MacroEncoding(encoding=";cp", func=typer("count(*) / sum(count(*)) over() pct,")),
     MacroEncoding(encoding=";ob", func=typer("order by ")),
     MacroEncoding(encoding=";bo", func=typer("order by  desc", 5)),
@@ -175,6 +177,7 @@ ENCODINGS = [
     MacroEncoding(encoding=";gp", func=typer("git push ")),
     MacroEncoding(encoding=";me", func=typer("git merge origin/main")),
     MacroEncoding(encoding=";pl", func=typer("git pull ")),
+    MacroEncoding(encoding=";gm", func=typer("git merge ")),
     # FORMATTERS #######################################################################
     MacroEncoding(encoding=";sl", func=typer.select_line_at_caret_and_copy),
     MacroEncoding(encoding=";re", func=formatters.cut_right_equality),
@@ -197,9 +200,11 @@ ENCODINGS = [
     MacroEncoding(encoding=";wb", func=formatters.open_cb_url),
     MacroEncoding(encoding=";jl", func=formatters.type_journal_header),
     # OTHER ############################################################################
-    MacroEncoding(encoding=";;t", func=typer("timestamp")),
     MacroEncoding(
         encoding=";gd", func=typer("https://drive.google.com/drive/my-drive")
+    ),
+    MacroEncoding(
+        encoding=";ca", func=typer("created_at")
     ),
 ]
 
