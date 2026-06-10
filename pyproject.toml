@@ -5,6 +5,8 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+    "playwright>=1.60.0",
+    "polars>=1.41.2",
 ]
 
 [dependency-groups]
@@ -44,6 +46,9 @@ bayes-bandits = [
     "pandas>=2.3.3",
     "plotly>=6.3.1",
     "scipy>=1.15.3",
+]
+houses = [
+    "requests>=2.32.5",
 ]
 
 
