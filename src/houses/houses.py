@@ -13,7 +13,10 @@ from playwright.sync_api import sync_playwright
 dir_project = Path(__file__).parent
 dir_tmp = dir_project / "tmp"
 dir_tmp.mkdir(exist_ok=True)
-user_agent: str = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
+user_agent: str = (
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
+)
 rightmove_pw: str = os.environ["RIGHTMOVE_PW"]
 gmail: str = os.environ["GMAIL"]
 
@@ -178,6 +181,7 @@ def get_sqm(postcode: str, house_number: str):
                 "Authorization": f"Bearer {epc_token}",
                 "Accept": "application/json",
             },
+            timeout=30,
         )
         r.raise_for_status()
         data = r.json()["data"]
@@ -193,6 +197,7 @@ def get_sqm(postcode: str, house_number: str):
                 "Authorization": f"Bearer {epc_token}",
                 "Accept": "application/json",
             },
+            timeout=30,
         )
         r.raise_for_status()
         spm = r.json()["data"]["total_floor_area"]
@@ -207,6 +212,7 @@ def get_sold_price(postcode: str, house_number: str) -> tuple:
             "http://landregistry.data.gov.uk/data/ppi/transaction-record.json",
             params={"propertyAddress.postcode": postcode, "_pageSize": 200},
             headers={"Accept": "application/json"},
+            timeout=30,
         )
         r.raise_for_status()
         prices = (
@@ -228,11 +234,15 @@ def get_sold_price(postcode: str, house_number: str) -> tuple:
 
 
 def main():
-    # zoopla_estimate = get_zoopla_estimate(postcode=postcode, house_number=house_number)
+    # zoopla_estimate = get_zoopla_estimate(
+    #     postcode=postcode, house_number=house_number
+    # )
     # print(zoopla_estimate)
 
     hauscope_estimate = get_hauscope_estimate(link=link)
-    rightmove_estimate = get_rightmove_estimate(postcode=postcode, house_number=house_number)
+    rightmove_estimate = get_rightmove_estimate(
+        postcode=postcode, house_number=house_number
+    )
     sqm = get_sqm(postcode=postcode, house_number=house_number)
     price, year = get_sold_price(postcode=postcode, house_number=house_number)
     print()
@@ -240,11 +250,11 @@ def main():
     print("-------")
     print(f"postcode: {postcode}")
     print(f"house_number: {house_number}")
-    print(f'rightmove_estimate: {rightmove_estimate}')
-    print(f'hauscope_estimate: {hauscope_estimate}')
+    print(f"rightmove_estimate: {rightmove_estimate}")
+    print(f"hauscope_estimate: {hauscope_estimate}")
     print(f"sqm: {sqm}")
-    print(f'price: {price:,}')
-    print(f'year: {year}')
+    print(f"price: {price:,}")
+    print(f"year: {year}")
 
 
 if __name__ == "__main__":

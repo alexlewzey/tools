@@ -40,7 +40,7 @@ class DataGenerator:
         self.p1 = p1
         self.p2 = p2
 
-    def get_clicks(self) -> tuple[float, float]:
+    def get_clicks(self) -> tuple[int, int]:
         click1 = 1 if np.random.random() > self.p1 else 0
         click2 = 1 if np.random.random() > self.p2 else 0
         return (click1, click2)

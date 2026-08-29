@@ -97,6 +97,7 @@ def run_experiment():
         except ZeroDivisionError:
             pass
 
+        assert best_bandit is not None
         result_binary = best_bandit.pull()
         best_bandit.update(result_binary)
         logger.info(f"i={i}, samples={all_samples}")
@@ -162,6 +163,7 @@ def generate_data() -> list[list[tuple[int, int]]]:
         for bandit in bandits:
             bandit_params.append(bandit.params)
 
+        assert best_bandit is not None
         result_binary = best_bandit.pull()
         best_bandit.update(result_binary)
         plot_parameters.append(bandit_params)

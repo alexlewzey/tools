@@ -51,12 +51,13 @@ x_norm = boston_norm.iloc[:, :-1]
 # pca
 res = utils.pca(x_norm, n_components=2)
 pcs, pca = res["pcs"], res["pca"]
+assert isinstance(pcs, pd.DataFrame)
 pcs["lbl"] = y
 pcs["type"] = "pca"
 
 # umap
 reduced = umap.UMAP(n_components=2).fit_transform(x_norm)
-reduced = pd.DataFrame(reduced, columns=[f"dim{i}" for i in range(2)])
+reduced = pd.DataFrame(reduced, columns=pd.Index([f"dim{i}" for i in range(2)]))
 reduced["lbl"] = y
 reduced["type"] = "umap"
 
@@ -131,7 +132,7 @@ for i in tqdm(range(1, 300, 10)):
     y_axis = np.linspace(min(pcs[y]), max(pcs[y]), resolution)
     xx, yy = np.meshgrid(x_axis, y_axis)
     coord = pd.DataFrame(
-        np.hstack([xx.reshape(-1, 1), yy.reshape(-1, 1)]), columns=[x, y]
+        np.hstack([xx.reshape(-1, 1), yy.reshape(-1, 1)]), columns=pd.Index([x, y])
     )
     coord["pred"] = model.predict(coord)
 

@@ -144,9 +144,9 @@ def speech2text(
             pred = pipe(path_tmp.as_posix())
             rows.append((path, i, pred["text"], path.stat().st_ctime))
     shutil.rmtree(path_tmp.parent)
-    df = pd.DataFrame(rows, columns=["path", "chunk", "text", "ctime"]).sort_values(
-        ["ctime", "chunk"]
-    )
+    df = pd.DataFrame(
+        rows, columns=pd.Index(["path", "chunk", "text", "ctime"])
+    ).sort_values(["ctime", "chunk"])
     df.to_parquet(path_parquet)
     with path_txt.open("w") as f:
         text = concat_text(df)

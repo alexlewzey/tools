@@ -59,12 +59,14 @@ houses = [
 km = "src.key_macro.app:run"
 
 
-[tool.mypy]
-ignore_missing_imports = true
-check_untyped_defs = true
+[tool.ty.rules]
+unresolved-import = "ignore"
 
 
 [tool.ruff]
+fix = true
+
+[tool.ruff.lint]
 select = [
     "A", # Pyflakes: general checks
     "B", # pycodestyle: pycodestyle checks
@@ -84,4 +86,3 @@ ignore = [
     "S108", # ignore use of tmp
     "S311", # Standard pseudo-random generators are not suitable for cryptographic purposes
 ]
-fix = true

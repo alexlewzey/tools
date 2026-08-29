@@ -85,7 +85,8 @@ def make_predicted_surface(
     y_axis = np.linspace(min(y), max(y), resolution)
     xx, yy = np.meshgrid(x_axis, y_axis)
     coord = pd.DataFrame(
-        np.hstack([xx.reshape(-1, 1), yy.reshape(-1, 1)]), columns=[x.name, y.name]
+        np.hstack([xx.reshape(-1, 1), yy.reshape(-1, 1)]),
+        columns=pd.Index([x.name, y.name]),
     )
     # predicting and formatting z into a grid
     pred = predictor(coord)
@@ -116,7 +117,7 @@ def make_3d_grid(
     yax = np.linspace(axis_mins[1], axis_maxs[1], resolution)
     zax = np.linspace(axis_mins[2], axis_maxs[2], resolution)
     data = list(itertools.product(xax, yax, zax))
-    return pd.DataFrame(data, columns=[x, y, z])
+    return pd.DataFrame(data, columns=pd.Index([x, y, z]))
 
 
 def path_plotly_with_default(
@@ -129,7 +130,7 @@ def path_plotly_with_default(
     return path
 
 
-def next_fname(path: Path | str | None, zfill: int = 2) -> Path:
+def next_fname(path: Path | str, zfill: int = 2) -> Path:
     """Return next incremental file that does not exist
     (path.root)_{next_num}.(path.suffix)"""
     path = Path(path)
@@ -161,7 +162,7 @@ def apply2features(
     not_features = (
         not_features
         if not_features
-        else [col for col in df.columns if col not in features]
+        else [col for col in df.columns if col not in (features or [])]
     )
     return df.set_index(not_features).pipe(processor).reset_index()
 
@@ -210,7 +211,9 @@ def pca(
         print(pca_explained_var(pca))
     if isinstance(x, pd.DataFrame):
         pcs = pd.DataFrame(
-            pcs, index=x.index, columns=[f"dim{i}" for i in range(pcs.shape[1])]
+            pcs,
+            index=x.index,
+            columns=pd.Index([f"dim{i}" for i in range(pcs.shape[1])]),
         )
     result = {"pcs": pcs, "pca": pca}
     return result
