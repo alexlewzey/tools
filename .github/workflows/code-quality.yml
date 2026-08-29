@@ -17,7 +17,7 @@ jobs:
       run: |
         pip install uv
         uv venv
-        uv sync --all-groups
+        uv sync --group devtk
 
     - name: Run pre-commit and check for changes
       id: check_changes
