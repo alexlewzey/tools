@@ -17,7 +17,7 @@ jobs:
       run: |
         pip install uv
         uv venv
-        uv sync --all-extras
+        uv sync --all-groups
 
     - name: Run pre-commit and check for changes
       id: check_changes
