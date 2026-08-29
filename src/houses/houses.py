@@ -18,8 +18,8 @@ rightmove_pw: str = os.environ["RIGHTMOVE_PW"]
 gmail: str = os.environ["GMAIL"]
 
 link: str = "https://www.rightmove.co.uk/properties/173060330#/?channel=RES_BUY"
-postcode: str = "SK6 1SB"
-house_number: str = "10"
+postcode: str = "SK7 6LE"
+house_number: str = "21"
 
 
 def get_hauscope_estimate(link):
@@ -231,20 +231,20 @@ def main():
     # zoopla_estimate = get_zoopla_estimate(postcode=postcode, house_number=house_number)
     # print(zoopla_estimate)
 
-    # hauscope_estimate = get_hauscope_estimate(link=link)
-    # rightmove_estimate = get_rightmove_estimate(postcode=postcode, house_number=house_number)
+    hauscope_estimate = get_hauscope_estimate(link=link)
+    rightmove_estimate = get_rightmove_estimate(postcode=postcode, house_number=house_number)
     sqm = get_sqm(postcode=postcode, house_number=house_number)
-    # price, year = get_sold_price(postcode=postcode, house_number=house_number)
+    price, year = get_sold_price(postcode=postcode, house_number=house_number)
     print()
     print("RESULTS")
     print("-------")
     print(f"postcode: {postcode}")
     print(f"house_number: {house_number}")
-    # print(f'rightmove_estimate: {rightmove_estimate}')
-    # print(f'hauscope_estimate: {hauscope_estimate}')
+    print(f'rightmove_estimate: {rightmove_estimate}')
+    print(f'hauscope_estimate: {hauscope_estimate}')
     print(f"sqm: {sqm}")
-    # print(f'price: {price:,}')
-    # print(f'year: {year}')
+    print(f'price: {price:,}')
+    print(f'year: {year}')
 
 
 if __name__ == "__main__":
