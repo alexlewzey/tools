@@ -1,23 +1,21 @@
 install:
-	@pip install -e .
+	uv sync --all-groups
 	@uv run pre-commit install --install-hooks
-
 
 test:
 	@uv run pre-commit run --all-files
 
-
 run:
-	uv sync --all-extras
 	uv run python -m src.key_macro.app
-
 
 clean:
 	rm -rf .venv
 
+adk_run:
+	uv run adk run src/adk
 
-run_adk:
-	uv run adk run src/first_adk
+adk_web:
+	uv run adk web --port 8000 src/sdk
 
-web_adk:
-	uv run adk web --port 8000 src/first_sdk
+grpc_compile:
+	uv run python -m grpc_tools.protoc -Isrc/grpc --python_out=src/grpc --grpc_python_out=src/grpc src/grpc/inference.proto
