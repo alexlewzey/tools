@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "fastexcel>=0.20.2",
+    "google-adk>=2.8.0",
     "nbformat>=5.10.4",
     "playwright>=1.60.0",
     "polars>=1.41.2",
