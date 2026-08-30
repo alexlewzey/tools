@@ -53,6 +53,11 @@ bayes-bandits = [
 houses = [
     "requests>=2.32.5",
 ]
+grpc = [
+    "grpcio>=1.83.1",
+    "grpcio-tools>=1.83.1",
+    "numpy>=2.2.6",
+]
 
 
 [project.scripts]
@@ -65,6 +70,7 @@ unresolved-import = "ignore"
 
 [tool.ruff]
 fix = true
+extend-exclude = ["*_pb2.py", "*_pb2_grpc.py"]
 
 [tool.ruff.lint]
 select = [
