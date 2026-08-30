@@ -1,31 +1,56 @@
-import os
-import warnings
-from datetime import datetime
+"""
+Hi, I would like to complain that I need more customer support as a bug with my
+software and it arrived later than it should have done.
+"""
 
-from google.adk.agents.llm_agent import Agent
+from google.adk import Agent, Event, Workflow
 
-warnings.filterwarnings("ignore", category=UserWarning, message=r"\[EXPERIMENTAL\]")
-os.environ.setdefault("ADK_SUPPRESS_EXPERIMENTAL_FEATURE_WARNINGS", "true")
-
-
-def get_size(breed) -> dict:
-    size = {"spaniel": "small", "labrador": "large"}[breed]
-    return {"size": size}
-
-
-def get_color(breed) -> dict:
-    color = {"spaniel": "liver and white", "labrador": "choc"}[breed]
-    return {"color": color}
-
-
-def get_time() -> dict:
-    return {"time": datetime.now().isoformat()}
-
-
-root_agent = Agent(
+process_message = Agent(
+    name="process_message",
     model="gemini-flash-lite-latest",
-    name="root_agent",
-    description="Tell us the current time or breed attributes.",
-    instruction="You are a helpful assistant.",
-    tools=[get_time, get_size, get_color],
+    instruction=(
+        "Categorize the user message as either BUG, CUSTOMER_SUPPORT or LOGISTICS. "
+        "If the message applies to more than one category, return them, comma "
+        "separated."
+    ),
+    output_schema=str,
+)
+
+
+def router(node_input: str):
+    routes = node_input.split(",")
+    routes = [route.strip() for route in routes]
+    return Event(route=routes)
+
+
+def response_bug():
+    return Event(message="BUG")
+
+
+def response_support():
+    return Event(output="SUPPORT")
+
+
+def response_logistics():
+    return Event(message="LOGISTICS")
+
+
+def triage():
+    return Event(message="Triaging the support")
+
+
+root_agent = Workflow(
+    name="routing_workflow",
+    edges=[
+        ("START", process_message, router),
+        (
+            router,
+            {
+                "BUG": response_bug,
+                "CUSTOMER_SUPPORT": response_support,
+                "LOGISTICS": response_logistics,
+            },
+        ),
+        (response_support, triage),
+    ],
 )
