@@ -14,3 +14,6 @@ run:
 
 clean:
 	rm -rf .venv
+
+compile:
+	uv run python -m grpc_tools.protoc -Isrc/grpc --python_out=src/grpc --grpc_python_out=src/grpc src/grpc/inference.proto
