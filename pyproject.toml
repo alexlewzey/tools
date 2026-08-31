@@ -58,6 +58,10 @@ grpc = [
     "grpcio-tools>=1.83.1",
     "numpy>=2.2.6",
 ]
+ollama = [
+    "ollama>=0.6.2",
+    "pydantic>=2.13.5",
+]
 
 
 [project.scripts]
