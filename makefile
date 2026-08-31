@@ -1,4 +1,5 @@
 install:
+	rm -f uv.lock
 	uv sync --all-groups
 	@uv run pre-commit install --install-hooks
 
