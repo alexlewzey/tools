@@ -6491,6 +6491,7 @@ key-macro = [
 ]
 ollama = [
     { name = "ollama" },
+    { name = "pydantic" },
 ]
 
 [package.metadata]
@@ -6546,7 +6547,10 @@ key-macro = [
     { name = "sqlfluff", specifier = ">=3.5.0" },
     { name = "textblob", specifier = ">=0.19.0" },
 ]
-ollama = [{ name = "ollama", specifier = ">=0.6.2" }]
+ollama = [
+    { name = "ollama", specifier = ">=0.6.2" },
+    { name = "pydantic", specifier = ">=2.13.5" },
+]
 
 [[package]]
 name = "torch"
