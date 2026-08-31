@@ -53,6 +53,9 @@ bayes-bandits = [
 houses = [
     "requests>=2.32.5",
 ]
+adk = [
+    "google-adk>=2.8.0",
+]
 grpc = [
     "grpcio>=1.83.1",
     "grpcio-tools>=1.83.1",

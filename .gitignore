@@ -5,6 +5,8 @@ callables.json
 tmp/
 tmp*
 .ruff_cache
+.adk/
+*.db
 .DS_Store
 *.pk
 *.pkl
