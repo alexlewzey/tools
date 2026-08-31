@@ -12,6 +12,7 @@ tmp*
 *.gif
 *.mp4
 *.pt
+*.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
