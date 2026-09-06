@@ -1,0 +1,98 @@
+[project]
+name = "tools"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastexcel>=0.20.2",
+    "nbformat>=5.10.4",
+    "playwright>=1.60.0",
+    "polars>=1.41.2",
+    "yfinance>=1.4.1",
+]
+
+[dependency-groups]
+key-macro = [
+    "autoflake>=2.3.1",
+    "black>=25.9.0",
+    "numpy>=2.2.6",
+    "opencv-python>=4.12.0.88",
+    "pillow>=12.0.0",
+    "pynput>=1.8.1",
+    "pyperclip>=1.11.0",
+    "pytesseract>=0.3.13",
+    "pyttsx3>=2.99",
+    "sqlfluff>=3.5.0",
+    "textblob>=0.19.0",
+]
+devtk = [
+    "ipykernel>=7.1.0",
+    "pandas>=2.3.3",
+    "pre-commit>=4.3.0",
+    "pytest>=8.4.2",
+]
+audiotk = [
+    "fire>=0.7.1",
+    "matplotlib>=3.10.7",
+    "pydub>=0.25.1",
+    "scipy>=1.15.3",
+    "simpleaudio>=1.0.4",
+    "soundfile>=0.13.1",
+    "torch>=2.9.0",
+    "tqdm>=4.67.1",
+    "transformers>=4.57.1",
+]
+bayes-bandits = [
+    "matplotlib>=3.10.7",
+    "numpy>=2.2.6",
+    "pandas>=2.3.3",
+    "plotly>=6.3.1",
+    "scipy>=1.15.3",
+]
+houses = [
+    "requests>=2.32.5",
+]
+grpc = [
+    "grpcio>=1.83.1",
+    "grpcio-tools>=1.83.1",
+    "numpy>=2.2.6",
+]
+ollama = [
+    "ollama>=0.6.2",
+    "pydantic>=2.13.5",
+]
+
+
+[project.scripts]
+km = "src.key_macro.app:run"
+
+
+[tool.ty.rules]
+unresolved-import = "ignore"
+
+
+[tool.ruff]
+fix = true
+extend-exclude = ["*_pb2.py", "*_pb2_grpc.py"]
+
+[tool.ruff.lint]
+select = [
+    "A", # Pyflakes: general checks
+    "B", # pycodestyle: pycodestyle checks
+    "C", # mccabe: complexity checks
+    # "D",  # pydocstyle: docstring style checks
+    "E",  # pycodestyle: pycodestyle errors
+    "F",  # pyflakes: unused imports, variables, etc.
+    "I",  # isort: import sorting
+    "N",  # pep8-naming: naming conventions
+    "S",  # bandit: security checks
+    "W",  # pycodestyle: pycodestyle warnings
+    "UP", # pyupgrade: upgrade python version syntax
+]
+
+ignore = [
+    "S101", # Ignore use of assert detected
+    "S108", # ignore use of tmp
+    "S311", # Standard pseudo-random generators are not suitable for cryptographic purposes
+]

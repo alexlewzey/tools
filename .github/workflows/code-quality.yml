@@ -1,0 +1,25 @@
+name: Code Quality
+
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        pip install uv
+        uv venv
+        uv sync --group devtk
+
+    - name: Run pre-commit and check for changes
+      id: check_changes
+      run: |
+        SKIP=unit-test uv run pre-commit run --all-files

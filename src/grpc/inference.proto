@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package inference;
+
+service ModelInference {
+    rpc PredictConfidence (InferenceRequest) returns (InferenceReply) {}
+    rpc PredictEmbedding (EmbeddingRequest) returns (EmbeddingReply) {}
+}
+
+message InferenceRequest {
+    repeated float features = 1;
+}
+
+message InferenceReply {
+    int32 class_id = 1;
+    float confidence = 2;
+}
+
+message EmbeddingRequest {
+    string text = 1;
+}
+
+message EmbeddingReply {
+    bytes embedding = 1;
+    repeated int32 shape = 2;
+}
